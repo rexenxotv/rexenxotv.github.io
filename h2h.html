@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <!--This viewport element ensures the page renders at the width of the browser viewport, preventing mobile browsers from rendering pages wider than the viewport and then shrinking them down.-->
+        <meta name="viewport" content="width=device-width">
+        <!--Linkeando el archivo CSS-->
+        <link rel="stylesheet" href="h2h.css">
+        <!--Título de la página (cuando pones el ratón encima tal)-->
+        <title>H2H | ATP Rexenxo</title>
+        <!-- Backend con Firebase -->
+        <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+        <script type="module" src="firebase-init.js"></script>
+        <!-- Configuración por defecto de la página -->
+        <script type="module" src="h2h.js" defer></script>
+        <!-- JavaScript para obtener los datos de los tenistas seleccionados y ponerlos en el html -->
+        <script type="module" src="h2h_setDatos.js" defer></script>
+        <!-- JavaScript para cambiar la data que se muestra (Estadísticas/Partidos) -->
+        <script type="module" src="h2h_seleccionador.js" defer></script>
+        <!-- JavaScript para calcular los porcentajes del círculo VS (actualiza el dibujo) -->
+        <script type="module" src="h2h_porcentajes_vs.js" defer></script>
+        <!-- JavaScript para calcular los porcentajes del Victorias/Derrotas (actualiza el dibujo) -->
+        <script type="module" src="h2h_porcentajes_barras.js" defer></script>
+        <!-- Lo de "defer" es para que se llame al script después de cargar el HTML -->
+    </head>
+    <body>
+        <!--MENÚ SUPERIOR-->
+        <div class="menu-superior">
+            <div class="boton-ver-apartados">
+                <img src="media/web/web-boton-ver-mas.jpeg" alt="Botón Ver Más">
+            </div>
+            <div class="logo-rexenxotv">
+                <img src="media/logo/logo-rexenxotv.png" alt="Logo ATP Rexenxo">
+            </div>
+        </div>
+        <div class="margen"></div>
+        <!--H2H-->
+        <div class="h2h">
+            <div class="h2h-estructura">
+                <div class="logo-h2h">
+                    <img src="media/logo/logo-atpr.png" alt="Logo H2H">
+                    HEAD2HEAD
+                </div>
+                <div class="h2h-vs">
+                    <div class="tenista1">
+                        <div class="tenista-imagen-hueco">
+                            <div class="tenista1-imagen">
+                                <img src="media/logo/logo-atpr.png">
+                            </div>
+                        </div>
+                        <div class="tenista1-nombre"><div>?</div></div>
+                    </div>
+                    <div class="vs-victorias">
+                        <div class="vs-victorias-contenido">
+                            <div class="victorias-tenista1">
+                                <strong>0</strong>
+                            </div>
+                            <div class="circunferencia-porcentajes"></div>
+                            <div class="victorias-tenista2">
+                                <strong>0</strong>
+                            </div>
+                        </div>
+                        <div class="vs-victorias-hueco"></div>
+                    </div>
+                    <div class="tenista2">
+                        <div class="tenista-imagen-hueco">
+                            <div class="tenista2-imagen">
+                                <img src="media/logo/logo-atpr.png">
+                            </div>
+                        </div>
+                        <div class="tenista2-nombre"><div>?</div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="margen"></div>
+            <div class="h2h-data">
+                <ul class="h2h-seleccion">
+                    <li>
+                        <a href="#" class="seleccion-modo seleccion-modo--activa" data-boton="1">
+                            <strong>Estadísticas</strong>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="seleccion-modo" data-boton="2">
+                            <strong>Partidos</strong>
+                        </a>
+                    </li>
+                </ul>
+                <div class="linea"></div>
+                <!-- ESTADÍSTICAS -->
+                <div class="seleccion-contenido seleccion-contenido--activa" data-info="1">
+                    <div class="h2h-info-individual">
+                        <div class="h2h-info-tabla-fila">
+                            <div class="h2h-info-tabla-izq"><strong>1</strong></div>
+                            <div class="h2h-info-tabla-cen">Ranking</div>
+                            <div class="h2h-info-tabla-der"><strong>2</strong></div>
+                        </div>
+                        <div class="h2h-info-tabla-fila">
+                            <div class="h2h-info-tabla-izq"><strong>Diestro</strong></div>
+                            <div class="h2h-info-tabla-cen">Mano dominante</div>
+                            <div class="h2h-info-tabla-der"><strong>Diestro</strong></div>
+                        </div>
+                        <div class="h2h-info-tabla-fila">
+                            <div class="h2h-info-tabla-izq"><strong>2021</strong></div>
+                            <div class="h2h-info-tabla-cen">Debut</div>
+                            <div class="h2h-info-tabla-der"><strong>2021</strong></div>
+                        </div>
+                        <div class="h2h-info-tabla-doblefila">
+                            <div class="h2h-info-tabla-fila">
+                                <div class="h2h-info-tabla-izq"><strong>0/0</strong></div>
+                                <div class="h2h-info-tabla-cen">Victorias/Derrotas</div>
+                                <div class="h2h-info-tabla-der"><strong>0/0</strong></div>
+                            </div>
+                            <div class="barra-comparativa">
+                                <div class="barra-porcentaje-tenista2"></div>
+                            </div>
+                        </div>
+                        <div class="h2h-info-tabla-doblefila">
+                            <div class="h2h-info-tabla-fila">
+                                <div class="h2h-info-tabla-izq"><strong>0</strong></div>
+                                <div class="h2h-info-tabla-cen">Títulos</div>
+                                <div class="h2h-info-tabla-der"><strong>0</strong></div>
+                            </div>
+                            <div class="barra-comparativa">
+                                <div class="barra-porcentaje-tenista2"></div>
+                            </div>
+                        </div>
+                        <div class="h2h-info-tabla-doblefila">
+                            <div class="h2h-info-tabla-fila">
+                                <div class="h2h-info-tabla-izq"><strong>0</strong></div>
+                                <div class="h2h-info-tabla-cen">Bagels</div>
+                                <div class="h2h-info-tabla-der"><strong>0</strong></div>
+                            </div>
+                            <div class="barra-comparativa">
+                                <div class="barra-porcentaje-tenista2"></div>
+                            </div>
+                        </div>
+                        <div class="h2h-info-tabla-fila">
+                            <div class="h2h-info-tabla-izq"><strong>Azerbayán</strong></div>
+                            <div class="h2h-info-tabla-cen">Origen</div>
+                            <div class="h2h-info-tabla-der"><strong>Armenia</strong></div>
+                        </div>
+                    </div>
+                    <button id="botonStatsAvanzadas">Ver Más</button>
+                    <div class="h2h-info-individual-extra">
+                        <div class="h2h-info-tabla-doblefila">
+                            <div class="h2h-info-tabla-fila">
+                                <div class="h2h-info-tabla-izq"><strong>0</strong></div>
+                                <div class="h2h-info-tabla-cen">Aces</div>
+                                <div class="h2h-info-tabla-der"><strong>0</strong></div>
+                            </div>
+                            <div class="barra-comparativa">
+                                <div class="barra-porcentaje-tenista2"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- PARTIDOS -->
+                <div class="seleccion-contenido" data-info="2">
+                    <div class="h2h-info-partidos">
+                        <ul id="partidos-h2h"></ul>
+                    </div>
+                </div>
+            </div>
+            <div class="margen"></div>
+            <div class="h2h-buscador">
+                <button id="botonCambiarJugadores" style="display: none;">Cambiar jugadores</button>
+                <div class="consejo">¡Haz click en uno de los nombres para cambiarlo!</div>
+                <div class="h2h-buscador-doble">
+                    <div class="selector-tenista">
+                        <button id="botonBuscarTenista1">?</button>
+                        <ul id="opciones1" style="display: none;"></ul>
+                    </div>
+                    <div class="selector-tenista">
+                        <button id="botonBuscarTenista2">?</button>
+                        <ul id="opciones2" style="display: none;"></ul>
+                    </div>
+                </div>
+            </div>
+            <div class="margen"></div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,360 @@
+/*Parvada*/
+body {
+    margin: 0;
+    font-family: sans-serif;
+    background-color: rgb(16, 32, 64);
+}
+
+/*Ajustar la calidad a la cual se cargan las imágenes en función del viewport*/
+img {
+    width: 50vw;
+    height: auto;   /*Mantener el ratio*/
+}
+
+/* ---------------INICIO CONFIG MENÚ SUPERIOR--------------- */
+
+.menu-superior {
+    width: 100vw;
+    height: 15vw;
+    background-color: rgb(8, 16, 32);
+    border: none;
+    /*Flexbox*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*Ajustes para que quede siempre arriba*/
+    position: fixed;
+    z-index: 100; /*Nos aseguramos que siempre esté encima*/
+}
+
+.boton-ver-apartados {
+    width: 15vw;
+    height: 15vw;
+    background-color: transparent;
+    border: none;
+    /*Flexbox*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-rexenxotv {
+    width: 85vw;
+    height: 15vw;
+    background-color: transparent;
+    border: none;
+    /*Flexbox*/
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+
+.logo-rexenxotv img {
+    height: 80%;
+    width: auto;
+    margin-top: 1vw;
+    margin-right: 2vw;
+    object-fit: contain;
+}
+
+/* ---------------FIN CONFIG MENÚ SUPERIOR--------------- */
+
+.margen {
+    width: 100vw;
+    height: 5vw;
+    background-color: rgb(16, 32, 64);
+}
+
+/*-----------------------------------------------------------------------------------------------*/
+
+.partido {
+    background-color: rgb(16, 32, 64);
+    /*Flexbox*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /*Ajuste para el menú superior*/
+    padding-top: 15vw;
+}
+
+.datos-y-marcador {
+    width: 98vw;
+    height: 50vw;
+    background-color: transparent;
+    border: 2px solid lime;
+    /*Flexbox*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.torneo-y-marcador {
+    width: 64vw;
+    height: 50vw;
+    /*Flexbox*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-right: 4vw;
+}
+
+.info-torneo {
+    width: 64vw;
+    /*Flexbox*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.info-torneo img {
+    object-fit: contain;
+    padding: 2vw;
+    border: none;
+    width: 20vw;
+}
+
+.info-torneo-datos {
+    /*Flexbox*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.info-torneo-nombre {
+    width: 40vw;
+    height: 10vw;
+    border: none;
+    /*Texto*/
+    font-size: 4vw;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+    /*Flexbox*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.info-torneo-otros {
+    width: 40vw;
+    border: none;
+    /*Texto*/
+    font-size: 3vw;
+    text-align: center;
+    color: white;
+    /*Flexbox*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.info-partido-fecha-y-duracion {
+    width: 64vw;
+    height: 7vw;
+    /*Flexbox*/
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    /*Texto*/
+    font-size: 3vw;
+    text-align: left;
+    color: lightgray;
+}
+
+.marcador {
+    width: 64vw;
+    height: 16vw;
+    /*Flexbox*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.marcador-fila {
+    width: 64vw;
+    height: 8vw;
+    /*Flexbox*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mf-margen1 {
+    width: 6vw;
+    height: 8vw;
+    background-color: rgb(16, 64, 32);
+}
+
+.mf-nombre1 {
+    width: 34vw;
+    height: 8vw;
+    background-color: rgb(16, 64, 32);
+    /*Flexbox*/
+    display: flex;
+    align-items: center;
+    /*Texto*/
+    font-size: 3vw;
+    font-weight: bolder;
+    text-align: left;
+    color: white;
+}
+
+.mf-margen2 {
+    width: 6vw;
+    height: 8vw;
+    background-color: rgb(16, 64, 32);
+}
+
+.mf-nombre2 {
+    width: 34vw;
+    height: 8vw;
+    background-color: rgb(16, 64, 32);
+    /*Flexbox*/
+    display: flex;
+    align-items: center;
+    /*Texto*/
+    font-size: 3vw;
+    font-weight: bolder;
+    text-align: left;
+    color: white;
+}
+
+.mf-juegoactual {
+    width: 10vw;
+    height: 8vw;
+    background-color: rgb(0, 0, 32);
+    border: 1px solid lightgray;
+    /*Flexbox*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*Texto*/
+    font-size: 5vw;
+    font-weight: bolder;
+    color: white;
+}
+
+.mf-set1 {
+    width: 8vw;
+    height: 8vw;
+    background-color: snow;
+    border: 1px solid lightgray;
+    /*Flexbox*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*Texto*/
+    font-size: 5vw;
+    font-weight: bolder;
+    color: black;
+}
+
+.mf-set2 {
+    width: 8vw;
+    height: 8vw;
+    background-color: snow;
+    border: 1px solid lightgray;
+    /*Flexbox*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*Texto*/
+    font-size: 5vw;
+    font-weight: bolder;
+    color: black;
+}
+
+.mf-set3 {
+    width: 8vw;
+    height: 8vw;
+    background-color: snow;
+    border: 1px solid lightgray;
+    /*Flexbox*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*Texto*/
+    font-size: 5vw;
+    font-weight: bolder;
+    color: black;
+}
+
+.marcador-sets {
+    width: 24vw;
+    height: 16vw;
+    background-color: snow;
+    border: 1px solid lightgray;
+}
+
+.marcador-ja-t {
+    height: 6vw;
+    margin-left: 1vw;
+}
+
+/*-----------------------------------------------------------------------------------------------*/
+
+.fotos-tenistas {
+    width: 30vw;
+    height: 45vw;
+    /*Flexbox*/
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.tenista1-imagen {
+    width: 20vw;
+    height: 20vw;
+    background-color: transparent;
+    border: 0.6vw solid blue;
+    /*Realmente este div es un círculo*/
+    border-radius: 50%; /*Esto le da la forma de círculo*/
+    box-sizing: border-box;
+    overflow: hidden;   /*Esto hace que todo lo que está por fuera del círculo no se vea*/
+}
+
+.tenista1-imagen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /*No queremos ajustar la imagen a dentro del círculo*/
+}
+
+.tenista2-imagen {
+    width: 20vw;
+    height: 20vw;
+    background-color: transparent;
+    border: 0.6vw solid yellow;
+    /*Realmente este div es un círculo*/
+    border-radius: 50%; /*Esto le da la forma de círculo*/
+    box-sizing: border-box;
+    overflow: hidden;   /*Esto hace que todo lo que está por fuera del círculo no se vea*/
+}
+
+.tenista2-imagen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /*No queremos ajustar la imagen a dentro del círculo*/
+}
+
+.ir-al-h2h {
+    height: 10vw;
+    /*Flexbox*/
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.ir-al-h2h a {
+    display: block;
+    background-color: gray;
+    /*Texto*/
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+}

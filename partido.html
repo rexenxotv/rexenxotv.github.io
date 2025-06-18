@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <!--This viewport element ensures the page renders at the width of the browser viewport, preventing mobile browsers from rendering pages wider than the viewport and then shrinking them down.-->
+        <meta name="viewport" content="width=device-width">
+        <!--Linkeando el archivo CSS-->
+        <link rel="stylesheet" href="partido.css">
+        <!--Título de la página (cuando pones el ratón encima tal)-->
+        <title>Stats Partido | ATP Rexenxo</title>
+        <!-- Backend con Firebase -->
+        <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+        <script type="module" src="firebase-init.js"></script>
+        <!-- JavaScript para cargar los datos del partido que indica el id -->
+        <script type="module" src="get_datos_partido.js" defer></script>
+    </head>
+    <body>
+        <!--MENÚ SUPERIOR-->
+        <div class="menu-superior">
+            <div class="boton-ver-apartados">
+                <img src="media/web/web-boton-ver-mas.jpeg" alt="Botón Ver Más">
+            </div>
+            <div class="logo-rexenxotv">
+                <img src="media/logo/logo-rexenxotv.png" alt="Logo ATP Rexenxo">
+            </div>
+        </div>
+        <div class="margen"></div>
+        <!--DATOS/STATS PARTIDO-->
+        <div class="partido">
+            <div class="datos-y-marcador">
+                <div class="fotos-tenistas">
+                    <div class="tenista1-imagen">
+                        <img src="media/logo/logo-atpr.png">
+                    </div>
+                    <div class="tenista2-imagen">
+                        <img src="media/logo/logo-atpr.png">
+                    </div>
+                </div>
+                <div class="torneo-y-marcador">
+                    <div class="info-torneo">
+                        <img src="media/logo/logo-atpr250.png">
+                        <div class="info-torneo-datos">
+                            <div class="info-torneo-nombre">Torneo</div>
+                            <div class="info-torneo-otros">Lugar (Superficie)</div>
+                        </div>
+                    </div>
+                    <div class="info-partido-fecha-y-duracion">
+                        <div class="info-partido-fecha">1.1.2020</div>
+                        <div class="info-partido-duracion">1h1min</div>
+                    </div>
+                    <div class="marcador">
+                        <div class="marcador-fila" data-player="t1">
+                            <div class="mf-margen1"></div>
+                            <div class="mf-nombre1">TENISTA1</div>
+                            <div class="mf-set1"> </div>
+                            <div class="mf-set2"> </div>
+                            <div class="mf-set3"> </div>
+                            <div class="mf-juegoactual" style="display: none;">0</div>
+                        </div>
+                        <div class="marcador-fila" data-player="t2">
+                            <div class="mf-margen2"></div>
+                            <div class="mf-nombre2">TENISTA2</div>
+                            <div class="mf-set1"> </div>
+                            <div class="mf-set2"> </div>
+                            <div class="mf-set3"> </div>
+                            <div class="mf-juegoactual" style="display: none;">0</div>
+                        </div>
+                    </div>
+                    <div class="ir-al-h2h">
+                        <a href="#">->H2H<-</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="margen"></div>
+    </body>
+</html>

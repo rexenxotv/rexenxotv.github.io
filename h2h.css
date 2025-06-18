@@ -1,0 +1,635 @@
+/*Parvada*/
+body {
+    margin: 0;
+    font-family: sans-serif;
+    background-color: rgb(16, 32, 64);
+}
+
+/*Ajustar la calidad a la cual se cargan las imágenes en función del viewport*/
+img {
+    width: 50vw;
+    height: auto;   /*Mantener el ratio*/
+}
+
+.linea {
+    width: 40vw;
+    height: 3vw;
+    border-top: 0.4vw solid grey;
+}
+
+/* ---------------INICIO CONFIG MENÚ SUPERIOR--------------- */
+
+.menu-superior {
+    width: 100vw;
+    height: 15vw;
+    background-color: rgb(8, 16, 32);
+    border: none;
+    /*Flexbox*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*Ajustes para que quede siempre arriba*/
+    position: fixed;
+    z-index: 100; /*Nos aseguramos que siempre esté encima*/
+}
+
+.boton-ver-apartados {
+    width: 15vw;
+    height: 15vw;
+    background-color: transparent;
+    border: none;
+    /*Flexbox*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-rexenxotv {
+    width: 85vw;
+    height: 15vw;
+    background-color: transparent;
+    border: none;
+    /*Flexbox*/
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+
+.logo-rexenxotv img {
+    height: 80%;
+    width: auto;
+    margin-top: 1vw;
+    margin-right: 2vw;
+    object-fit: contain;
+}
+
+/* ---------------FIN CONFIG MENÚ SUPERIOR--------------- */
+
+.margen {
+    width: 100vw;
+    height: 5vw;
+    background-color: transparent;
+}
+
+.h2h {
+    background-color: rgb(16, 32, 64);
+    /*Ajuste para el menú superior*/
+    padding-top: 15vw;
+}
+
+/*-----------------------------------------------------------------------------------------------*/
+
+/*Contenedor de la primera parte del h2h: logo, tenistas (foto, nombre, etc.) y el vs victorias*/
+.h2h-estructura {
+    /*El tamaño en referencia al ancho del dispositivo: mismo ancho y la mitad de ese ancho de alto*/
+    width: 100vw;
+    height: 50vw;
+    /*Color de fondo de la estructura entera*/
+    background-color: transparent;
+    /*Borde del rectángulo: de momento no quiero*/
+    border: none;
+    /*Flexbox*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-h2h {
+    width: 100vw;
+    height: 10vw;
+    background-color: transparent;
+    border: none;
+    /*Texto porque el HEAD2HEAD no es de la imagen todavía (T.T)*/
+    font-size: 5vw;
+    font-weight: 600;
+    color: white;
+    /*Flexbox*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-h2h img {
+    height: 90%;
+    width: auto;
+    margin-bottom: 1vw;
+}
+
+/*Estilo para que la imagen se muestre entera en el contenedor sin cambiar de proporción*/
+.h2h-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.h2h-vs {
+    width: 90vw;
+    height: 40vw;
+    background-color: transparent;
+    border: none;
+    /*Flexbox*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tenista1 {
+    width: 25vw;
+    height: 40vw;
+    background-color: transparent;
+    border: none;
+    /*Flexbox*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.tenista-imagen-hueco {
+    width: 25vw;
+    height: 25vw;
+    background-color: transparent;
+    border: none;
+    /*Flexbox*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tenista1-imagen {
+    width: 20vw;
+    height: 20vw;
+    background-color: transparent;
+    border: 0.6vw solid blue;
+    /*Realmente este div es un círculo*/
+    border-radius: 50%; /*Esto le da la forma de círculo*/
+    box-sizing: border-box;
+    overflow: hidden;   /*Esto hace que todo lo que está por fuera del círculo no se vea*/
+}
+
+.tenista1-imagen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /*No queremos ajustar la imagen a dentro del círculo*/
+}
+
+.tenista1-nombre {
+    width: 25vw;
+    height: 15vw;
+    background-color: transparent;
+    border: none;
+    /*Flexbox*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*Ajustar el tamaño de letra al tamaño de pantalla*/
+    font-size: 5vw;
+    text-align: center;
+    color: white;
+}
+
+.tenista2 {
+    width: 25vw;
+    height: 40vw;
+    background-color: transparent;
+    border: none;
+    /*Flexbox*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.tenista2-imagen {
+    width: 20vw;
+    height: 20vw;
+    background-color: transparent;
+    border: 0.6vw solid yellow;
+    /*Realmente este div es un círculo*/
+    border-radius: 50%; /*Esto le da la forma de círculo*/
+    box-sizing: border-box;
+    overflow: hidden;   /*Esto hace que todo lo que está por fuera del círculo no se vea*/
+}
+
+.tenista2-imagen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /*No queremos ajustar la imagen a dentro del círculo*/
+}
+
+.tenista2-nombre {
+    width: 25vw;
+    height: 15vw;
+    background-color: transparent;
+    border: none;
+    /*Flexbox*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*Ajustar el tamaño de letra al tamaño de pantalla*/
+    font-size: 5vw;
+    text-align: center;
+    color: white;
+}
+
+.vs-victorias {
+    width: 40vw;
+    height: 40vw;
+    background-color: transparent;
+    border: none;
+    /*Flexbox*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.vs-victorias-contenido {
+    width: 40vw;
+    height: 26vw;
+    background-color: transparent;
+    border: none;
+    /*Flexbox*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.victorias-tenista1 {
+    width: 8vw;
+    height: 26vw;
+    background-color: transparent;
+    border: none;
+    /*Flexbox*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*Ajustar el tamaño de letra al tamaño de pantalla*/
+    font-size: 6vw;
+    text-align: center;
+    color: white;
+}
+
+.victorias-tenista2 {
+    width: 8vw;
+    height: 26vw;
+    background-color: transparent;
+    border: none;
+    /*Flexbox*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*Ajustar el tamaño de letra al tamaño de pantalla*/
+    font-size: 6vw;
+    text-align: center;
+    color: white;
+}
+
+.circunferencia-porcentajes {
+    width: 24vw;
+    height: 24vw;
+    background-color: transparent;
+    border-radius: 50%; /*Para que sea un círculo*/
+    box-sizing: border-box;
+    /*Flexbox*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*Ajustar el tamaño de letra al tamaño de pantalla*/
+    font-size: 3vw;
+    text-align: center;
+    color: grey;
+
+    /*Empieza lo bueno: gradiente dinámico en función del H2H*/
+    background: conic-gradient(
+        blue 0deg,
+        yellow 0deg
+    );
+
+    /*Para posicionar el ::after*/
+    position: relative;
+}
+
+.circunferencia-porcentajes::after {
+    width: 80%;
+    height: 80%;
+    border-radius: 50%;
+    background-color: rgb(16, 32, 64);
+    z-index: 1;
+    /*Para posicionar el ::after*/
+    position: absolute;
+    /*Texto: con \A se indica nueva línea y con la siguiente línea cómo se gestiona*/
+    content: "VS\Avictorias";
+    white-space: pre;
+    /*Ajustar el tamaño de letra al tamaño de pantalla*/
+    font-size: 3vw;
+    text-align: center;
+    color: grey;
+    /*Flexbox*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.vs-victorias-hueco {
+    width: 40vw;
+    height: 14vw;
+    background-color: transparent;
+    border: none;
+}
+
+/*-----------------------------------------------------------------------------------------------*/
+
+.h2h-data {
+    width: 100vw;
+    /*NO ESPECIFICAMOS LA ALTURA YA QUE ES VARIABLE*/
+    background-color: transparent;
+    border: 2px solid violet;
+    /*Flexbox*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+ul.h2h-seleccion {
+    width: 80vw;
+    height: 2vw;
+    background-color: transparent;
+    border: none;
+    /*Flexbox*/
+    display: flex;
+    justify-content: center;
+    gap: 3vw;
+    align-items: center;
+    /*Corrigiendo el estilo por defecto*/
+    list-style: none;
+}
+
+.seleccion-modo {
+    width: 14vw;
+    background-color: transparent;
+    border: 1px solid transparent;
+    /*Texto cuando no está pulsado*/
+    font-size: 3vw;
+    text-align: center;
+    color: gray;
+    /*Corrigiendo el estilo por defecto*/
+    text-decoration: none;
+    /*Display tipo Block*/
+    display: block;
+    margin-right: 7vw;
+}
+
+.seleccion-modo--activa {
+    /*Texto cuando está pulsado*/
+    font-size: 3vw;
+    text-align: center;
+    color: white;
+}
+
+.seleccion-contenido {
+    /*Si no está pulsada la opción para verlo, se oculta*/
+    display: none;
+}
+
+.seleccion-contenido--activa {
+    display: block;
+    color: white;
+}
+
+.h2h-info-individual {
+    width: 80vw;
+    border: none;
+    /*Flexbox*/
+    display: flex;
+    flex-direction: column;
+}
+
+.h2h-info-tabla-doblefila {
+    width: 80vw;
+    height: 6.5vw;
+    /*Flexbox*/
+    display: flex;
+    flex-direction: column;
+}
+
+.h2h-info-tabla-fila {
+    width: 80vw;
+    height: 5.5vw;
+    /*Flexbox*/
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.h2h-info-tabla-izq {
+    width: 25vw;
+    text-align: left;
+    font-size: 3vw;
+}
+
+.h2h-info-tabla-cen {
+    width: 25vw;
+    text-align: center;
+    font-size: 2.5vw;
+    color: lightgray;
+}
+
+.h2h-info-tabla-der {
+    width: 25vw;
+    text-align: right;
+    font-size: 3vw;
+}
+
+.barra-comparativa {
+    width: 80vw;
+    height: 1vw;
+    background-color: blue;
+    /*Básicamente vamos a mostrar el porcentaje del tenista2 por encima*/
+    overflow: hidden;
+
+    position: relative;
+}
+
+.barra-porcentaje-tenista2 {
+    width: 0%; /*Este valor se ajusta con h2h_porcentajes_lineares.js*/
+    height: 1vw;
+    background-color: yellow;
+    
+    position: absolute;
+    right: 0;
+}
+
+#botonStatsAvanzadas {
+    width: fit-content;
+    display: block;
+    margin: 1rem auto;
+}
+
+/*-----------------------------------------------------------------------------------------------*/
+
+.h2h-info-partidos {
+    width: 90vw;
+    margin: 0 auto;
+    border: none;
+    /*Flexbox*/
+    display: flex;
+    flex-direction: column;
+}
+
+.h2h-info-partidos ul {
+    text-decoration: none;
+    /*Arreglo pa que esté bien distribuido*/
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    /*Texto*/
+    text-align: center;
+}
+
+.fila-info-partido {
+    /*Flexbox*/
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    /* Texto */
+    font-size: 3vw;
+}
+
+.columna-lista-partidos {
+    height: 7vw;
+    /*Flexbox*/
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    /*Texto*/
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+}
+
+.columna-lista-partidos a {
+    display: block;
+    /*Texto*/
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+}
+
+.clp-anho {
+    flex-basis: 5vw;
+}
+
+.clp-ganador {
+    flex-basis: 20vw;
+    justify-content: flex-start; /*Texto alineado a la izquierda*/
+}
+
+.clp-torneo {
+    flex-basis: 20vw;
+    justify-content: flex-start; /*Texto alineado a la izquierda*/
+}
+
+.clp-ronda {
+    flex-basis: 5vw;
+}
+
+.clp-marcador {
+    flex-basis: 30vw;
+}
+
+.circulito-ganador {
+    width: 4vw;
+    height: 4vw;
+    border-radius: 50%;
+    /*Ajustes pa centrarlo*/
+    margin: auto;
+    align-self: center;
+}
+
+/*-----------------------------------------------------------------------------------------------*/
+
+.h2h-buscador {
+    width: 100vw;
+    /*Flexbox*/
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.h2h-buscador-doble {
+    width: 70vw;
+    /*Efecto degradado en el borde pero color plano dentro*/
+    border: 1vw solid transparent;
+    border-radius: 6vw;
+    padding: 3vw;
+    background-image:
+        linear-gradient(rgb(8, 16, 32), rgb(8, 16, 32)),/*Fondo*/
+        linear-gradient(to right, blue, yellow);        /*Degradado del borde*/
+    background-origin: padding-box, border-box;
+    background-clip: padding-box, border-box;
+    /*Flexbox*/
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.selector-tenista {
+    position: relative;
+    display: inline-block;
+}
+
+.selector-tenista button {
+    width: 25vw;
+    cursor: pointer;
+    border: 0px;
+    border-radius: 4px;
+    background-color: transparent;
+    /*Texto*/
+    font-size: 4vw;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+}
+
+.selector-tenista ul {
+    width: 25vw;
+    position: absolute;
+    top: 100%;
+    padding: 0;
+    background-color: rgb(8, 16, 32);
+    border: 1px solid rgb(8, 16, 32);
+    border-radius: 4px;
+    overflow-y: auto;
+    display: none;
+    z-index: 10;
+    /*Texto*/
+    font-size: 3vw;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+}
+
+.selector-tenista ul li {
+    padding: 1vw 1vw;
+    cursor: pointer;
+}
+
+.consejo {
+    height: 10vw;
+    /*Flexbox*/
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /*Texto*/
+    font-size: 3vw;
+    font-weight: 500;
+    text-align: center;
+    color: white;
+}
+
