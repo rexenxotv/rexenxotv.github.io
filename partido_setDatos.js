@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', async() => {
 
     try {
         const p = await getPartido(ID_partido);
-        console.log("Datos del partido:", p);
+        //console.log("Datos del partido:", p); DEBUG
         if(!p) {
             console.error("No se encontró el partido con ID:", ID_partido);
             return;
@@ -21,13 +21,13 @@ document.addEventListener('DOMContentLoaded', async() => {
 
         // Datos del torneo
         const t = await getTorneo(p.torneo);
-        console.log("Datos del torneo:", t);
+        //console.log("Datos del torneo:", t); DEBUG
         if(!t) {
             // Si el torneo es null --> Partido amistoso
             document.querySelector('.info-torneo-nombre').textContent = "Amistoso";
             // Como no hay torneo se obtiene la ubicación y el tipo de pista del ID_pista
             const pista = await getPista(p.pista);
-        console.log("Datos de la pista:", p);
+            //console.log("Datos de la pista:", p); DEBUG
             document.querySelector('.info-torneo-otros').textContent = pista ? `${pista.lugar} (${pista.tipo})` : "N/A";
             // Sin imagen
             document.querySelector('.info-torneo img').src = "";
@@ -63,7 +63,9 @@ document.addEventListener('DOMContentLoaded', async() => {
         // Moito ollo: el marcador siempre está desde el punto de vista del ganador
         let ID_tenista1 = p.tenista1;
         let ID_tenista2 = p.tenista2;
-        // Último detallito de crack: actualizar el botón pa volver al H2H
+        // Detallito de crack: actualizar el título de la página
+        document.title = `${ID_tenista1} vs ${ID_tenista2} | ATP Rexenxo`;
+        // Detallito de crack: actualizar el botón pa volver al H2H
         document.querySelector('.ir-al-h2h a').href = `h2h.html?j1=${ID_tenista1}&j2=${ID_tenista2}`;
         // intercambiar tenistas para que el ganador siempre sea el tenista1
         if(p.tenista1 !== p.ganador && p.estado !== "nojugado") {
@@ -71,6 +73,8 @@ document.addEventListener('DOMContentLoaded', async() => {
         }
         document.querySelector('.tenista1-imagen img').src = `media/pfp/${ID_tenista1}.png`;
         document.querySelector('.tenista2-imagen img').src = `media/pfp/${ID_tenista2}.png`;
+        document.querySelector('.tenista1-imagen a').href = `tenista.html?id=${ID_tenista1}`;
+        document.querySelector('.tenista2-imagen a').href = `tenista.html?id=${ID_tenista2}`;
         document.querySelector('.mf-nombre1').textContent = ID_tenista1?.toUpperCase();
         document.querySelector('.mf-nombre2').textContent = ID_tenista2?.toUpperCase();
         
@@ -161,6 +165,6 @@ document.addEventListener('DOMContentLoaded', async() => {
 
     }
     catch (error) {
-        console.error("Error cargando el partido.", error)
+        console.error("Error cargando el partido.", error);
     }
 });

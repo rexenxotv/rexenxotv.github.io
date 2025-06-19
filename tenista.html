@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <!--This viewport element ensures the page renders at the width of the browser viewport, preventing mobile browsers from rendering pages wider than the viewport and then shrinking them down.-->
+        <meta name="viewport" content="width=device-width">
+        <!--Linkeando el archivo CSS-->
+        <link rel="stylesheet" href="tenista.css">
+        <!--Título de la página (cuando pones el ratón encima tal)-->
+        <title>Perfil | ATP Rexenxo</title>
+        <!-- Backend con Firebase -->
+        <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+        <script type="module" src="firebase-init.js"></script>
+        <!-- JavaScript para cargar los datos del tenista que indica el id -->
+        <script type="module" src="tenista_setDatos.js" defer></script>
+    </head>
+    <body>
+        <!--MENÚ SUPERIOR-->
+        <div class="menu-superior">
+            <div class="boton-ver-apartados">
+                <img src="media/web/web-boton-ver-mas.jpeg" alt="Botón Ver Más">
+            </div>
+            <div class="logo-rexenxotv">
+                <img src="media/logo/logo-rexenxotv.png" alt="Logo ATP Rexenxo">
+            </div>
+        </div>
+        <div class="margen"></div>
+        <!--DATOS/STATS TENISTA-->
+        <div class="tenista">
+            <div class="tenista-info">
+                <div class="tenista-info-basica">
+                    <div class="tenista-info-nombre-y-club">
+                        <span class="tenista-info-nombre">VITIBOU</span><br>
+                        <span class="tenista-info-club">Choto&Friends</span>
+                    </div>
+                    <!-- Venga va me animo a hacer mi primera tabla -->
+                    <table class="tenista-info-datosbasicos">
+                        <tr>
+                            <td>
+                                <span class="tenista-info-dato" id="-ranking">0</span><br>
+                                <span class="tenista-info-tipodato">Ranking</span>
+                            </td>
+                            <td>
+                                <!-- Usar el signo menos: − + -->
+                                <span class="tenista-info-datodif" id="-dif-ranking">−</span><br>
+                                <span class="tenista-info-tipodato">Dif.</span>
+                            </td>
+                            <td>
+                                <span class="tenista-info-dato" id="-w-l">0-0</span><br>
+                                <span class="tenista-info-tipodato">W-L</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <span class="tenista-info-dato" id="-mejor-ranking">0</span><br>
+                                <span class="tenista-info-mejorranking">Mejor Ranking (1.2021)</span>
+                            </td>
+                            <td>
+                                <span class="tenista-info-dato" id="-titulos">0</span><br>
+                                <span class="tenista-info-tipodato">Títulos</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="tenista-info-imagen">
+                    <img src="media/silueta/VitiBouu.png">
+                </div>
+            </div>
+            <div class="margen"></div>
+        </div>
+        <div class="margen"></div>
+    </body>
+</html>

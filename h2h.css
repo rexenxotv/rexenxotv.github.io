@@ -11,12 +11,6 @@ img {
     height: auto;   /*Mantener el ratio*/
 }
 
-.linea {
-    width: 40vw;
-    height: 3vw;
-    border-top: 0.4vw solid grey;
-}
-
 /* ---------------INICIO CONFIG MENÚ SUPERIOR--------------- */
 
 .menu-superior {
@@ -354,14 +348,13 @@ img {
 }
 
 ul.h2h-seleccion {
-    width: 80vw;
+    width: 40vw;
     height: 2vw;
     background-color: transparent;
     border: none;
     /*Flexbox*/
     display: flex;
-    justify-content: center;
-    gap: 3vw;
+    justify-content: space-between;
     align-items: center;
     /*Corrigiendo el estilo por defecto*/
     list-style: none;
@@ -370,7 +363,6 @@ ul.h2h-seleccion {
 .seleccion-modo {
     width: 14vw;
     background-color: transparent;
-    border: 1px solid transparent;
     /*Texto cuando no está pulsado*/
     font-size: 3vw;
     text-align: center;
@@ -378,8 +370,22 @@ ul.h2h-seleccion {
     /*Corrigiendo el estilo por defecto*/
     text-decoration: none;
     /*Display tipo Block*/
-    display: block;
-    margin-right: 7vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.seleccion-modo strong {
+    border-bottom: 0.6vw solid gray;
+    /*Animación*/
+    transition: border-color 1s ease;
+}
+
+/*Finura*/
+.seleccion-modo--activa strong {
+    border-bottom-color: blue;
+    /*Animación*/
+    transition: border-color 1s ease;
 }
 
 .seleccion-modo--activa {
@@ -460,6 +466,9 @@ ul.h2h-seleccion {
     
     position: absolute;
     right: 0;
+
+    /*Animación (nah insano)*/
+    transition: width 0.8s ease-out;
 }
 
 #botonStatsAvanzadas {

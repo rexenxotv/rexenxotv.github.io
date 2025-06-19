@@ -1,4 +1,4 @@
-import { getPartidosTenista, getTenista, getTorneo } from "./firebase-init.js";
+import { getPartidosTenista, getTenista, getTorneo, getLiveRankings, calcularRanking } from "./firebase-init.js";
 import { actualizarTodasLasBarras } from "./h2h_porcentajes_barras.js";
 import { actualizarCircunferenciaVS } from "./h2h_porcentajes_vs.js";
 
@@ -35,9 +35,11 @@ async function setDatosH2H(ID_tenista1, ID_tenista2) {
         const partidos_t1 = await getPartidosTenista(t1);
         const partidos_t2 = await getPartidosTenista(t2);
 
-        // Imagen
+        // Imagen y links
         document.querySelector('.tenista1-imagen img').src = `media/pfp/${ID_tenista1}.png`;
         document.querySelector('.tenista2-imagen img').src = `media/pfp/${ID_tenista2}.png`;
+        document.querySelector('.tenista1-imagen a').href = `tenista.html?id=${ID_tenista1}`;
+        document.querySelector('.tenista2-imagen a').href = `tenista.html?id=${ID_tenista2}`;
         // Nombre (x2)
         document.querySelector('.tenista1-nombre div').innerHTML = `${t1.nombre}<br><strong>${t1.apellido}</strong>`;
         document.querySelector('.tenista2-nombre div').innerHTML = `${t2.nombre}<br><strong>${t2.apellido}</strong>`;
@@ -56,18 +58,23 @@ async function setDatosH2H(ID_tenista1, ID_tenista2) {
 
         // ------------------ESTADÍSTICAS-----------------
         // (1) CALCULARLAS
+        // Ranking de cada tenista
+        const liverankings = await getLiveRankings();
+        console.log(liverankings);
+        if(!liverankings) {
+            console.error("Error al cargar los liverankings...");
+            return [];
+        }
+        const ranking_t1 = await calcularRanking(liverankings[0], ID_tenista1);
+        const ranking_t2 = await calcularRanking(liverankings[0], ID_tenista2);
         // Victorias y derrotas de cada tenista
         const victorias_t1 = partidos_t1.filter(p => p.ganador === ID_tenista1).length;
         const derrotas_t1 = partidos_t1.filter(p => p.ganador !== ID_tenista1 && p.ganador != null).length;
         const victorias_t2 = partidos_t2.filter(p => p.ganador === ID_tenista2).length;
         const derrotas_t2 = partidos_t2.filter(p => p.ganador !== ID_tenista2 && p.ganador != null).length;
         // Títulos de cada tenista
-        const titulos_t1 = partidos_t1.filter(p =>
-            p.ronda === 'F' && p.ganador === ID_tenista1
-        ).length;
-        const titulos_t2 = partidos_t2.filter(p =>
-            p.ronda === 'F' && p.ganador === ID_tenista2
-        ).length;
+        const titulos_t1 = partidos_t1.filter(p => p.ronda === 'F' && p.ganador === ID_tenista1).length;
+        const titulos_t2 = partidos_t2.filter(p => p.ronda === 'F' && p.ganador === ID_tenista2).length;
         // Bagels de cada tenista
         const bagels_t1 = calcularBagels(ID_tenista1, partidos_t1);
         const bagels_t2 = calcularBagels(ID_tenista2, partidos_t2);
@@ -79,8 +86,8 @@ async function setDatosH2H(ID_tenista1, ID_tenista2) {
                 // ?? 'N/A' al final de algunos datos por si acaso (null, undefined...)
                 case 'Ranking':
                     // Datos calculados
-                    fila.querySelector('.h2h-info-tabla-izq strong').textContent = '1';
-                    fila.querySelector('.h2h-info-tabla-der strong').textContent = '2';
+                    fila.querySelector('.h2h-info-tabla-izq strong').textContent = ranking_t1;
+                    fila.querySelector('.h2h-info-tabla-der strong').textContent = ranking_t2;
                     break;
                 case 'Mano dominante':
                     fila.querySelector('.h2h-info-tabla-izq strong').textContent = t1.diestro ? 'Diestro': 'Zurdo';
