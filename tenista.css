@@ -2,7 +2,7 @@
 body {
     margin: 0;
     font-family: sans-serif;
-    background-color: rgb(16, 32, 64);
+    background-color: transparent;
 }
 
 /*Ajustar la calidad a la cual se cargan las imágenes en función del viewport*/
@@ -62,8 +62,8 @@ img {
 .margen {
     width: 100vw;
     height: 5vw;
-    background-color: rgb(16, 32, 64);
-    border: 2px solid purple;
+    background-color: snow;
+    border: none; /*C-PURPLE*/
 }
 
 /*-----------------------------------------------------------------------------------------------*/
@@ -82,7 +82,7 @@ img {
 .tenista-info {
     width: 100vw;
     height: 50vw;
-    border: 2px solid lime;
+    border: none; /*C-LIME*/
     /*Degradado*/
     background: radial-gradient(
         circle at right center,
@@ -99,7 +99,7 @@ img {
 .tenista-info-imagen {
     width: 40vw;
     height: 50vw;
-    border: 2px solid gold;
+    border: none; /*C-GOLD*/
 }
 
 .tenista-info-imagen img {
@@ -189,4 +189,76 @@ img {
     font-size: 2.6vw;
     font-weight: 500;
     color: lightslategray;
+}
+
+/*-----------------------------------------------------------------------------------------------*/
+
+.tenista-data {
+    width: 100vw;
+    /*NO ESPECIFICAMOS LA ALTURA YA QUE ES VARIABLE*/
+    background-color: snow;
+    border: none; /*C-VIOLET*/
+    /*Flexbox*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.tenista-seleccion {
+    width: 80vw;
+    height: 6vw;
+    background-color: transparent;
+    border: none; /*C-BLUE*/
+    /*Flexbox*/
+    display: flex;
+    gap: 8vw;
+    justify-content: center;
+    align-items: center;
+}
+
+.tenista-seleccion a {
+    border: none; /*C-BLUE*/
+}
+
+.seleccion-modo {
+    background-color: transparent;
+    /*Texto cuando no está pulsado*/
+    font-size: 3vw;
+    font-weight: bold;
+    text-align: center;
+    color: darkslategray;
+    /*Corrigiendo el estilo por defecto*/
+    text-decoration: none;
+}
+
+.seleccion-modo strong {
+    border-bottom: 0.6vw solid darkslategray;
+    /*Animación*/
+    transition: border-color 1s ease;
+}
+
+/*Finura*/
+.seleccion-modo--activa strong {
+    border-bottom-color: blue;
+    /*Animación*/
+    transition: border-color 1s ease;
+}
+
+.seleccion-modo--activa {
+    /*Texto cuando está pulsado*/
+    font-size: 3vw;
+    font-weight: bold;
+    text-align: center;
+    color: blue;
+}
+
+.seleccion-contenido {
+    /*Si no está pulsada la opción para verlo, se oculta*/
+    display: none;
+}
+
+.seleccion-contenido--activa {
+    display: block;
+    color: white;
 }

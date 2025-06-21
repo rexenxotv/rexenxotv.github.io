@@ -41,8 +41,10 @@ async function setDatosH2H(ID_tenista1, ID_tenista2) {
         document.querySelector('.tenista1-imagen a').href = `tenista.html?id=${ID_tenista1}`;
         document.querySelector('.tenista2-imagen a').href = `tenista.html?id=${ID_tenista2}`;
         // Nombre (x2)
-        document.querySelector('.tenista1-nombre div').innerHTML = `${t1.nombre}<br><strong>${t1.apellido}</strong>`;
-        document.querySelector('.tenista2-nombre div').innerHTML = `${t2.nombre}<br><strong>${t2.apellido}</strong>`;
+        document.querySelector('.tenista1-nombre a').innerHTML = `${t1.nombre}<br><strong>${t1.apellido}</strong>`;
+        document.querySelector('.tenista2-nombre a').innerHTML = `${t2.nombre}<br><strong>${t2.apellido}</strong>`;
+        document.querySelector('.tenista1-nombre a').href = `tenista.html?id=${ID_tenista1}`;
+        document.querySelector('.tenista2-nombre a').href = `tenista.html?id=${ID_tenista2}`;
         document.querySelector("#botonBuscarTenista1").textContent = `${ID_tenista1}`;
         document.querySelector("#botonBuscarTenista2").textContent = `${ID_tenista2}`;
         // VS Victorias
@@ -60,7 +62,6 @@ async function setDatosH2H(ID_tenista1, ID_tenista2) {
         // (1) CALCULARLAS
         // Ranking de cada tenista
         const liverankings = await getLiveRankings();
-        console.log(liverankings);
         if(!liverankings) {
             console.error("Error al cargar los liverankings...");
             return [];

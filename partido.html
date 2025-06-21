@@ -8,6 +8,9 @@
         <link rel="stylesheet" href="partido.css">
         <!--Título de la página (cuando pones el ratón encima tal)-->
         <title>Stats Partido | ATP Rexenxo</title>
+        <!-- CONFIG MENÚ -->
+        <link rel="stylesheet" href="menu.css">
+        <script src="menu.js"></script>
         <!-- Backend con Firebase -->
         <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
         <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
@@ -17,15 +20,7 @@
     </head>
     <body>
         <!--MENÚ SUPERIOR-->
-        <div class="menu-superior">
-            <div class="boton-ver-apartados">
-                <img src="media/web/web-boton-ver-mas.jpeg" alt="Botón Ver Más">
-            </div>
-            <div class="logo-rexenxotv">
-                <img src="media/logo/logo-rexenxotv.png" alt="Logo ATP Rexenxo">
-            </div>
-        </div>
-        <div class="margen"></div>
+        <div id="menu"></div>
         <!--DATOS/STATS PARTIDO-->
         <div class="partido">
             <div class="datos-y-marcador">

@@ -11,54 +11,6 @@ img {
     height: auto;   /*Mantener el ratio*/
 }
 
-/* ---------------INICIO CONFIG MENÚ SUPERIOR--------------- */
-
-.menu-superior {
-    width: 100vw;
-    height: 15vw;
-    background-color: rgb(8, 16, 32);
-    border: none;
-    /*Flexbox*/
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /*Ajustes para que quede siempre arriba*/
-    position: fixed;
-    z-index: 100; /*Nos aseguramos que siempre esté encima*/
-}
-
-.boton-ver-apartados {
-    width: 15vw;
-    height: 15vw;
-    background-color: transparent;
-    border: none;
-    /*Flexbox*/
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.logo-rexenxotv {
-    width: 85vw;
-    height: 15vw;
-    background-color: transparent;
-    border: none;
-    /*Flexbox*/
-    display: flex;
-    justify-content: right;
-    align-items: center;
-}
-
-.logo-rexenxotv img {
-    height: 80%;
-    width: auto;
-    margin-top: 1vw;
-    margin-right: 2vw;
-    object-fit: contain;
-}
-
-/* ---------------FIN CONFIG MENÚ SUPERIOR--------------- */
-
 .margen {
     width: 100vw;
     height: 5vw;
@@ -177,6 +129,11 @@ img {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.tenista1-nombre a {
+    /*Corrigiendo el estilo por defecto*/
+    text-decoration: none;
     /*Ajustar el tamaño de letra al tamaño de pantalla*/
     font-size: 5vw;
     text-align: center;
@@ -221,6 +178,15 @@ img {
     display: flex;
     justify-content: center;
     align-items: center;
+    /*Ajustar el tamaño de letra al tamaño de pantalla*/
+    font-size: 5vw;
+    text-align: center;
+    color: white;
+}
+
+.tenista2-nombre a {
+    /*Corrigiendo el estilo por defecto*/
+    text-decoration: none;
     /*Ajustar el tamaño de letra al tamaño de pantalla*/
     font-size: 5vw;
     text-align: center;
@@ -339,7 +305,7 @@ img {
     width: 100vw;
     /*NO ESPECIFICAMOS LA ALTURA YA QUE ES VARIABLE*/
     background-color: transparent;
-    border: 2px solid violet;
+    border: none;
     /*Flexbox*/
     display: flex;
     flex-direction: column;

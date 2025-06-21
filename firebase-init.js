@@ -195,6 +195,9 @@ export async function calcularRanking(liveranking, ID_tenista) {
         return b.puntosPorJuegos - a.puntosPorJuegos;
     });
 
+    // DEBUG
+    console.log(ranking);
+
     // Buscamos el ranking del tenista ahora que está ordenado
     for(let nranking = 0; nranking < ranking.length; nranking++) {
         // Extraemos el nombre de cada tenista y comprobamos si es el que buscamos

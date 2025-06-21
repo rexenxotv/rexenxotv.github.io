@@ -8,6 +8,9 @@
         <link rel="stylesheet" href="h2h.css">
         <!--Título de la página (cuando pones el ratón encima tal)-->
         <title>H2H | ATP Rexenxo</title>
+        <!-- CONFIG MENÚ -->
+        <link rel="stylesheet" href="menu.css">
+        <script src="menu.js"></script>
         <!-- Backend con Firebase -->
         <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
         <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
@@ -26,15 +29,7 @@
     </head>
     <body>
         <!--MENÚ SUPERIOR-->
-        <div class="menu-superior">
-            <div class="boton-ver-apartados">
-                <img src="media/web/web-boton-ver-mas.jpeg" alt="Botón Ver Más">
-            </div>
-            <div class="logo-rexenxotv">
-                <img src="media/logo/logo-rexenxotv.png" alt="Logo ATP Rexenxo">
-            </div>
-        </div>
-        <div class="margen"></div>
+        <div id="menu"></div>
         <!--H2H-->
         <div class="h2h">
             <div class="h2h-estructura">
@@ -49,7 +44,9 @@
                                 <a href=""><img src="media/logo/logo-atpr.png"></a>
                             </div>
                         </div>
-                        <div class="tenista1-nombre"><div>?</div></div>
+                        <div class="tenista1-nombre">
+                            <a href="">?</a>
+                        </div>
                     </div>
                     <div class="vs-victorias">
                         <div class="vs-victorias-contenido">
@@ -69,7 +66,9 @@
                                 <a href=""><img src="media/logo/logo-atpr.png"></a>
                             </div>
                         </div>
-                        <div class="tenista2-nombre"><div>?</div></div>
+                        <div class="tenista2-nombre">
+                            <a href="">?</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -179,6 +178,6 @@
             </div>
             <div class="margen"></div>
         </div>
-        <div class="margen"></div>
+        <div class="margen" style="height: 100vw;"></div>
     </body>
 </html>
