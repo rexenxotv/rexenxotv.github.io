@@ -48,13 +48,6 @@ document.addEventListener('DOMContentLoaded', () => {
         mostrarOpciones(boton2, boton1, lista2, cacheTenistas, false);
     });
 
-    /** BOTÓN QUE CAMBIA LOS JUGADORES QUE SE MUESTRAN */
-    document.getElementById('botonCambiarJugadores').addEventListener('click', () => {
-        const tenista1 = boton1.textContent;
-        const tenista2 = boton2.textContent;
-        setDatosH2H(tenista1, tenista2);
-    });
-
     // VALORES POR DEFECTO AL CARGAR LA PÁGINA
     const parametros = new URLSearchParams(window.location.search);
     const j1 = parametros.get('j1');

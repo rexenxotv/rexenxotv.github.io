@@ -21,9 +21,18 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 // APPCheck
 initializeAppCheck(app, {
-  provider: new ReCaptchaV3Provider("6LendWYrAAAAAHQAHxggGQuexs0rPae54uHXteFU"),
-  isTokenAutoRefreshEnabled: true
+    provider: new ReCaptchaV3Provider("6LendWYrAAAAAHQAHxggGQuexs0rPae54uHXteFU"),
+    isTokenAutoRefreshEnabled: true,
 });
+
+/** 
+// DEBUG APPCheck
+const appCheck = getAppCheck(app);
+appCheck.getToken().then(tokenResult => {
+  console.log('AppCheck token:', tokenResult.token);
+}).catch(e => {
+  console.error('Error obteniendo token AppCheck:', e);
+});*/
 
 // Exportamos la base datos para poder importarla en otro archivo
 export { db };
@@ -65,40 +74,37 @@ export async function getLiveRankings() {
     return snapshot.val();
 }
 
-/** OJO: ESTA FUNCIÓN SOPORTA TANTO IDs COMO EL PROPIO OBJETO TENISTA */
-export async function getPartidosTenista(ID_o_tenista) {
-    let tenista;
+export async function getIDsPartidosTenista(ID_tenista) {
+    const snapshot_tenista = await get(child(ref(db), `tenistas/${ID_tenista}`));
+    if (!snapshot_tenista.exists()) throw new Error(`No se encontró el jugador: ${ID_tenista}`);
 
-    // Si el argumento es un string, es un ID
-    if(typeof ID_o_tenista === 'string') {
-        const snapshot_tenista = await get(child(ref(db), `tenistas/${ID_o_tenista}`));
-        if (!snapshot_tenista.exists()) throw new Error(`No se encontró el jugador: ${ID_o_tenista}`);
-        tenista = snapshot_tenista.val();
-    }
-    else if (typeof ID_o_tenista === 'object' && ID_o_tenista !== null) {
-        tenista = ID_o_tenista;
-    }
-    else {
-        throw new Error('Entrada inválida para la función getPartidosTenista.');
-    }
+    // Obtener el objeto tenista
+    const tenista = snapshot_tenista.val();
     
-    // Al final es como todo
-    const partidos = Array.isArray(tenista.partidos)
-        ? tenista.partidos
-        : Object.values(tenista.partidos || {}); // Convierte un objeto tipo {0: "id1" ...} a Array 
+    // Array con los IDs de los partidos
+    const partidosIDs = tenista.partidos || [];
     
-    // Recorremos la lista de partidos obteniendo cada uno
-    //console.log('Partidos del tenista:', partidos); DEBUG
-    const snapshot_partidos = await Promise.all(
-        partidos.map(async (ID_partido) => {
-            const snapshot = await get(child(ref(db), `partidos/${ID_partido}`));
-            if (!snapshot.exists()) throw new Error(`No se encontró el partido: ${ID_partido}`);
-            return snapshot.val();
-        })
-    );
+    return partidosIDs;
+}
 
-    // Filtrar los partidos que no existan y devolver el resto
-    return snapshot_partidos.filter(p => p!== null);
+export async function getPartidosTenista(ID_tenista) {
+    const snapshot_tenista = await get(child(ref(db), `tenistas/${ID_tenista}`));
+    if (!snapshot_tenista.exists()) throw new Error(`No se encontró el jugador: ${ID_tenista}`);
+
+    // Obtener el objeto tenista
+    const tenista = snapshot_tenista.val();
+    
+    // Array con los IDs de los partidos
+    const partidosIDs = tenista.partidos || [];
+
+    // Array de objetos de tipo 'partido'
+    const partidos = [];
+
+    for (const ID_partido of partidosIDs) {
+        partidos.push(await getPartido(ID_partido));
+    }
+
+    return partidos;
 }
 
 export async function getTodosLosTenistas() {
@@ -132,16 +138,23 @@ export async function getRankingsTenista(ID_tenista) {
     const rankingActual = await calcularRanking(liverankings[0], ID_tenista);
     let mejorRanking = rankingActual;
     let fechaMR = liverankings[0].fecha;
+    // Banderinha para asegurarse de que el tenista tuvo ranking en algún momento
+    let tuvoRanking = mejorRanking != null;
     // Recorremos todos los liverankings entre el primero y el último
     for(let i=1; i < liverankings.length - 1; i++) {
         const r = await calcularRanking(liverankings[i], ID_tenista);
+        if(r != null) tuvoRanking = true; 
         // slice(1) ==> dame todo lo que hay a partir del elemento 1
         const rFecha = liverankings[i].fecha.split('.').slice(1).join('.');
         [mejorRanking, fechaMR] = actualizarMejorRanking(r, rFecha, mejorRanking, fechaMR);
     }
     const rankingAnterior = await calcularRanking(liverankings[liverankings.length - 1], ID_tenista);
+    if(rankingAnterior != null) tuvoRanking = true; 
     const raFecha = liverankings[liverankings.length - 1].fecha.split('.').slice(1).join('.');
     [mejorRanking, fechaMR] = actualizarMejorRanking(rankingAnterior, raFecha, mejorRanking, fechaMR);
+
+    // Si nunca tuvo ranking hacemos este apaño
+    if(!tuvoRanking) fechaMR = "live";
 
     return [rankingActual, rankingAnterior, mejorRanking, fechaMR];
 }

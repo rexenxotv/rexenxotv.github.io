@@ -32,12 +32,18 @@ async function actualizarTodasLasBarras() {
 
         let ancho = 0; // Por defecto se muestra toda azul la barra
 
-        // Cualquier tipo de dato que no sea Victorias/Derrotas tiene números normales
-        if(tipoDato.startsWith('Victorias/Derrotas')) {
+        // Ahora calculamos qué parte de la barra hay que pintar de amarillo
+        if( tipoDato.startsWith('Victorias/Derrotas') ) {
+            // sólo para datos que se muestran en formato "A/B"
             ancho = calcularProporcion(
                 calcularPorcentajes_VictoriasDerrotas(dato_t1),
                 calcularPorcentajes_VictoriasDerrotas(dato_t2)
             );
+        }
+        else if( tipoDato.startsWith('%') ) {
+            // Porcentajes: al ser valores entre 0 y 1 no se notan tanto las diferencias
+            // Elevamos al cuadrado para que se noten más las diferencias en valores altos
+            ancho = calcularProporcion(Math.pow(Number(dato_t1),2), Math.pow(Number(dato_t2),2));
         }
         else {
             ancho = calcularProporcion(Number(dato_t1), Number(dato_t2));

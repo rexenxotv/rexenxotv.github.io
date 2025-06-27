@@ -25,6 +25,8 @@
         <script type="module" src="h2h_porcentajes_vs.js" defer></script>
         <!-- JavaScript para calcular los porcentajes del Victorias/Derrotas (actualiza el dibujo) -->
         <script type="module" src="h2h_porcentajes_barras.js" defer></script>
+        <!-- Por si aca -->
+        <script type="module" src="stats.js" defer></script>
         <!-- Lo de "defer" es para que se llame al script después de cargar el HTML -->
     </head>
     <body>
@@ -74,38 +76,35 @@
             </div>
             <div class="margen"></div>
             <div class="h2h-data">
-                <ul class="h2h-seleccion">
-                    <li>
-                        <a href="#" class="seleccion-modo seleccion-modo--activa" data-boton="1">
-                            <strong>Estadísticas</strong>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="seleccion-modo" data-boton="2">
-                            <strong>Partidos</strong>
-                        </a>
-                    </li>
-                </ul>
+                <div class="h2h-seleccion">
+                    <a href="#" class="seleccion-modo seleccion-modo--activa" data-boton="1">
+                        <strong>Estadísticas</strong>
+                    </a>
+                    <a href="#" class="seleccion-modo" data-boton="2">
+                        <strong>Partidos</strong>
+                    </a>
+                </div>
+                <div class="margen"></div>
                 <!-- ESTADÍSTICAS -->
                 <div class="seleccion-contenido seleccion-contenido--activa" data-info="1">
                     <div class="h2h-info-individual">
-                        <div class="h2h-info-tabla-fila">
+                        <div class="h2h-info-tabla-fila" id="ranking">
                             <div class="h2h-info-tabla-izq"><strong>1</strong></div>
                             <div class="h2h-info-tabla-cen">Ranking</div>
                             <div class="h2h-info-tabla-der"><strong>2</strong></div>
                         </div>
-                        <div class="h2h-info-tabla-fila">
+                        <div class="h2h-info-tabla-fila" id="mano-dominante">
                             <div class="h2h-info-tabla-izq"><strong>Diestro</strong></div>
                             <div class="h2h-info-tabla-cen">Mano dominante</div>
                             <div class="h2h-info-tabla-der"><strong>Diestro</strong></div>
                         </div>
-                        <div class="h2h-info-tabla-fila">
+                        <div class="h2h-info-tabla-fila" id="debut">
                             <div class="h2h-info-tabla-izq"><strong>2021</strong></div>
                             <div class="h2h-info-tabla-cen">Debut</div>
                             <div class="h2h-info-tabla-der"><strong>2021</strong></div>
                         </div>
                         <div class="h2h-info-tabla-doblefila">
-                            <div class="h2h-info-tabla-fila">
+                            <div class="h2h-info-tabla-fila" id="victorias-derrotas">
                                 <div class="h2h-info-tabla-izq"><strong>0/0</strong></div>
                                 <div class="h2h-info-tabla-cen">Victorias/Derrotas</div>
                                 <div class="h2h-info-tabla-der"><strong>0/0</strong></div>
@@ -115,7 +114,7 @@
                             </div>
                         </div>
                         <div class="h2h-info-tabla-doblefila">
-                            <div class="h2h-info-tabla-fila">
+                            <div class="h2h-info-tabla-fila" id="nTitulos">
                                 <div class="h2h-info-tabla-izq"><strong>0</strong></div>
                                 <div class="h2h-info-tabla-cen">Títulos</div>
                                 <div class="h2h-info-tabla-der"><strong>0</strong></div>
@@ -125,27 +124,273 @@
                             </div>
                         </div>
                         <div class="h2h-info-tabla-doblefila">
-                            <div class="h2h-info-tabla-fila">
+                            <div class="h2h-info-tabla-fila" id="nTorneos">
                                 <div class="h2h-info-tabla-izq"><strong>0</strong></div>
-                                <div class="h2h-info-tabla-cen">Bagels</div>
+                                <div class="h2h-info-tabla-cen">Torneos</div>
                                 <div class="h2h-info-tabla-der"><strong>0</strong></div>
                             </div>
                             <div class="barra-comparativa">
                                 <div class="barra-porcentaje-tenista2"></div>
                             </div>
                         </div>
-                        <div class="h2h-info-tabla-fila">
+                        <div class="h2h-info-tabla-fila" id="origen">
                             <div class="h2h-info-tabla-izq"><strong>Azerbayán</strong></div>
                             <div class="h2h-info-tabla-cen">Origen</div>
                             <div class="h2h-info-tabla-der"><strong>Armenia</strong></div>
                         </div>
                     </div>
                     <button id="botonStatsAvanzadas">Ver Más</button>
+                    <!-- Stats Generales -->
                     <div class="h2h-info-individual-extra">
                         <div class="h2h-info-tabla-doblefila">
-                            <div class="h2h-info-tabla-fila">
+                            <div class="h2h-info-tabla-fila" id="nPartidos">
+                                <div class="h2h-info-tabla-izq"><strong>0</strong></div>
+                                <div class="h2h-info-tabla-cen">PARTIDOS CON STATS</div>
+                                <div class="h2h-info-tabla-der"><strong>0</strong></div>
+                            </div>
+                            <div class="barra-comparativa">
+                                <div class="barra-porcentaje-tenista2"></div>
+                            </div>
+                        </div>
+                        <br>Saque
+                        <div class="h2h-info-tabla-doblefila">
+                            <div class="h2h-info-tabla-fila" id="aces">
                                 <div class="h2h-info-tabla-izq"><strong>0</strong></div>
                                 <div class="h2h-info-tabla-cen">Aces</div>
+                                <div class="h2h-info-tabla-der"><strong>0</strong></div>
+                            </div>
+                            <div class="barra-comparativa">
+                                <div class="barra-porcentaje-tenista2"></div>
+                            </div>
+                        </div>
+                        <div class="h2h-info-tabla-doblefila">
+                            <div class="h2h-info-tabla-fila" id="p_primerSaque">
+                                <div class="h2h-info-tabla-izq"><strong>0.75</strong></div>
+                                <div class="h2h-info-tabla-cen">%primer saque</div>
+                                <div class="h2h-info-tabla-der"><strong>0.85</strong></div>
+                            </div>
+                            <div class="barra-comparativa">
+                                <div class="barra-porcentaje-tenista2"></div>
+                            </div>
+                        </div>
+                        <div class="h2h-info-tabla-doblefila">
+                            <div class="h2h-info-tabla-fila" id="p_PG_primerSaque">
+                                <div class="h2h-info-tabla-izq"><strong>0</strong></div>
+                                <div class="h2h-info-tabla-cen">%puntos ganados con primer saque</div>
+                                <div class="h2h-info-tabla-der"><strong>0</strong></div>
+                            </div>
+                            <div class="barra-comparativa">
+                                <div class="barra-porcentaje-tenista2"></div>
+                            </div>
+                        </div>
+                        <div class="h2h-info-tabla-doblefila">
+                            <div class="h2h-info-tabla-fila" id="p_PG_segundoSaque">
+                                <div class="h2h-info-tabla-izq"><strong>0</strong></div>
+                                <div class="h2h-info-tabla-cen">%puntos ganados con segundo saque</div>
+                                <div class="h2h-info-tabla-der"><strong>0</strong></div>
+                            </div>
+                            <div class="barra-comparativa">
+                                <div class="barra-porcentaje-tenista2"></div>
+                            </div>
+                        </div>
+                        <div class="h2h-info-tabla-doblefila">
+                            <div class="h2h-info-tabla-fila" id="doblesFaltas">
+                                <div class="h2h-info-tabla-izq"><strong>0</strong></div>
+                                <div class="h2h-info-tabla-cen">Dobles Faltas</div>
+                                <div class="h2h-info-tabla-der"><strong>0</strong></div>
+                            </div>
+                            <div class="barra-comparativa">
+                                <div class="barra-porcentaje-tenista2"></div>
+                            </div>
+                        </div>
+                        <div class="h2h-info-tabla-doblefila">
+                            <div class="h2h-info-tabla-fila" id="p_breakpointsSalvados">
+                                <div class="h2h-info-tabla-izq"><strong>0</strong></div>
+                                <div class="h2h-info-tabla-cen">%breakpoints salvados</div>
+                                <div class="h2h-info-tabla-der"><strong>0</strong></div>
+                            </div>
+                            <div class="barra-comparativa">
+                                <div class="barra-porcentaje-tenista2"></div>
+                            </div>
+                        </div>
+                        <div class="h2h-info-tabla-doblefila">
+                            <div class="h2h-info-tabla-fila" id="p_JG_sacando">
+                                <div class="h2h-info-tabla-izq"><strong>0</strong></div>
+                                <div class="h2h-info-tabla-cen">%juegos ganados sacando</div>
+                                <div class="h2h-info-tabla-der"><strong>0</strong></div>
+                            </div>
+                            <div class="barra-comparativa">
+                                <div class="barra-porcentaje-tenista2"></div>
+                            </div>
+                        </div>
+                        <br>Resto
+                        <div class="h2h-info-tabla-doblefila">
+                            <div class="h2h-info-tabla-fila" id="p_PG_restandoPrimerSaque">
+                                <div class="h2h-info-tabla-izq"><strong>0</strong></div>
+                                <div class="h2h-info-tabla-cen">%puntos ganados restando primer saque</div>
+                                <div class="h2h-info-tabla-der"><strong>0</strong></div>
+                            </div>
+                            <div class="barra-comparativa">
+                                <div class="barra-porcentaje-tenista2"></div>
+                            </div>
+                        </div>
+                        <div class="h2h-info-tabla-doblefila">
+                            <div class="h2h-info-tabla-fila" id="p_PG_restandoSegundoSaque">
+                                <div class="h2h-info-tabla-izq"><strong>0</strong></div>
+                                <div class="h2h-info-tabla-cen">%puntos ganados restando segundo saque</div>
+                                <div class="h2h-info-tabla-der"><strong>0</strong></div>
+                            </div>
+                            <div class="barra-comparativa">
+                                <div class="barra-porcentaje-tenista2"></div>
+                            </div>
+                        </div>
+                        <div class="h2h-info-tabla-doblefila">
+                            <div class="h2h-info-tabla-fila" id="p_breakpointsConvertidos">
+                                <div class="h2h-info-tabla-izq"><strong>0</strong></div>
+                                <div class="h2h-info-tabla-cen">%breakpoints convertidos</div>
+                                <div class="h2h-info-tabla-der"><strong>0</strong></div>
+                            </div>
+                            <div class="barra-comparativa">
+                                <div class="barra-porcentaje-tenista2"></div>
+                            </div>
+                        </div>
+                        <div class="h2h-info-tabla-doblefila">
+                            <div class="h2h-info-tabla-fila" id="p_JG_restando">
+                                <div class="h2h-info-tabla-izq"><strong>0</strong></div>
+                                <div class="h2h-info-tabla-cen">%juegos ganados restando</div>
+                                <div class="h2h-info-tabla-der"><strong>0</strong></div>
+                            </div>
+                            <div class="barra-comparativa">
+                                <div class="barra-porcentaje-tenista2"></div>
+                            </div>
+                        </div>
+                        <br>Momentos críticos
+                        <div class="h2h-info-tabla-doblefila">
+                            <div class="h2h-info-tabla-fila" id="tiebreaksGanados">
+                                <div class="h2h-info-tabla-izq"><strong>0</strong></div>
+                                <div class="h2h-info-tabla-cen">Tiebreaks ganados</div>
+                                <div class="h2h-info-tabla-der"><strong>0</strong></div>
+                            </div>
+                            <div class="barra-comparativa">
+                                <div class="barra-porcentaje-tenista2"></div>
+                            </div>
+                        </div>
+                        <div class="h2h-info-tabla-doblefila">
+                            <div class="h2h-info-tabla-fila" id="p_setpointsConvertidos">
+                                <div class="h2h-info-tabla-izq"><strong>0</strong></div>
+                                <div class="h2h-info-tabla-cen">%setpoints convertidos</div>
+                                <div class="h2h-info-tabla-der"><strong>0</strong></div>
+                            </div>
+                            <div class="barra-comparativa">
+                                <div class="barra-porcentaje-tenista2"></div>
+                            </div>
+                        </div>
+                        <div class="h2h-info-tabla-doblefila">
+                            <div class="h2h-info-tabla-fila" id="p_setpointsSalvados">
+                                <div class="h2h-info-tabla-izq"><strong>0</strong></div>
+                                <div class="h2h-info-tabla-cen">%setpoints salvados</div>
+                                <div class="h2h-info-tabla-der"><strong>0</strong></div>
+                            </div>
+                            <div class="barra-comparativa">
+                                <div class="barra-porcentaje-tenista2"></div>
+                            </div>
+                        </div>
+                        <div class="h2h-info-tabla-doblefila">
+                            <div class="h2h-info-tabla-fila" id="p_matchpointsConvertidos">
+                                <div class="h2h-info-tabla-izq"><strong>0</strong></div>
+                                <div class="h2h-info-tabla-cen">%matchpoints convertidos</div>
+                                <div class="h2h-info-tabla-der"><strong>0</strong></div>
+                            </div>
+                            <div class="barra-comparativa">
+                                <div class="barra-porcentaje-tenista2"></div>
+                            </div>
+                        </div>
+                        <div class="h2h-info-tabla-doblefila">
+                            <div class="h2h-info-tabla-fila" id="p_matchpointsSalvados">
+                                <div class="h2h-info-tabla-izq"><strong>0</strong></div>
+                                <div class="h2h-info-tabla-cen">%matchpoints salvados</div>
+                                <div class="h2h-info-tabla-der"><strong>0</strong></div>
+                            </div>
+                            <div class="barra-comparativa">
+                                <div class="barra-porcentaje-tenista2"></div>
+                            </div>
+                        </div>
+                        <br>Tundas
+                        <div class="h2h-info-tabla-doblefila">
+                            <div class="h2h-info-tabla-fila" id="donuts">
+                                <div class="h2h-info-tabla-izq"><strong>0</strong></div>
+                                <div class="h2h-info-tabla-cen">Donuts</div>
+                                <div class="h2h-info-tabla-der"><strong>0</strong></div>
+                            </div>
+                            <div class="barra-comparativa">
+                                <div class="barra-porcentaje-tenista2"></div>
+                            </div>
+                        </div>
+                        <div class="h2h-info-tabla-doblefila">
+                            <div class="h2h-info-tabla-fila" id="donutsEnContra">
+                                <div class="h2h-info-tabla-izq"><strong>0</strong></div>
+                                <div class="h2h-info-tabla-cen">Donuts (en contra)</div>
+                                <div class="h2h-info-tabla-der"><strong>0</strong></div>
+                            </div>
+                            <div class="barra-comparativa">
+                                <div class="barra-porcentaje-tenista2"></div>
+                            </div>
+                        </div>
+                        <div class="h2h-info-tabla-doblefila">
+                            <div class="h2h-info-tabla-fila" id="juegosEnBlanco">
+                                <div class="h2h-info-tabla-izq"><strong>0</strong></div>
+                                <div class="h2h-info-tabla-cen">Juegos en blanco</div>
+                                <div class="h2h-info-tabla-der"><strong>0</strong></div>
+                            </div>
+                            <div class="barra-comparativa">
+                                <div class="barra-porcentaje-tenista2"></div>
+                            </div>
+                        </div>
+                        <div class="h2h-info-tabla-doblefila">
+                            <div class="h2h-info-tabla-fila" id="juegosEnBlancoEnContra">
+                                <div class="h2h-info-tabla-izq"><strong>0</strong></div>
+                                <div class="h2h-info-tabla-cen">Juegos en blanco<br>(en contra)</div>
+                                <div class="h2h-info-tabla-der"><strong>0</strong></div>
+                            </div>
+                            <div class="barra-comparativa">
+                                <div class="barra-porcentaje-tenista2"></div>
+                            </div>
+                        </div>
+                        <br>Rachas
+                        <div class="h2h-info-tabla-doblefila">
+                            <div class="h2h-info-tabla-fila" id="mejorRachaPuntosGanados">
+                                <div class="h2h-info-tabla-izq"><strong>0</strong></div>
+                                <div class="h2h-info-tabla-cen">Mejor racha de puntos ganados</div>
+                                <div class="h2h-info-tabla-der"><strong>0</strong></div>
+                            </div>
+                            <div class="barra-comparativa">
+                                <div class="barra-porcentaje-tenista2"></div>
+                            </div>
+                        </div>
+                        <div class="h2h-info-tabla-doblefila">
+                            <div class="h2h-info-tabla-fila" id="mejorRachaJuegosGanados">
+                                <div class="h2h-info-tabla-izq"><strong>0</strong></div>
+                                <div class="h2h-info-tabla-cen">Mejor racha de juegos ganados</div>
+                                <div class="h2h-info-tabla-der"><strong>0</strong></div>
+                            </div>
+                            <div class="barra-comparativa">
+                                <div class="barra-porcentaje-tenista2"></div>
+                            </div>
+                        </div>
+                        <div class="h2h-info-tabla-doblefila">
+                            <div class="h2h-info-tabla-fila" id="mejorRachaSetsGanados">
+                                <div class="h2h-info-tabla-izq"><strong>0</strong></div>
+                                <div class="h2h-info-tabla-cen">Mejor racha de sets ganados</div>
+                                <div class="h2h-info-tabla-der"><strong>0</strong></div>
+                            </div>
+                            <div class="barra-comparativa">
+                                <div class="barra-porcentaje-tenista2"></div>
+                            </div>
+                        </div>
+                        <div class="h2h-info-tabla-doblefila">
+                            <div class="h2h-info-tabla-fila" id="mejorRachaPartidosGanados">
+                                <div class="h2h-info-tabla-izq"><strong>0</strong></div>
+                                <div class="h2h-info-tabla-cen">Mejor racha de partidos ganados</div>
                                 <div class="h2h-info-tabla-der"><strong>0</strong></div>
                             </div>
                             <div class="barra-comparativa">
@@ -163,7 +408,6 @@
             </div>
             <div class="margen"></div>
             <div class="h2h-buscador">
-                <button id="botonCambiarJugadores" style="display: none;">Cambiar jugadores</button>
                 <div class="consejo">¡Haz click en uno de los nombres para cambiarlo!</div>
                 <div class="h2h-buscador-doble">
                     <div class="selector-tenista">

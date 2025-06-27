@@ -25,9 +25,11 @@ document.addEventListener('DOMContentLoaded', async() => {
         document.querySelector('.tenista-info-nombre').textContent = ID_tenista.toUpperCase();
         document.querySelector('.tenista-info-imagen img').src = `media/silueta/${ID_tenista}.png`;
         // Chekear el último club del historial (si hay alguno claro) y si aún está en él
-        const ultimoClub = t.historialClubes[t.historialClubes.length - 1];
-        let club = "−";
-        if (ultimoClub && ultimoClub.fechaFin == null) club = ultimoClub.club;
+        let club = "Sin club";
+        if (Array.isArray(t.historialClubes) && t.historialClubes.length > 0) {
+            const ultimoClub = t.historialClubes[t.historialClubes.length - 1];
+            if (ultimoClub && ultimoClub.fechaFin == null) club = ultimoClub.club;
+        }
         document.querySelector('.tenista-info-club').textContent = club;
 
         // ------------------------ PARTIDOS (Y STATS DERIVADAS) ------------------------
@@ -52,7 +54,15 @@ document.addEventListener('DOMContentLoaded', async() => {
             fechaMR === "live" ? "Mejor Ranking" : `Mejor Ranking (${fechaMR})`;
         // Ollo coa diferencia de ranking: se é negativa significa que mellorou!
         const spanDif = document.getElementById('-dif-ranking');
-        if (diferenciaRanking == 0) {
+        // Si no tenía rankingAnterior y ashora sí es que "debuta" en el ranking
+        if (rankingAnterior == null && rankingActual != null) {
+            spanDif.textContent = 'NEW!';
+            spanDif.style.color = 'gold';
+            // Solución chapuzeira
+            document.getElementById('-mejor-ranking').textContent = rankingActual;
+            document.querySelector('.tenista-info-mejorranking').textContent = "Mejor Ranking";
+        }
+        else if (diferenciaRanking == 0) {
             spanDif.textContent = `=`;
             spanDif.style.color = 'lightslategray';
         }
