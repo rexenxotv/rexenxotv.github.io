@@ -1,31 +1,7 @@
-import { getIDsPartidosTenista, getPartidosTenista, getTenista, getTorneo, getLiveRankings, calcularRanking } from "./firebase-init.js";
+import { getPartidosTenista, getTenista, getTorneo, getLiveRankings, calcularRanking } from "./firebase-init.js";
 import { actualizarTodasLasBarras } from "./h2h_porcentajes_barras.js";
 import { actualizarCircunferenciaVS } from "./h2h_porcentajes_vs.js";
-import { RawDataStatsTenistaPartido, StatsTenistaPartido, EstadoPartido, getRawData, getStatsPartido } from "./stats.js";
-
-function calcularDonuts(ID_tenista, partidos) {
-    let bagels = 0;
-
-    // Crazy for sintaxis en javascript
-    for(const partido of partidos) {
-        const esGanador = (partido.ganador === ID_tenista);
-        if (!partido.marcador) continue; // Para los marcadores null o undefined
-        const sets = partido.marcador.split(' ');
-
-        for(const set of sets) {
-            // Ojo con el formato, algunos sets son del estilo 7-6(7-0)
-            const setSinTiebreak = set.split('(')[0];
-            const [juegos_t1, juegos_t2] = setSinTiebreak.split('-').map(Number);
-            // Programasió defensiva Joan
-            if (isNaN(juegos_t1) || isNaN(juegos_t2)) continue;
-
-            if(esGanador && juegos_t1 === 6 && juegos_t2 === 0) bagels++;
-            if(!esGanador && juegos_t1 === 0 && juegos_t2 === 6) bagels++;
-        }
-    }
-
-    return bagels;
-}
+import { RawDataStatsTenistaPartido, StatsTenistaPartido, getRawData } from "./stats.js";
 
 async function setDatosH2H(ID_tenista1, ID_tenista2) {
     try {
@@ -133,6 +109,12 @@ async function setDatosH2H(ID_tenista1, ID_tenista2) {
                 else statsTotalesT1.juntarCon(stats_t2);
 
                 // DEBUG
+                console.log(p.id + ": " + p.tenista1 + " vs " + p.tenista2);
+                console.log("stats " + p.tenista1);
+                console.log(stats_t1);
+                console.log("stats " + p.tenista2);
+                console.log(stats_t2);
+                console.log("stats acumuladas " + ID_tenista1);
                 console.log(statsTotalesT1);
             } catch (e) {
                 console.warn(`No se pudieron obtener stats del partido ${p.id}`, e);
@@ -147,10 +129,11 @@ async function setDatosH2H(ID_tenista1, ID_tenista2) {
 
             try {
                 const [stats_t1, stats_t2] = getRawData(p);
-                if(p.tenista1 === ID_tenista1) statsTotalesT2.juntarCon(stats_t1);
+                if(p.tenista1 === ID_tenista2) statsTotalesT2.juntarCon(stats_t1);
                 else statsTotalesT2.juntarCon(stats_t2);
 
                 // DEBUG
+                console.log(ID_tenista2);
                 console.log(statsTotalesT2);
             } catch (e) {
                 console.warn(`No se pudieron obtener stats del partido ${p.id}`, e);
@@ -243,15 +226,6 @@ async function setDatosH2H(ID_tenista1, ID_tenista2) {
         // Mejor racha de juegos ganados ---------------------------------------------------------- //
         // Mejor racha de sets ganados ------------------------------------------------------------ //
         // Mejor racha de partidos ganados -------------------------------------------------------- //
-
-
-        /** 
-        // Donuts de cada tenista
-        const donuts_t1 = calcularDonuts(ID_tenista1, partidos_t1);
-        const donuts_t2 = calcularDonuts(ID_tenista2, partidos_t2);
-        fila.querySelector('.h2h-info-tabla-izq strong').textContent = donuts_t1;
-        fila.querySelector('.h2h-info-tabla-der strong').textContent = donuts_t2;
-        */
 
         // Actualizar las barras y porcentajes visuales !! ---------------------------------------- //
         actualizarTodasLasBarras();

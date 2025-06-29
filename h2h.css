@@ -426,7 +426,7 @@ img {
 }
 
 .barra-porcentaje-tenista2 {
-    width: 0%; /*Este valor se ajusta con h2h_porcentajes_lineares.js*/
+    width: 0%; /*Este valor se ajusta con h2h_porcentajes_barras.js*/
     height: 1vw;
     background-color: yellow;
     

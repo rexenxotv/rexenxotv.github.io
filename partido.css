@@ -350,6 +350,8 @@ img {
 }
 
 .ir-al-h2h a {
+    height: 4.5vw;
+    width: 22.5vw;
     display: block;
     background-color: purple;
     /*Texto*/
@@ -357,4 +359,62 @@ img {
     text-align: center;
     text-decoration: none;
     color: lime;
+}
+
+/*-----------------------------------------------------------------------------------------------*/
+
+.partido-seleccion {
+    width: 100vw;
+    height: 8vw;
+    background-color: snow;
+    border: none; /*C-BLUE*/
+    /*Flexbox*/
+    display: flex;
+    gap: 8vw;
+    justify-content: left;
+    align-items: center;
+}
+
+.tenista-seleccion a {
+    border: none; /*C-BLUE*/
+}
+
+.seleccion-modo {
+    height: 6vw;
+    background-color: transparent;
+    /*Texto cuando no está pulsado*/
+    font-size: 3vw;
+    font-weight: bold;
+    text-align: center;
+    color: darkslategray;
+    /*Corrigiendo el estilo por defecto*/
+    text-decoration: none;
+}
+
+.seleccion-modo strong {
+    border-bottom: 0.6vw solid darkslategray;
+    /*Animación*/
+    transition: border-color 1s ease;
+}
+
+.seleccion-modo--activa strong {
+    border-bottom-color: blue;
+    /*Animación*/
+    transition: border-color 1s ease;
+}
+
+.seleccion-modo--activa {
+    /*Texto cuando está pulsado*/
+    font-size: 3vw;
+    font-weight: bold;
+    text-align: center;
+    color: blue;
+}
+
+/*-----------------------------------------------------------------------------------------------*/
+
+.stats-partido {
+    width: 100vw;
+    height: 200vw;
+    background-color: snow;
 }

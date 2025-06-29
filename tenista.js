@@ -1,4 +1,3 @@
-import { getTodosLosTenistas } from './firebase-init.js';
 import { setDatosH2H } from './h2h_setDatos.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -60,35 +59,3 @@ document.addEventListener('DOMContentLoaded', () => {
         setDatosH2H('SweetElo','Mateo');
     }
 });
-
-/** CÓDIGO PARA MOSTRAR LAS OPCIONES PARA CAMBIAR DE TENISTA */
-/** t1_pulsado es booleano */
-function mostrarOpciones(botonClikado, elOtroBoton, lista, listaTenistas, t1_pulsado) {
-    // Obtenemos los nombres actualmente mostrados en ambos botones
-    const tenistaActual = botonClikado.textContent;
-    const elOtroTenista = elOtroBoton.textContent;
-
-    // Eliminar en la lista de todos los tenistas que se le pasa los que ya se muestran
-    const listaSinEstosDos = listaTenistas.filter(
-        id => id !== tenistaActual && id !== elOtroTenista
-    );
-
-    // Mostrar la lista (html fino)
-    lista.innerHTML = ''; // Limpiamos las opciones anteriores
-    listaSinEstosDos.forEach(id => {
-        const li = document.createElement('li');
-        li.textContent = id;
-        li.style.cursor = 'pointer';
-        li.addEventListener('click', () => {
-            botonClikado.textContent = id;
-            lista.style.display = 'none';
-
-            // Actualizar los datos que se muestran automáticamente
-            if (t1_pulsado) setDatosH2H(id, elOtroTenista);
-            else setDatosH2H(elOtroTenista, id);
-        });
-        lista.appendChild(li);
-    });
-
-    lista.style.display = 'block';
-}

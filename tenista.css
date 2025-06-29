@@ -260,5 +260,68 @@ img {
 
 .seleccion-contenido--activa {
     display: block;
-    color: white;
+    color: black;
+}
+
+/*-----------------------------------------------------------------------------------------------*/
+
+/*WIP*/
+.tenista-stats {
+    width: 80vw;
+    border: none;
+    font-size: 4.5vw;
+    /*Flexbox*/
+    display: flex;
+    flex-direction: column;
+}
+
+.ts-tabla-doblefila {
+    width: 80vw;
+    height: 6.5vw;
+    /*Flexbox*/
+    display: flex;
+    flex-direction: column;
+}
+
+.ts-tabla-fila {
+    width: 80vw;
+    height: 5.5vw;
+    /*Flexbox*/
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ts-tabla-izq {
+    width: 60vw;
+    text-align: left;
+    font-size: 3vw;
+}
+
+.ts-tabla-der {
+    width: 20vw;
+    text-align: right;
+    font-size: 3vw;
+}
+
+.barra-comparativa {
+    width: 80vw;
+    height: 1vw;
+    background-color: lightgray;
+    /*Básicamente vamos a mostrar el porcentaje del tenista2 por encima*/
+    overflow: hidden;
+
+    position: relative;
+}
+
+.barra-porcentaje {
+    width: 0%; /*Este valor se ajusta con h2h_porcentajes_barras.js*/
+    height: 1vw;
+    background-color: blue;
+    
+    position: absolute;
+    left: 0;
+
+    /*Animación (nah insano)*/
+    transition: width 0.8s ease-in;
 }

@@ -6,7 +6,7 @@ export class RawDataStatsTenistaPartido {
         this.nPuntos = 0;
         this.nPuntosGanados = 0;
         this.nTiebreaksGanados = 0;
-        this.warnings = 0;
+        this.nWarnings = 0;
         // Saque
         this.nAces = 0;
         this.nSaques = 0;
@@ -761,10 +761,10 @@ export class EstadoPartido {
             
             // TODO TO-DO: perfilar estas bullshits
             case "W1": // W1 -> warning al que saca el punto CORREGIR EN EL JSON
-                this.t1.warnings++;
+                this.t1.nWarnings++;
                 break;
             case "W2": // W2 -> warning al que resta el punto CORREGIR EN EL JSON
-                this.t2.warnings++;
+                this.t2.nWarnings++;
                 break;
             case "RET1": // RET1 -> se retira el que saca el punto CORREGIR EN EL JSON
                 this.finalizarPartido();
@@ -778,95 +778,315 @@ export class EstadoPartido {
     }
 }
 
-
-
-// La GOAT de las funciones de esta web
-/** Le pasas un json partido y te devuelve el RawData del tenista que empieza sacando y el otro [t1, t2] */
+// La GOAT de las funciones de esta web (Versión 2)
+/** Le pasas un json partido y te devuelve el RawData del tenista que empieza sacando y el otro: [t1, t2] */
 export function getRawData(partido) {
     if (!partido || partido.estado !== "fulldata") {
         throw new Error("El partido no tiene datos completos");
     }
-
+    
     let rawData_t1 = new RawDataStatsTenistaPartido();
     let rawData_t2 = new RawDataStatsTenistaPartido();
 
-    // (1) Obtenemos el marcador
-    const marcadorSet = partido.marcador.trim().split(' ');
-    const marcadorSet_limpio = [];
-    const marcadorSet_extras = [];
+    // Ver si el que empezó sacando es el que ganó el partido
+    let ganoT1 = false;
+    if (partido.tenista1 == partido.ganador) ganoT1 = true;
 
+    // (1) Obtenemos el marcador
+    const marcadorSets = partido.marcador.trim().split(' ');
+    const marcadorSets_limpio = [];
+    const marcadorSets_extras = [];
     // Guardar el formato básico de los sets en un sitio y los extras en otro
-    marcadorSet.forEach(set => {
+    marcadorSets.forEach(set => {
         const partes = set.split('(');
-        marcadorSet_limpio.push(partes[0]);
-        marcadorSet_extras.push(partes[1] ? partes[1].replace(')','') : null);
+        marcadorSets_limpio.push(partes[0]);
+        marcadorSets_extras.push(partes[1] ? partes[1].replace(')','') : null);
     });
 
     // Calcular el número de juegos/tiebreaks que tuvo el partido
     let nJuegos = 0;
-    for (let i = 0; i < marcadorSet_limpio.length; i++) {
-        const [juegos_t1, juegos_t2] = marcadorSet_limpio[i].split('-').map(Number);
-        nJuegos += juegos_t1 + juegos_t2;
+    let indicesTiebreak = []; // Índices de los juegos que son tiebreaks (si los hay)
+    for (let i = 0; i < marcadorSets_limpio.length; i++) {
+        const [juegosGanador, juegosPerdedor] = marcadorSets_limpio[i].split('-').map(Number);
 
-        // Ya de paso obtenemos la primera estadística: el número de tiebreaks ganados
-        if(juegos_t1 === 7) rawData_t1.nTiebreaksGanados++;
-        else if(juegos_t2 === 7) rawData_t2.nTiebreaksGanados++;
+        // Ordenamos en función de quién ganó el partido (el marcador está en función de esa persona)
+        let juegosT1, juegosT2;
+        if(partido.ganador === partido.tenista1) {
+            juegosT1 = juegosGanador;
+            juegosT2 = juegosPerdedor;
+        }
+        else {
+            juegosT2 = juegosGanador;
+            juegosT1 = juegosPerdedor;
+        }
+
+        // Stats que se obtienen con el marcador:
+        // Donuts
+        if(juegosT1===6 && juegosT2===0) {
+            rawData_t1.nDonuts++;
+            rawData_t2.nDonutsEnContra++;
+        }
+        else if(juegosT1===0 && juegosT2===6) {
+            rawData_t1.nDonutsEnContra++;
+            rawData_t2.nDonuts++;
+        }
+        // Tiebreaks
+        if(juegosT1 === 7 && juegosT2===6) {
+            rawData_t1.nTiebreaksGanados++;
+            indicesTiebreak.push(nJuegos + 12);
+        }
+        else if(juegosT1 === 6 && juegosT2===7) {
+            rawData_t2.nTiebreaksGanados++;
+            indicesTiebreak.push(nJuegos + 12);
+        }
+
+        // Actualizamos el número de juegos
+        nJuegos += juegosGanador + juegosPerdedor;
     }
 
     if( nJuegos !== partido.data.length) {
-        throw new Error("El número de juegos calculado con el marcador y el número de juegos en el json no coinciden!");
+        throw new Error("El número de juegos del marcador y del json no coinciden!");
     }
 
-    // Creamos un marcador en directo para saber los breakpoints, setpoints, etc.
-    let estado = new EstadoPartido(rawData_t1, rawData_t2, "0-0", "0-0", "0-0");
-    
-    // Primera stat: +1 a juegos sacando t1 y +1 a juegos restando t2
-    estado.sumarJuegosSaqueYResto();
-
-    /**
-     * NOTA IMPORTANTE SOBRE TIEBREAKS:
-     * -> Empieza sacando el que le toca sacar como si fuera un juego
-     * -> Saca 1 vez (desde la derecha) y a partir de ahí 2 veces cada uno (empezando por la izquierda cada vez)
-     * -> Se cambia de lado cada 6 puntos
-     * -> Después del tiebreak saca el siguiente juego el que restó el primer punto (como si hubiese sido un juego)
-     * 
-     * AHORA BIEN, en el partido 'pozadebar2025_qf_mateo_sweetelo' aplicamos la norma mal (sacó el q no debía, después lo arreglo)
+    // Variables auxiliares pa contar las veces que sale cada tipopunto o mensaje
+    // Básicas
+    let n1 = 0;
+    let n2 = 0;
+    let n3 = 0;
+    let n1P = 0;
+    let n2P = 0;
+    let n1A = 0;
+    let n2A = 0;
+    // Underarms (DE MOMENTO NO SE TIENEN EN CUENTA!)
+    let n1U = 0;
+    let n2U = 0;
+    let n1PU = 0;
+    let n2PU = 0;
+    // Mensajes
+    let nWarnings = 0;
+    let RET1 = false;
+    let RET2 = false;
+    /** 
+     * Detallito sobre el .match() pal futuro. Ejemplo; .match(/\bTAL\b/g)
+     * -> lo que va entre // es lo que queremos buscar
+     * -> la g después de // indica 'global', es decir, que se busquen todas
+     * -> los delimitadores \b\b aseguran que no haya letras o números justo antes o después
      */
-
-    // (2) Ahora que sabemos nJuegos recorremos la data de cada juego obteniendo el resto de estadísticas
-    for (let i = 0; i < nJuegos; i++) {
-        const rawDataJuegoActual = partido.data[i];
-        const rawDataPuntos = rawDataJuegoActual.trim().split(' ');
-
-        // A no ser que estemos en un tiebreak tenemos siempre el 'estado' correcto
-        if(estado.setActualLive === "6-6") {
-            // Es tiebreak !!
-            for (let j = 0; j < rawDataPuntos.length; j++) {
-                // Excepto el primero (0), cada 2 puntos se hace cambiarSacador();
-                if(j%2 !== 0) {
-                    estado.cambiarSacador();
-                }
-                estado.procesarPunto(rawDataPuntos[j]);
-            }
-
-            // Ajuste extra para aplicar bien la norma del tiebreak (PENSANDO EN EL INICIO DEL SIGUIENTE SET)
-            if ((rawDataPuntos.length - 7) % 4 !== 0) {
-                estado.cambiarSacador();
-            }
-        }
-        else {
-            rawDataPuntos.forEach(punto => {
-                estado.procesarPunto(punto);
-            });
-
-            estado.nuevoJuego();
-        }
+    let dataJuego;
+    function contarVeces(codificacionPunto) {
+        const regex = new RegExp(`\\b${codificacionPunto}\\b`, 'g');
+        return (dataJuego.match(regex) || []).length;
     }
 
-    // Aquí hay que devolverlo de una forma u otra en función del que empieza sacando el partido
-    // estado.t1 == rawDataT1 tal...
-    if(nJuegos%2 === 0) return [estado.t1, estado.t2];
-    else return [estado.t2, estado.t1];
+    // (2) Procesar la info de los juegos en los que saca T1 (los tiebreaks van a parte)
+    for(let sacaT1 = 0; sacaT1 < nJuegos; sacaT1+=2) {
+        // Saltar los tiebreaks
+        if(indicesTiebreak.includes(sacaT1)) continue;
+
+        dataJuego = partido.data[sacaT1];
+
+        // NOTA: DE MOMENTO NO TENEMOS EN CUENTA LOS UNDERARMS !!!!!!!!!!!!!!!
+        // (2.A) Contar cada tipopunto/mensaje
+        // 1 ---> puntos ganados con primer saque
+        n1 = contarVeces("1") + contarVeces("1U");
+        // 2 ---> puntos ganados con segundo saque
+        n2 = contarVeces("2") + contarVeces("2U");
+        // 3 ---> dobles faltas
+        n3 = contarVeces("3");
+        // 1A ---> puntos ganados con ace en primer saque
+        n1A = contarVeces("1A") + contarVeces("1AU");
+        // 2A ---> puntos ganados con ace en segundo saque
+        n2A = contarVeces("2A") + contarVeces("2AU");
+        // 1P ---> puntos perdidos con primer saque
+        n1P = contarVeces("1P") + contarVeces("1PU");
+        // 2P ---> puntos perdidos con segundo saque
+        n2P = contarVeces("2P") + contarVeces("2PU");
+
+        // Warnings T1
+        nWarnings = contarVeces("W1");
+
+        // (2.B) Transformar las veces que sale cada tipopunto a rawData
+        rawData_t1.nWarnings += nWarnings;
+        // SAQUES (T1)
+        rawData_t1.nAces += n1A + n2A;
+        rawData_t1.nPrimerSaque += n1 + n1A + n1P;
+        rawData_t1.nSegundoSaque += n2 + n2A + n2P;
+        rawData_t1.nSaques += (n1 + n1A + n1P) + (n2 + n2A + n2P);
+        rawData_t1.nDoblesFaltas += n3;
+        rawData_t1.nPG_primerSaque += n1 + n1A;
+        rawData_t1.nPG_segundoSaque += n2 + n2A;
+        rawData_t1.nPG_saque += n1 + n1A + n2 + n2A;
+        rawData_t1.nJuegosSacando++;
+        // RESTOS (T2)
+        rawData_t2.nRestos += (n1 + n1A + n1P) + (n2 + n2A + n2P);
+        rawData_t2.nRestosPrimerSaque += n1 + n1A + n1P;
+        rawData_t2.nRestosSegundoSaque += n2 + n2A + n2P;
+        rawData_t2.nPG_restando += n1P + n2P + n3;
+        rawData_t2.nPG_restandoPrimerSaque += n1P;
+        rawData_t2.nPG_restandoSegundoSaque += n2P;
+        rawData_t2.nJuegosRestando++;
+
+        // (2.C) Quién ganó el juego y si fue juego en blanco
+
+        // TODO TO-DO PAFACER: gestionar RET1 RET2
+
+        // Ver de qué tipo es el último punto para saber quién ganó el juego
+        const nPuntosJuego = dataJuego.trim().split(" ").length;
+
+        // *
+        // 100% tengo que quitar el W1 W2 y meter PP1 PP2 pa chekear juegos en blanco fácil
+        const puntosJuegoSinWarnings = dataJuego.trim().split(" ").filter(p => p !== "W1" && p !== "W2");
+        const esJuegoEnBlanco = puntosJuegoSinWarnings.length === 4 ? true : false;
+        // *
+
+        let ultimoPuntoJuego = dataJuego.trim().split(" ")[nPuntosJuego - 1];
+        // Revisar warnings, a partir del tercero es point penalty
+        if(ultimoPuntoJuego === "W1") {
+            if(rawData_t1.nWarnings > 2) rawData_t2.nJG_restando++;
+            else {
+                let tal = 2;
+                while(ultimoPuntoJuego === "W1" || ultimoPuntoJuego === "W2") {
+                    ultimoPuntoJuego = dataJuego.trim().split(" ")[nPuntosJuego - tal];
+                    tal++;
+                }
+            }
+        }
+        else if(ultimoPuntoJuego === "W2") {
+            if(rawData_t2.nWarnings > 2) rawData_t1.nJG_sacando++;
+            else {
+                let tal = 2;
+                while(ultimoPuntoJuego === "W1" || ultimoPuntoJuego === "W2") {
+                    ultimoPuntoJuego = dataJuego.trim().split(" ")[nPuntosJuego - tal];
+                    tal++;
+                }
+            }
+        }
+
+        if(["1", "2", "1A", "2A", "1U", "2U"].includes(ultimoPuntoJuego)) {
+            rawData_t1.nJG_sacando++;
+            if(esJuegoEnBlanco) {
+                rawData_t1.nJuegosEnBlanco++;
+                rawData_t2.nJuegosEnBlancoEnContra++;
+            }
+        }
+        else if(["1P", "2P", "3", "1PU", "2PU"].includes(ultimoPuntoJuego)) {
+            rawData_t2.nJG_restando++;
+            if(esJuegoEnBlanco) {
+                rawData_t2.nJuegosEnBlanco++;
+                rawData_t1.nJuegosEnBlancoEnContra++;
+            }
+        }
+
+    }
+
+    // (3) Procesar la info de los juegos en los que saca T2 (los tiebreaks van a parte)
+    for(let sacaT1 = 1; sacaT1 < nJuegos; sacaT1+=2) {
+        // Saltar los tiebreaks
+        if(indicesTiebreak.includes(sacaT1)) continue;
+
+        dataJuego = partido.data[sacaT1];
+
+        // (3.A) Contar cada tipopunto/mensaje
+        // TODO TO-DO PAFACER: CREAR UNA FUNCIÓN CONTARVECES(PUNTO) PA MODULARIZAR N SHIT
+        // 1 ---> puntos ganados con primer saque
+        n1 = contarVeces("1") + contarVeces("1U");
+        // 2 ---> puntos ganados con segundo saque
+        n2 = contarVeces("2") + contarVeces("2U");
+        // 3 ---> dobles faltas
+        n3 = contarVeces("3");
+        // 1A ---> puntos ganados con ace en primer saque
+        n1A = contarVeces("1A");
+        // 2A ---> puntos ganados con ace en segundo saque
+        n2A = contarVeces("2A");
+        // 1P ---> puntos perdidos con primer saque
+        n1P = contarVeces("1P") + contarVeces("1PU");
+        // 2P ---> puntos perdidos con segundo saque
+        n2P = contarVeces("2P") + contarVeces("2PU");
+
+        // Warnings T2
+        nWarnings = contarVeces("W2");
+
+        // (3.B) Transformar las veces que sale cada tipopunto a rawData
+        rawData_t2.nWarnings += nWarnings;
+        // SAQUES (T1)
+        rawData_t2.nAces += n1A + n2A;
+        rawData_t2.nPrimerSaque += n1 + n1A + n1P;
+        rawData_t2.nSegundoSaque += n2 + n2A + n2P;
+        rawData_t2.nSaques += (n1 + n1A + n1P) + (n2 + n2A + n2P);
+        rawData_t2.nDoblesFaltas += n3;
+        rawData_t2.nPG_primerSaque += n1 + n1A;
+        rawData_t2.nPG_segundoSaque += n2 + n2A;
+        rawData_t2.nPG_saque += n1 + n1A + n2 + n2A;
+        rawData_t2.nJuegosSacando++;
+        // RESTOS (T2)
+        rawData_t1.nRestos += (n1 + n1A + n1P) + (n2 + n2A + n2P);
+        rawData_t1.nRestosPrimerSaque += n1 + n1A + n1P;
+        rawData_t1.nRestosSegundoSaque += n2 + n2A + n2P;
+        rawData_t1.nPG_restando += n1P + n2P + n3;
+        rawData_t1.nPG_restandoPrimerSaque += n1P;
+        rawData_t1.nPG_restandoSegundoSaque += n2P;
+        rawData_t1.nJuegosRestando++;
+
+        // (3.C) Quién ganó el juego y si fue juego en blanco
+
+        // TODO TO-DO PAFACER: gestionar RET1 RET2
+
+        // Ver de qué tipo es el último punto para saber quién ganó el juego
+        const nPuntosJuego = dataJuego.trim().split(" ").length;
+
+        // *
+        // 100% tengo que quitar el W1 W2 y meter PP1 PP2 pa chekear juegos en blanco fácil
+        const puntosJuegoSinWarnings = dataJuego.trim().split(" ").filter(p => p !== "W1" && p !== "W2");
+        const esJuegoEnBlanco = puntosJuegoSinWarnings.length === 4 ? true : false;
+        // *
+
+        let ultimoPuntoJuego = dataJuego.trim().split(" ")[nPuntosJuego - 1];
+        // Revisar warnings, a partir del tercero es point penalty
+        if(ultimoPuntoJuego === "W1") {
+            if(rawData_t1.nWarnings > 2) rawData_t2.nJG_sacando++;
+            else {
+                let tal = 2;
+                while(ultimoPuntoJuego === "W1" || ultimoPuntoJuego === "W2") {
+                    ultimoPuntoJuego = dataJuego.trim().split(" ")[nPuntosJuego - tal];
+                    tal++;
+                }
+            }
+        }
+        else if(ultimoPuntoJuego === "W2") {
+            if(rawData_t2.nWarnings > 2) rawData_t1.nJG_restando++;
+            else {
+                let tal = 2;
+                while(ultimoPuntoJuego === "W1" || ultimoPuntoJuego === "W2") {
+                    ultimoPuntoJuego = dataJuego.trim().split(" ")[nPuntosJuego - tal];
+                    tal++;
+                }
+            }
+        }
+
+        if(["1", "2", "1A", "2A", "1U", "2U"].includes(ultimoPuntoJuego)) {
+            rawData_t2.nJG_sacando++;
+            if(esJuegoEnBlanco) {
+                rawData_t2.nJuegosEnBlanco++;
+                rawData_t1.nJuegosEnBlancoEnContra++;
+            }
+        }
+        else if(["1P", "2P", "3", "1PU", "2PU"].includes(ultimoPuntoJuego)) {
+            rawData_t1.nJG_restando++;
+            if(esJuegoEnBlanco) {
+                rawData_t1.nJuegosEnBlanco++;
+                rawData_t2.nJuegosEnBlancoEnContra++;
+            }
+        }
+
+    }
+
+    // (4) Procesar la info de los tiebreaks
+    /** 
+    for(const indice of indicesTiebreak) {
+
+    }*/
+
+    return [rawData_t1, rawData_t2];
 }
 
 export async function getStatsPartido(ID_partido) {
