@@ -379,6 +379,15 @@ img {
     flex-direction: column;
 }
 
+.h2h-info-individual-extra {
+    width: 80vw;
+    border: none;
+    font-size: 4vw;
+    /*Flexbox*/
+    display: flex;
+    flex-direction: column;
+}
+
 .h2h-info-tabla-doblefila {
     width: 80vw;
     height: 6.5vw;
@@ -446,7 +455,7 @@ img {
 /*-----------------------------------------------------------------------------------------------*/
 
 .h2h-info-partidos {
-    width: 90vw;
+    width: 92vw;
     margin: 0 auto;
     border: none;
     /*Flexbox*/

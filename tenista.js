@@ -1,5 +1,6 @@
 import { setDatosH2H } from './h2h_setDatos.js';
 
+/**
 document.addEventListener('DOMContentLoaded', () => {
     const boton1 = document.getElementById('botonBuscarTenista1');
     const boton2 = document.getElementById('botonBuscarTenista2');
@@ -58,4 +59,4 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         setDatosH2H('SweetElo','Mateo');
     }
-});
+}); */

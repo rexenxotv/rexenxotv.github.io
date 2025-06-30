@@ -299,7 +299,7 @@ img {
 }
 
 .ts-tabla-der {
-    width: 20vw;
+    width: 10vw;
     text-align: right;
     font-size: 3vw;
 }
@@ -325,3 +325,156 @@ img {
     /*Animación (nah insano)*/
     transition: width 0.8s ease-in;
 }
+
+/*-----------------------------------------------------------------------------------------------*/
+
+.caja-partidos-torneo {
+    width: 75vw;
+    table-layout: fixed; /*Amazing*/
+    /*Bordeciño*/
+    border: 0.3vw solid grey;
+    border-radius: 3vw;
+    border-spacing: 0; /*Importante*/
+    /* Margen interior aka padding */
+    padding: 2vw;
+}
+
+.resultados-del-torneo {
+    height: 8vw;
+    margin-left: 6vw;
+    margin-top: 1vw;
+    /*Texto*/
+    color: grey;
+    font-size: 2.5vw;
+    font-weight: 400;
+    text-align: left;
+}
+
+.partidos-torneo {
+    width: 70vw;
+    display: inline-block; /*El padre es flexbox*/
+}
+
+.datos-torneo {
+    width: 75vw;
+    font-weight: bolder;
+    /*Flexbox*/
+    display: flex;
+    justify-content: left;
+    align-items: flex-start;
+}
+
+.categoria-torneo img {
+    width: 15vw;
+    object-fit: contain;
+    padding: 2vw;
+}
+
+.info-torneo {
+    margin-left: 2vw;
+    /*Flexbox*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.info-torneo-nombre {
+    /*Texto*/
+    font-size: 4vw;
+    font-weight: bold;
+    color: black;
+}
+
+.info-torneo-otros {
+    /*Texto*/
+    font-size: 3vw;
+    font-weight: 500;
+    color: black;
+    text-align: left;
+}
+
+/*-----------------------------------------------------------------------------------------------*/
+
+.tenista-info-partidos {
+    width: 90vw;
+    margin: 0 auto;
+    border: none;
+    /*Flexbox*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.tenista-info-partidos ul {
+    text-decoration: none;
+    /*Arreglo pa que esté bien distribuido*/
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    /*Texto*/
+    text-align: center;
+}
+
+.fila-info-partido {
+    /*Flexbox*/
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1.5vw;
+    /* Texto */
+    font-size: 3vw;
+    border: none;
+}
+
+.columna-lista-partidos {
+    height: 7vw;
+    /*Flexbox*/
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    /*Texto*/
+    text-align: center;
+    text-decoration: none;
+    color: black;
+}
+
+.columna-lista-partidos a {
+    display: block;
+    /*Texto*/
+    text-align: center;
+    text-decoration: none;
+    color: black;
+}
+
+.leyenda {
+    /* Texto */
+    font-size: 2.7vw;
+    color: grey;
+}
+
+.w-l {
+    flex-basis: 3vw;
+    font-weight: bolder;
+    border: none;
+}
+
+.clp-rival {
+    flex-basis: 18vw;
+    justify-content: flex-start; /*Texto alineado a la izquierda*/
+    border: none;
+}
+
+.clp-ronda {
+    flex-basis: 10vw;
+    border: none;
+}
+
+.clp-marcador {
+    flex-basis: 22vw;
+    justify-content: flex-start; /*Texto alineado a la izquierda*/
+    border: none;
+}
+
+/*-----------------------------------------------------------------------------------------------*/
