@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const boton2 = document.getElementById('botonBuscarTenista2');
     const lista1 = document.getElementById('opciones1');
     const lista2 = document.getElementById('opciones2');
+    const botonVerMas = document.getElementById('botonStatsAvanzadas');
     
     // Ojo el detalle: cacheamos para no pedir a Firebase los datos constantemente (cacheman)
     let cacheTenistas = [];
@@ -45,6 +46,20 @@ document.addEventListener('DOMContentLoaded', () => {
             cacheTenistas = await getTodosLosTenistas();
         }
         mostrarOpciones(boton2, boton1, lista2, cacheTenistas, false);
+    });
+
+    // div que tiene que modificar:
+    const statsAvanzadas = document.querySelector('.h2h-info-individual-extra');
+    botonVerMas.addEventListener('click', () => {
+        // Si no se muestra: hacer que se muestre y cambiar el texto del botón
+        if (statsAvanzadas.style.display === 'none') {
+            statsAvanzadas.style.display = 'flex';
+            botonVerMas.textContent = "Ver Menos";
+        }
+        else {
+            statsAvanzadas.style.display = 'none';
+            botonVerMas.textContent = "Ver Más";
+        }
     });
 
     // VALORES POR DEFECTO AL CARGAR LA PÁGINA

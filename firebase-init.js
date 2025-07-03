@@ -115,8 +115,6 @@ export async function getTodosLosTenistas() {
     return Object.keys(data);   // Devuelve el listado de IDs
 }
 
-
-
 /* FUNCIÓN MONSTRUOSA QUE DEVUELVE: ranking actual, ranking anterior, mejor ranking */
 export async function getRankingsTenista(ID_tenista) {
     const liverankings = await getLiveRankings();
@@ -131,7 +129,7 @@ export async function getRankingsTenista(ID_tenista) {
      * (1) Se da por hecho que liverankings hay como mínimo 2
      * (2) liverankings[0] es el verdadero ranking live (del torneo que se está jugando ahora mismo)
      * (3) a partir de liveranking[1] parriba son los anteriores en orden cronológico (desde el primero)
-     */
+    **/
 
     // Tenemos que recorrer cada liveranking para ver cuál fue su mejor
     // Por el camino obtenemos el actual y el anterior
@@ -159,7 +157,106 @@ export async function getRankingsTenista(ID_tenista) {
     return [rankingActual, rankingAnterior, mejorRanking, fechaMR];
 }
 
-// Función auxiliar de la anterior
+/** Pensada para ranking.html, también necesitaba la diferencia con el ranking anterior */
+export async function getRankingCompletoTenista(ID_tenista) {
+  // Obtenemos los liverankings (debería haber al menos 2)
+  const liverankings = await getLiveRankings();
+  if (!liverankings) {
+    console.error("Error al cargar los liverankings...");
+    return null;
+  }
+
+  // Calculamos ranking extendido (actual) del live ranking (el primero)
+  const rankingExtendido = await calcularRankingExtendido(liverankings[0], ID_tenista);
+  
+  // Por si aca
+  if (!rankingExtendido) return null;
+
+  // Obtenemos el ranking anterior con la función calcularRanking (que devuelve solo el número)
+  const rankingAnterior = await calcularRanking(liverankings[liverankings.length - 1], ID_tenista);
+
+  return {
+    ranking: rankingExtendido.ranking,
+    puntos: rankingExtendido.puntos,
+    puntosPorSets: rankingExtendido.puntosPorSets,
+    puntosPorJuegos: rankingExtendido.puntosPorJuegos,
+    rankingAnterior: rankingAnterior
+  };
+}
+
+/** En vez de devolver sólo el ranking (número) devuelve un objeto con los puntosporset y puntosporjuegos */
+export async function calcularRankingExtendido(liveranking, ID_tenista) {
+    const torneos = liveranking.torneos;
+
+    // Wizard shit imos traballar cun mapa
+    const resultadosPorJugador = new Map();
+
+    // Cargamos los resultados de cada torneo
+    const resultadosPorTorneo = await Promise.all(
+        torneos.map(ID_torneo => getResultados(ID_torneo))
+    );
+
+    for (const resultados of resultadosPorTorneo) {
+        for (const { tenista, puntos, puntosPorSets, puntosPorJuegos } of resultados) {
+            // Si es la primera vez que un tenista suma resultados, se crea
+            if (!resultadosPorJugador.has(tenista)) {
+                resultadosPorJugador.set(tenista, {
+                    puntos: 0,
+                    puntosPorSets: 0,
+                    puntosPorJuegos: 0
+                });
+            }
+            const j = resultadosPorJugador.get(tenista);
+            j.puntos += puntos;
+            j.puntosPorSets += puntosPorSets;
+            j.puntosPorJuegos += puntosPorJuegos;
+            resultadosPorJugador.set(tenista, j);
+        }
+    }
+
+    // Una vez hemos sumado los puntos que le corresponden a cada tenista transformamos el mapa en array
+    let ranking = Array.from(resultadosPorJugador.entries());
+    // ORDENAMOS (quizás axudou o xefe con isto...)
+    ranking.sort((aResultados, bResultados) => {
+        const a = aResultados[1];
+        const b = bResultados[1];
+
+        /**
+         * Explicación de la fokin resta: siendo (b − a) la resta, .sort() espera:
+         * un número negativo si a debe ir antes de b
+         * un número positivo si a debe ir después de b
+         * cero si son iguales
+         */
+
+        // (1) Por puntos obtenidos (10, 40, 90...)
+        if (a.puntos !== b.puntos) return b.puntos - a.puntos;
+        // (2) Por puntos por sets obtenidos
+        if (a.puntosPorSets !== b.puntosPorSets) return b.puntosPorSets - a.puntosPorSets;
+        // (3) Por puntos por juegos obtenidos
+        return b.puntosPorJuegos - a.puntosPorJuegos;
+    });
+
+    // Buscamos el ranking del tenista ahora que está ordenado
+    for (let nranking = 0; nranking < ranking.length; nranking++) {
+        // Extraemos el nombre de cada tenista y comprobamos si es el que buscamos
+        const [nombretenista, stats] = ranking[nranking];
+        if (nombretenista === ID_tenista) {
+            return {
+                // Recuerda sumar 1 taraaao que aquí vamos de 0 a N−1
+                ranking: nranking + 1,
+                puntos: stats.puntos,
+                puntosPorSets: stats.puntosPorSets,
+                puntosPorJuegos: stats.puntosPorJuegos
+            };
+        }
+    }
+
+    // Si no se encuentra al tenista o el tenista no participó en ningún torneo del periodo
+    return null;
+}
+
+
+// Función auxiliar de getRankingsTenista
 export async function calcularRanking(liveranking, ID_tenista) {
     const torneos = liveranking.torneos;
 
@@ -219,11 +316,11 @@ export async function calcularRanking(liveranking, ID_tenista) {
         if(nombretenista === ID_tenista) return nranking +1;
     }
 
-    // Si no se encuentra al tenista (me cago en la puta) digo se devuelve null
+    // Si no se encuentra al tenista o el tenista no participó en ningún torneo del periodo
     return null;
 }
 
-// Función auxiliar de la anterior
+// Función auxiliar de getRankingsTenista
 function actualizarMejorRanking(r, rFecha, mejorRanking, fechaMR) {
     if(r > mejorRanking) {
         return [ mejorRanking, fechaMR ];

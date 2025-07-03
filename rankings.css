@@ -1,0 +1,296 @@
+/*Parvada*/
+body {
+    margin: 0;
+    font-family: sans-serif;
+    background-color: fuchsia;
+    /*Flexbox*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* RATIO MÓVIL SIEMPRE: Ahora en vez de 10vw hay que hacer calc(var(--vw) * 10); */
+
+.ratio-movil {
+    /*Por defecto (modo móvil cuando vh > vw)*/
+    width: 100vw;
+    background: goldenrod;
+    overflow: hidden;
+}
+
+@media(min-aspect-ratio: 1/1) {
+    .ratio-movil {
+        width: 100vh;
+        background: goldenrod;
+        overflow: hidden;
+    }
+}
+
+/*Ajustar la calidad a la cual se cargan las imágenes en función del viewport*/
+img {
+    width: calc(var(--vw) * 50);
+    height: auto;   /*Mantener el ratio*/
+}
+
+.margen {
+    width: calc(var(--vw) * 100);
+    height: calc(var(--vw) * 5);
+    background-color: snow;
+}
+
+/*-----------------------------------------------------------------------------------------------*/
+
+/* Nueva parvada: cargando... */
+#cargando {
+    position: fixed;
+    inset: 0; /* top: 0; bottom: 0; left: 0; right: 0 */
+    z-index: 9999;
+    background-color: rgba(128, 192, 255, 0.5);
+    /*Flexbox*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.circulo-carga {
+    width: 50px;
+    height: 50px;
+    border: 5px solid lightgray;
+    border-top: 5px solid black;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.cargando-texto {
+    /*Texto*/
+    color: black;
+    font-size: calc(var(--vw) * 3.2);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/*-----------------------------------------------------------------------------------------------*/
+
+.logo-h2h {
+    width: calc(var(--vw) * 100);
+    height: calc(var(--vw) * 10);
+    background-color: transparent;
+    border: none;
+    /*Texto porque el HEAD2HEAD no es de la imagen todavía (T.T)*/
+    font-size: calc(var(--vw) * 5);
+    font-weight: 600;
+    color: white;
+    /*Flexbox*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-h2h img {
+    height: 90%;
+    width: auto;
+    margin-bottom: calc(var(--vw) * 1);
+}
+
+.rankings-encabezado {
+    background-color: rgb(16, 32, 64);
+    /*Ajuste para el menú superior*/
+    padding-top: calc(var(--vw) * 16);
+    /*Flexbox*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.rankings-seleccion {
+    width: calc(var(--vw) * 100);
+    height: calc(var(--vw) * 10);
+    background-color: rgb(16, 32, 64);
+    padding-left: calc(var(--vw) * 4);
+    /*Flexbox*/
+    display: flex;
+    gap: calc(var(--vw) * 8);
+    justify-content: left;
+    align-items: center;
+    /*Corrigiendo el estilo por defecto*/
+    list-style: none;
+}
+
+.seleccion-modo {
+    background-color: transparent;
+    /*Texto cuando no está pulsado*/
+    font-size: calc(var(--vw) * 3);
+    text-align: center;
+    color: gray;
+    /*Corrigiendo el estilo por defecto*/
+    text-decoration: none;
+    /*Display tipo Block*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.seleccion-modo strong {
+    border-bottom: calc(var(--vw) * 0.6);
+    border-bottom-style: solid;
+    border-bottom-color: gray;
+    /*Animación*/
+    transition: border-color 1s ease;
+}
+
+/*Finura*/
+.seleccion-modo--activa strong {
+    border-bottom-color: blue;
+    /*Animación*/
+    transition: border-color 1s ease;
+}
+
+.seleccion-modo--activa {
+    /*Texto cuando está pulsado*/
+    font-size: calc(var(--vw) * 3);
+    text-align: center;
+    color: white;
+}
+
+.seleccion-contenido {
+    background-color: snow;
+    /*Si no está pulsada la opción para verlo, se oculta*/
+    display: none;
+}
+
+.seleccion-contenido--activa {
+    display: block;
+    color: black;
+}
+
+/*-----------------------------------------------------------------------------------------------*/
+
+.live-ranking {
+    background-color: snow;
+    /*Flexbox*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#live-ranking-actual {
+    width: calc(var(--vw) * 100);
+    /*Quitemos la bullshit*/
+    list-style: none;
+    padding-left: 0;
+    margin-left: 0;
+}
+
+#live-ranking-actual li {
+    width: calc(var(--vw) * 100);
+    height: calc(var(--vw) * 20);
+    /*Flexbox*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*Márgenes verticales y horizontales*/
+    gap: calc(var(--vw) * 2);
+    margin-bottom: calc(var(--vw) * 2);
+    border: 2px solid yellow;
+}
+
+.lr-foto {
+    width: calc(var(--vw) * 20);
+    height: calc(var(--vw) * 20);
+    background-color: transparent;
+    border: calc(var(--vw) * 0.6);
+    border-style: solid;
+    border-color: blue;
+    /*Realmente este div es un círculo*/
+    border-radius: 50%; /*Esto le da la forma de círculo*/
+    box-sizing: border-box;
+    overflow: hidden;   /*Esto hace que todo lo que está por fuera del círculo no se vea*/
+}
+
+.lr-foto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /*No queremos ajustar la imagen a dentro del círculo*/
+}
+
+.lr-nombre {
+    width: calc(var(--vw) * 26);
+    border: 2px solid lime;
+}
+
+.lr-nombre a {
+    /*Corrigiendo el estilo por defecto*/
+    text-decoration: none;
+    /*Texto*/
+    color: black;
+    text-align: left;
+    font-weight: bolder;
+}
+
+.lr-club {
+    width: calc(var(--vw) * 26);
+    border: 2px solid lime;
+}
+
+.lr-club a {
+    /*Corrigiendo el estilo por defecto*/
+    text-decoration: none;
+    /*Texto*/
+    color: grey;
+    text-align: left;
+    font-weight: bolder;
+    font-size: calc(var(--vw) * 3);
+}
+
+.lr-puntos {
+    width: calc(var(--vw) * 10);
+    border: 2px solid lime;
+    /*Texto*/
+    color: black;
+    font-size: calc(var(--vw) * 3.2);
+    font-weight: bolder;
+}
+
+.lr-pps {
+    width: calc(var(--vw) * 7);
+    height: calc(var(--vw) * 4);
+    border: 2px solid lime;
+    /*Texto*/
+    color: gray;
+    font-size: calc(var(--vw) * 3.2);
+    font-weight: bold;
+}
+
+.lr-ppj {
+    width: calc(var(--vw) * 7);
+    border: 2px solid lime;
+    /*Texto*/
+    color: gray;
+    font-size: calc(var(--vw) * 3.2);
+    font-weight: bold;
+}
+
+.lr-ranking {
+    width: calc(var(--vw) * 10);
+    border: 2px solid lime;
+    /*Texto*/
+    text-align: right;
+    font-size: calc(var(--vw) * 5);
+    font-weight: bolder;
+}
+
+.lr-diff {
+    width: calc(var(--vw) * 10);
+    /*Texto*/
+    text-align: right;
+    font-size: calc(var(--vw) * 3.6);
+    font-weight: bolder;
+    color: lightslategray;
+    border: 2px solid lime;
+}

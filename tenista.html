@@ -8,6 +8,8 @@
         <link rel="stylesheet" href="tenista.css">
         <!--Título de la página (cuando pones el ratón encima tal)-->
         <title>Perfil | ATP Rexenxo</title>
+        <!-- JavaScript para garantizar ratio de móvil -->
+        <script src="ratio_movil.js"></script>
         <!-- CONFIG MENÚ -->
         <link rel="stylesheet" href="menu.css">
         <script src="menu.js"></script>
@@ -23,331 +25,332 @@
         <script type="module" src="tenista_setDatos.js" defer></script>
     </head>
     <body>
-        <!--MENÚ SUPERIOR-->
-        <div id="menu" style="height: 0vw;"></div>
-        <!--DATOS/STATS TENISTA-->
-        <div class="tenista">
-            <div class="tenista-info">
-                <div class="tenista-info-basica">
-                    <div class="tenista-info-nombre-y-club">
-                        <span class="tenista-info-nombre">?</span><br>
-                        <span class="tenista-info-club">?</span>
+        <div class="ratio-movil">
+            <!--MENÚ SUPERIOR-->
+            <div id="menu"></div>
+            <!--DATOS/STATS TENISTA-->
+            <div class="tenista">
+                <div class="tenista-info">
+                    <div class="tenista-info-basica">
+                        <div class="tenista-info-nombre-y-club">
+                            <span class="tenista-info-nombre">?</span><br>
+                            <span class="tenista-info-club">?</span>
+                        </div>
+                        <!-- Venga va me animo a hacer mi primera tabla -->
+                        <table class="tenista-info-datosbasicos">
+                            <tr>
+                                <td>
+                                    <span class="tenista-info-dato" id="-ranking">0</span><br>
+                                    <span class="tenista-info-tipodato">Ranking</span>
+                                </td>
+                                <td>
+                                    <!-- Usar el signo menos: − + -->
+                                    <span class="tenista-info-datodif" id="-dif-ranking">−</span><br>
+                                    <span class="tenista-info-tipodato">Dif.</span>
+                                </td>
+                                <td>
+                                    <span class="tenista-info-dato" id="-w-l">0-0</span><br>
+                                    <span class="tenista-info-tipodato">W-L</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <span class="tenista-info-dato" id="-mejor-ranking">0</span><br>
+                                    <span class="tenista-info-mejorranking">Mejor Ranking (mm.aaaa)</span>
+                                </td>
+                                <td>
+                                    <span class="tenista-info-dato" id="-titulos">0</span><br>
+                                    <span class="tenista-info-tipodato">Títulos</span>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
-                    <!-- Venga va me animo a hacer mi primera tabla -->
-                    <table class="tenista-info-datosbasicos">
-                        <tr>
-                            <td>
-                                <span class="tenista-info-dato" id="-ranking">0</span><br>
-                                <span class="tenista-info-tipodato">Ranking</span>
-                            </td>
-                            <td>
-                                <!-- Usar el signo menos: − + -->
-                                <span class="tenista-info-datodif" id="-dif-ranking">−</span><br>
-                                <span class="tenista-info-tipodato">Dif.</span>
-                            </td>
-                            <td>
-                                <span class="tenista-info-dato" id="-w-l">0-0</span><br>
-                                <span class="tenista-info-tipodato">W-L</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <span class="tenista-info-dato" id="-mejor-ranking">0</span><br>
-                                <span class="tenista-info-mejorranking">Mejor Ranking (mm.aaaa)</span>
-                            </td>
-                            <td>
-                                <span class="tenista-info-dato" id="-titulos">0</span><br>
-                                <span class="tenista-info-tipodato">Títulos</span>
-                            </td>
-                        </tr>
-                    </table>
+                    <div class="tenista-info-imagen">
+                        <img src="media/silueta/VitiBouu.png">
+                    </div>
                 </div>
-                <div class="tenista-info-imagen">
-                    <img src="media/silueta/VitiBouu.png">
+                <div class="margen"></div>
+                <div class="tenista-data">
+                    <div class="tenista-seleccion">
+                        <a href="#" class="seleccion-modo seleccion-modo--activa" data-boton="1">
+                            <strong>Resumen</strong>
+                        </a>
+                        <a href="#" class="seleccion-modo" data-boton="2">
+                            <strong>Stats</strong>
+                        </a>
+                        <a href="#" class="seleccion-modo" data-boton="3">
+                            <strong>Partidos</strong>
+                        </a>
+                        <a href="#" class="seleccion-modo" data-boton="4">
+                            <strong>Rivalidades</strong>
+                        </a>
+                    </div>
+                    <div class="margen"></div>
+                    <!-- RESUMEN -->
+                    <div class="seleccion-contenido seleccion-contenido--activa" data-info="1">
+                        <div class="dato-resumen-tipo">Debut
+                            <div class="dato-resumen" id="debut">?</div>
+                        </div>
+                        <div class="dato-resumen-tipo">Mano dominante
+                            <div class="dato-resumen" id="mano-dominante">Diestro</div>
+                        </div>
+                        <div class="dato-resumen-tipo">Origen
+                            <div class="dato-resumen" id="origen">?</div>
+                        </div>
+                        <div class="dato-resumen-tipo">Torneos jugados
+                            <div class="dato-resumen" id="nTorneos">0</div>
+                        </div>
+                    </div>
+                    <!-- STATS -->
+                    <div class="seleccion-contenido" data-info="2">
+                        <!-- Stats Generales -->
+                        <div class="tenista-stats">
+                            <div class="ts-tabla-doblefila">
+                                <div class="ts-tabla-fila" id="nPartidos">
+                                    <div class="ts-tabla-izq">PARTIDOS CON STATS</div>
+                                    <div class="ts-tabla-der"><strong>0</strong></div>
+                                </div>
+                                <div class="barra-comparativa">
+                                    <div class="barra-porcentaje"></div>
+                                </div>
+                            </div>
+                            <br>Saque
+                            <div class="ts-tabla-doblefila">
+                                <div class="ts-tabla-fila" id="aces">
+                                    <div class="ts-tabla-izq">Aces</div>
+                                    <div class="ts-tabla-der"><strong>0</strong></div>
+                                </div>
+                                <div class="barra-comparativa">
+                                    <div class="barra-porcentaje"></div>
+                                </div>
+                            </div>
+                            <div class="ts-tabla-doblefila">
+                                <div class="ts-tabla-fila" id="p_primerSaque">
+                                    <div class="ts-tabla-izq">%primer saque</div>
+                                    <div class="ts-tabla-der"><strong>0</strong></div>
+                                </div>
+                                <div class="barra-comparativa">
+                                    <div class="barra-porcentaje"></div>
+                                </div>
+                            </div>
+                            <div class="ts-tabla-doblefila">
+                                <div class="ts-tabla-fila" id="p_PG_primerSaque">
+                                    <div class="ts-tabla-izq">%puntos ganados con primer saque</div>
+                                    <div class="ts-tabla-der"><strong>0</strong></div>
+                                </div>
+                                <div class="barra-comparativa">
+                                    <div class="barra-porcentaje"></div>
+                                </div>
+                            </div>
+                            <div class="ts-tabla-doblefila">
+                                <div class="ts-tabla-fila" id="p_PG_segundoSaque">
+                                    <div class="ts-tabla-izq">%puntos ganados con segundo saque</div>
+                                    <div class="ts-tabla-der"><strong>0</strong></div>
+                                </div>
+                                <div class="barra-comparativa">
+                                    <div class="barra-porcentaje"></div>
+                                </div>
+                            </div>
+                            <div class="ts-tabla-doblefila">
+                                <div class="ts-tabla-fila" id="doblesFaltas">
+                                    <div class="ts-tabla-izq">Dobles Faltas</div>
+                                    <div class="ts-tabla-der"><strong>0</strong></div>
+                                </div>
+                                <div class="barra-comparativa">
+                                    <div class="barra-porcentaje"></div>
+                                </div>
+                            </div>
+                            <div class="ts-tabla-doblefila">
+                                <div class="ts-tabla-fila" id="p_breakpointsSalvados">
+                                    <div class="ts-tabla-izq">%breakpoints salvados</div>
+                                    <div class="ts-tabla-der"><strong>0</strong></div>
+                                </div>
+                                <div class="barra-comparativa">
+                                    <div class="barra-porcentaje"></div>
+                                </div>
+                            </div>
+                            <div class="ts-tabla-doblefila">
+                                <div class="ts-tabla-fila" id="p_JG_sacando">
+                                    <div class="ts-tabla-izq">%juegos ganados sacando</div>
+                                    <div class="ts-tabla-der"><strong>0</strong></div>
+                                </div>
+                                <div class="barra-comparativa">
+                                    <div class="barra-porcentaje"></div>
+                                </div>
+                            </div>
+                            <br>Resto
+                            <div class="ts-tabla-doblefila">
+                                <div class="ts-tabla-fila" id="p_PG_restandoPrimerSaque">
+                                    <div class="ts-tabla-izq">%puntos ganados restando primer saque</div>
+                                    <div class="ts-tabla-der"><strong>0</strong></div>
+                                </div>
+                                <div class="barra-comparativa">
+                                    <div class="barra-porcentaje"></div>
+                                </div>
+                            </div>
+                            <div class="ts-tabla-doblefila">
+                                <div class="ts-tabla-fila" id="p_PG_restandoSegundoSaque">
+                                    <div class="ts-tabla-izq">%puntos ganados restando segundo saque</div>
+                                    <div class="ts-tabla-der"><strong>0</strong></div>
+                                </div>
+                                <div class="barra-comparativa">
+                                    <div class="barra-porcentaje"></div>
+                                </div>
+                            </div>
+                            <div class="ts-tabla-doblefila">
+                                <div class="ts-tabla-fila" id="p_breakpointsConvertidos">
+                                    <div class="ts-tabla-izq">%breakpoints convertidos</div>
+                                    <div class="ts-tabla-der"><strong>0</strong></div>
+                                </div>
+                                <div class="barra-comparativa">
+                                    <div class="barra-porcentaje"></div>
+                                </div>
+                            </div>
+                            <div class="ts-tabla-doblefila">
+                                <div class="ts-tabla-fila" id="p_JG_restando">
+                                    <div class="ts-tabla-izq">%juegos ganados restando</div>
+                                    <div class="ts-tabla-der"><strong>0</strong></div>
+                                </div>
+                                <div class="barra-comparativa">
+                                    <div class="barra-porcentaje"></div>
+                                </div>
+                            </div>
+                            <br>Momentos críticos
+                            <div class="ts-tabla-doblefila">
+                                <div class="ts-tabla-fila" id="tiebreaksGanados">
+                                    <div class="ts-tabla-izq">Tiebreaks ganados</div>
+                                    <div class="ts-tabla-der"><strong>0</strong></div>
+                                </div>
+                                <div class="barra-comparativa">
+                                    <div class="barra-porcentaje"></div>
+                                </div>
+                            </div>
+                            <div class="ts-tabla-doblefila">
+                                <div class="ts-tabla-fila" id="p_setpointsConvertidos">
+                                    <div class="ts-tabla-izq">%setpoints convertidos</div>
+                                    <div class="ts-tabla-der"><strong>0</strong></div>
+                                </div>
+                                <div class="barra-comparativa">
+                                    <div class="barra-porcentaje"></div>
+                                </div>
+                            </div>
+                            <div class="ts-tabla-doblefila">
+                                <div class="ts-tabla-fila" id="p_setpointsSalvados">
+                                    <div class="ts-tabla-izq">%setpoints salvados</div>
+                                    <div class="ts-tabla-der"><strong>0</strong></div>
+                                </div>
+                                <div class="barra-comparativa">
+                                    <div class="barra-porcentaje"></div>
+                                </div>
+                            </div>
+                            <div class="ts-tabla-doblefila">
+                                <div class="ts-tabla-fila" id="p_matchpointsConvertidos">
+                                    <div class="ts-tabla-izq">%matchpoints convertidos</div>
+                                    <div class="ts-tabla-der"><strong>0</strong></div>
+                                </div>
+                                <div class="barra-comparativa">
+                                    <div class="barra-porcentaje"></div>
+                                </div>
+                            </div>
+                            <div class="ts-tabla-doblefila">
+                                <div class="ts-tabla-fila" id="p_matchpointsSalvados">
+                                    <div class="ts-tabla-izq">%matchpoints salvados</div>
+                                    <div class="ts-tabla-der"><strong>0</strong></div>
+                                </div>
+                                <div class="barra-comparativa">
+                                    <div class="barra-porcentaje"></div>
+                                </div>
+                            </div>
+                            <br>Tundas
+                            <div class="ts-tabla-doblefila">
+                                <div class="ts-tabla-fila" id="donuts">
+                                    <div class="ts-tabla-izq">Donuts</div>
+                                    <div class="ts-tabla-der"><strong>0</strong></div>
+                                </div>
+                                <div class="barra-comparativa">
+                                    <div class="barra-porcentaje"></div>
+                                </div>
+                            </div>
+                            <div class="ts-tabla-doblefila">
+                                <div class="ts-tabla-fila" id="donutsEnContra">
+                                    <div class="ts-tabla-izq">Donuts (en contra)</div>
+                                    <div class="ts-tabla-der"><strong>0</strong></div>
+                                </div>
+                                <div class="barra-comparativa">
+                                    <div class="barra-porcentaje"></div>
+                                </div>
+                            </div>
+                            <div class="ts-tabla-doblefila">
+                                <div class="ts-tabla-fila" id="juegosEnBlanco">
+                                    <div class="ts-tabla-izq">Juegos en blanco</div>
+                                    <div class="ts-tabla-der"><strong>0</strong></div>
+                                </div>
+                                <div class="barra-comparativa">
+                                    <div class="barra-porcentaje"></div>
+                                </div>
+                            </div>
+                            <div class="ts-tabla-doblefila">
+                                <div class="ts-tabla-fila" id="juegosEnBlancoEnContra">
+                                    <div class="ts-tabla-izq">Juegos en blanco (en contra)</div>
+                                    <div class="ts-tabla-der"><strong>0</strong></div>
+                                </div>
+                                <div class="barra-comparativa">
+                                    <div class="barra-porcentaje"></div>
+                                </div>
+                            </div>
+                            <br>Rachas
+                            <div class="ts-tabla-doblefila">
+                                <div class="ts-tabla-fila" id="mejorRachaPuntosGanados">
+                                    <div class="ts-tabla-izq">Mejor racha de puntos ganados</div>
+                                    <div class="ts-tabla-der"><strong>0</strong></div>
+                                </div>
+                                <div class="barra-comparativa">
+                                    <div class="barra-porcentaje"></div>
+                                </div>
+                            </div>
+                            <div class="ts-tabla-doblefila">
+                                <div class="ts-tabla-fila" id="mejorRachaJuegosGanados">
+                                    <div class="ts-tabla-izq">Mejor racha de juegos ganados</div>
+                                    <div class="ts-tabla-der"><strong>0</strong></div>
+                                </div>
+                                <div class="barra-comparativa">
+                                    <div class="barra-porcentaje"></div>
+                                </div>
+                            </div>
+                            <div class="ts-tabla-doblefila">
+                                <div class="ts-tabla-fila" id="mejorRachaSetsGanados">
+                                    <div class="ts-tabla-izq">Mejor racha de sets ganados</div>
+                                    <div class="ts-tabla-der"><strong>0</strong></div>
+                                </div>
+                                <div class="barra-comparativa">
+                                    <div class="barra-porcentaje"></div>
+                                </div>
+                            </div>
+                            <div class="ts-tabla-doblefila">
+                                <div class="ts-tabla-fila" id="mejorRachaPartidosGanados">
+                                    <div class="ts-tabla-izq">Mejor racha de partidos ganados</div>
+                                    <div class="ts-tabla-der"><strong>0</strong></div>
+                                </div>
+                                <div class="barra-comparativa">
+                                    <div class="barra-porcentaje"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- PARTIDOS -->
+                    <div class="seleccion-contenido" data-info="3">
+                        <div class="tenista-info-partidos">
+                            <ul id="partidos-tenista">
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- RESULTADOS -->
+                    <div class="seleccion-contenido" data-info="4">
+                        RESULTADOS
+                    </div>
                 </div>
             </div>
             <div class="margen"></div>
-            <div class="tenista-data">
-                <div class="tenista-seleccion">
-                    <a href="#" class="seleccion-modo seleccion-modo--activa" data-boton="1">
-                        <strong>Resumen</strong>
-                    </a>
-                    <a href="#" class="seleccion-modo" data-boton="2">
-                        <strong>Stats</strong>
-                    </a>
-                    <a href="#" class="seleccion-modo" data-boton="3">
-                        <strong>Partidos</strong>
-                    </a>
-                    <a href="#" class="seleccion-modo" data-boton="4">
-                        <strong>Resultados</strong>
-                    </a>
-                </div>
-                <div class="margen"></div>
-                <!-- RESUMEN -->
-                <div class="seleccion-contenido seleccion-contenido--activa" data-info="1">
-                    RESUMEN
-                </div>
-                <!-- STATS -->
-                <div class="seleccion-contenido" data-info="2">
-                    <!-- Stats Generales -->
-                    <div class="tenista-stats">
-                        <div class="ts-tabla-doblefila">
-                            <div class="ts-tabla-fila" id="nPartidos">
-                                <div class="ts-tabla-izq">PARTIDOS CON STATS</div>
-                                <div class="ts-tabla-der"><strong>0</strong></div>
-                            </div>
-                            <div class="barra-comparativa">
-                                <div class="barra-porcentaje"></div>
-                            </div>
-                        </div>
-                        <br>Saque
-                        <div class="ts-tabla-doblefila">
-                            <div class="ts-tabla-fila" id="aces">
-                                <div class="ts-tabla-izq">Aces</div>
-                                <div class="ts-tabla-der"><strong>0</strong></div>
-                            </div>
-                            <div class="barra-comparativa">
-                                <div class="barra-porcentaje"></div>
-                            </div>
-                        </div>
-                        <div class="ts-tabla-doblefila">
-                            <div class="ts-tabla-fila" id="p_primerSaque">
-                                <div class="ts-tabla-izq">%primer saque</div>
-                                <div class="ts-tabla-der"><strong>0</strong></div>
-                            </div>
-                            <div class="barra-comparativa">
-                                <div class="barra-porcentaje"></div>
-                            </div>
-                        </div>
-                        <div class="ts-tabla-doblefila">
-                            <div class="ts-tabla-fila" id="p_PG_primerSaque">
-                                <div class="ts-tabla-izq">%puntos ganados con primer saque</div>
-                                <div class="ts-tabla-der"><strong>0</strong></div>
-                            </div>
-                            <div class="barra-comparativa">
-                                <div class="barra-porcentaje"></div>
-                            </div>
-                        </div>
-                        <div class="ts-tabla-doblefila">
-                            <div class="ts-tabla-fila" id="p_PG_segundoSaque">
-                                <div class="ts-tabla-izq">%puntos ganados con segundo saque</div>
-                                <div class="ts-tabla-der"><strong>0</strong></div>
-                            </div>
-                            <div class="barra-comparativa">
-                                <div class="barra-porcentaje"></div>
-                            </div>
-                        </div>
-                        <div class="ts-tabla-doblefila">
-                            <div class="ts-tabla-fila" id="doblesFaltas">
-                                <div class="ts-tabla-izq">Dobles Faltas</div>
-                                <div class="ts-tabla-der"><strong>0</strong></div>
-                            </div>
-                            <div class="barra-comparativa">
-                                <div class="barra-porcentaje"></div>
-                            </div>
-                        </div>
-                        <div class="ts-tabla-doblefila">
-                            <div class="ts-tabla-fila" id="p_breakpointsSalvados">
-                                <div class="ts-tabla-izq">%breakpoints salvados</div>
-                                <div class="ts-tabla-der"><strong>0</strong></div>
-                            </div>
-                            <div class="barra-comparativa">
-                                <div class="barra-porcentaje"></div>
-                            </div>
-                        </div>
-                        <div class="ts-tabla-doblefila">
-                            <div class="ts-tabla-fila" id="p_JG_sacando">
-                                <div class="ts-tabla-izq">%juegos ganados sacando</div>
-                                <div class="ts-tabla-der"><strong>0</strong></div>
-                            </div>
-                            <div class="barra-comparativa">
-                                <div class="barra-porcentaje"></div>
-                            </div>
-                        </div>
-                        <br>Resto
-                        <div class="ts-tabla-doblefila">
-                            <div class="ts-tabla-fila" id="p_PG_restandoPrimerSaque">
-                                <div class="ts-tabla-izq">%puntos ganados restando primer saque</div>
-                                <div class="ts-tabla-der"><strong>0</strong></div>
-                            </div>
-                            <div class="barra-comparativa">
-                                <div class="barra-porcentaje"></div>
-                            </div>
-                        </div>
-                        <div class="ts-tabla-doblefila">
-                            <div class="ts-tabla-fila" id="p_PG_restandoSegundoSaque">
-                                <div class="ts-tabla-izq">%puntos ganados restando segundo saque</div>
-                                <div class="ts-tabla-der"><strong>0</strong></div>
-                            </div>
-                            <div class="barra-comparativa">
-                                <div class="barra-porcentaje"></div>
-                            </div>
-                        </div>
-                        <div class="ts-tabla-doblefila">
-                            <div class="ts-tabla-fila" id="p_breakpointsConvertidos">
-                                <div class="ts-tabla-izq">%breakpoints convertidos</div>
-                                <div class="ts-tabla-der"><strong>0</strong></div>
-                            </div>
-                            <div class="barra-comparativa">
-                                <div class="barra-porcentaje"></div>
-                            </div>
-                        </div>
-                        <div class="ts-tabla-doblefila">
-                            <div class="ts-tabla-fila" id="p_JG_restando">
-                                <div class="ts-tabla-izq">%juegos ganados restando</div>
-                                <div class="ts-tabla-der"><strong>0</strong></div>
-                            </div>
-                            <div class="barra-comparativa">
-                                <div class="barra-porcentaje"></div>
-                            </div>
-                        </div>
-                        <br>Momentos críticos
-                        <div class="ts-tabla-doblefila">
-                            <div class="ts-tabla-fila" id="tiebreaksGanados">
-                                <div class="ts-tabla-izq">Tiebreaks ganados</div>
-                                <div class="ts-tabla-der"><strong>0</strong></div>
-                            </div>
-                            <div class="barra-comparativa">
-                                <div class="barra-porcentaje"></div>
-                            </div>
-                        </div>
-                        <div class="ts-tabla-doblefila">
-                            <div class="ts-tabla-fila" id="p_setpointsConvertidos">
-                                <div class="ts-tabla-izq">%setpoints convertidos</div>
-                                <div class="ts-tabla-der"><strong>0</strong></div>
-                            </div>
-                            <div class="barra-comparativa">
-                                <div class="barra-porcentaje"></div>
-                            </div>
-                        </div>
-                        <div class="ts-tabla-doblefila">
-                            <div class="ts-tabla-fila" id="p_setpointsSalvados">
-                                <div class="ts-tabla-izq">%setpoints salvados</div>
-                                <div class="ts-tabla-der"><strong>0</strong></div>
-                            </div>
-                            <div class="barra-comparativa">
-                                <div class="barra-porcentaje"></div>
-                            </div>
-                        </div>
-                        <div class="ts-tabla-doblefila">
-                            <div class="ts-tabla-fila" id="p_matchpointsConvertidos">
-                                <div class="ts-tabla-izq">%matchpoints convertidos</div>
-                                <div class="ts-tabla-der"><strong>0</strong></div>
-                            </div>
-                            <div class="barra-comparativa">
-                                <div class="barra-porcentaje"></div>
-                            </div>
-                        </div>
-                        <div class="ts-tabla-doblefila">
-                            <div class="ts-tabla-fila" id="p_matchpointsSalvados">
-                                <div class="ts-tabla-izq">%matchpoints salvados</div>
-                                <div class="ts-tabla-der"><strong>0</strong></div>
-                            </div>
-                            <div class="barra-comparativa">
-                                <div class="barra-porcentaje"></div>
-                            </div>
-                        </div>
-                        <br>Tundas
-                        <div class="ts-tabla-doblefila">
-                            <div class="ts-tabla-fila" id="donuts">
-                                <div class="ts-tabla-izq">Donuts</div>
-                                <div class="ts-tabla-der"><strong>0</strong></div>
-                            </div>
-                            <div class="barra-comparativa">
-                                <div class="barra-porcentaje"></div>
-                            </div>
-                        </div>
-                        <div class="ts-tabla-doblefila">
-                            <div class="ts-tabla-fila" id="donutsEnContra">
-                                <div class="ts-tabla-izq">Donuts (en contra)</div>
-                                <div class="ts-tabla-der"><strong>0</strong></div>
-                            </div>
-                            <div class="barra-comparativa">
-                                <div class="barra-porcentaje"></div>
-                            </div>
-                        </div>
-                        <div class="ts-tabla-doblefila">
-                            <div class="ts-tabla-fila" id="juegosEnBlanco">
-                                <div class="ts-tabla-izq">Juegos en blanco</div>
-                                <div class="ts-tabla-der"><strong>0</strong></div>
-                            </div>
-                            <div class="barra-comparativa">
-                                <div class="barra-porcentaje"></div>
-                            </div>
-                        </div>
-                        <div class="ts-tabla-doblefila">
-                            <div class="ts-tabla-fila" id="juegosEnBlancoEnContra">
-                                <div class="ts-tabla-izq">Juegos en blanco (en contra)</div>
-                                <div class="ts-tabla-der"><strong>0</strong></div>
-                            </div>
-                            <div class="barra-comparativa">
-                                <div class="barra-porcentaje"></div>
-                            </div>
-                        </div>
-                        <br>Rachas
-                        <div class="ts-tabla-doblefila">
-                            <div class="ts-tabla-fila" id="mejorRachaPuntosGanados">
-                                <div class="ts-tabla-izq">Mejor racha de puntos ganados</div>
-                                <div class="ts-tabla-der"><strong>0</strong></div>
-                            </div>
-                            <div class="barra-comparativa">
-                                <div class="barra-porcentaje"></div>
-                            </div>
-                        </div>
-                        <div class="ts-tabla-doblefila">
-                            <div class="ts-tabla-fila" id="mejorRachaJuegosGanados">
-                                <div class="ts-tabla-izq">Mejor racha de juegos ganados</div>
-                                <div class="ts-tabla-der"><strong>0</strong></div>
-                            </div>
-                            <div class="barra-comparativa">
-                                <div class="barra-porcentaje"></div>
-                            </div>
-                        </div>
-                        <div class="ts-tabla-doblefila">
-                            <div class="ts-tabla-fila" id="mejorRachaSetsGanados">
-                                <div class="ts-tabla-izq">Mejor racha de sets ganados</div>
-                                <div class="ts-tabla-der"><strong>0</strong></div>
-                            </div>
-                            <div class="barra-comparativa">
-                                <div class="barra-porcentaje"></div>
-                            </div>
-                        </div>
-                        <div class="ts-tabla-doblefila">
-                            <div class="ts-tabla-fila" id="mejorRachaPartidosGanados">
-                                <div class="ts-tabla-izq">Mejor racha de partidos ganados</div>
-                                <div class="ts-tabla-der"><strong>0</strong></div>
-                            </div>
-                            <div class="barra-comparativa">
-                                <div class="barra-porcentaje"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- PARTIDOS -->
-                <div class="seleccion-contenido" data-info="3">
-                    <div class="tenista-info-partidos">
-                        <ul id="partidos-tenista">
-                            <li class="torneo">
-                                <div class="datos-torneo">
-                                    <div class="categoria-torneo"></div>
-                                    <div class="info-torneo">
-                                        <div class="info-torneo-nombre"></div>
-                                        <div class="info-torneo-otros"></div>
-                                    </div>
-                                </div>
-                                <ul class="partidos-torneo">
-                                    
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- RESULTADOS -->
-                <div class="seleccion-contenido" data-info="4">
-                    RESULTADOS
-                </div>
-            </div>
         </div>
-        <div class="margen"></div>
     </body>
 </html>

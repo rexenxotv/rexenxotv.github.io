@@ -2,66 +2,39 @@
 body {
     margin: 0;
     font-family: sans-serif;
-    background-color: transparent;
+    background-color: rgb(8, 16, 32);
+    /*Flexbox*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* RATIO MÓVIL SIEMPRE: Ahora en vez de 10vw hay que hacer calc(var(--vw) * 10); */
+
+.ratio-movil {
+    /*Por defecto (modo móvil cuando vh > vw)*/
+    width: 100vw;
+    background: goldenrod;
+    overflow: hidden;
+}
+
+@media(min-aspect-ratio: 1/1) {
+    .ratio-movil {
+        width: 100vh;
+        background: goldenrod;
+        overflow: hidden;
+    }
 }
 
 /*Ajustar la calidad a la cual se cargan las imágenes en función del viewport*/
 img {
-    width: 50vw;
+    width: calc(var(--vw) * 50);
     height: auto;   /*Mantener el ratio*/
 }
 
-/* ---------------INICIO CONFIG MENÚ SUPERIOR--------------- */
-
-.menu-superior {
-    width: 100vw;
-    height: 15vw;
-    background-color: rgb(8, 16, 32);
-    border: none;
-    /*Flexbox*/
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /*Ajustes para que quede siempre arriba*/
-    position: fixed;
-    z-index: 100; /*Nos aseguramos que siempre esté encima*/
-}
-
-.boton-ver-apartados {
-    width: 15vw;
-    height: 15vw;
-    background-color: transparent;
-    border: none;
-    /*Flexbox*/
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.logo-rexenxotv {
-    width: 85vw;
-    height: 15vw;
-    background-color: transparent;
-    border: none;
-    /*Flexbox*/
-    display: flex;
-    justify-content: right;
-    align-items: center;
-}
-
-.logo-rexenxotv img {
-    height: 80%;
-    width: auto;
-    margin-top: 1vw;
-    margin-right: 2vw;
-    object-fit: contain;
-}
-
-/* ---------------FIN CONFIG MENÚ SUPERIOR--------------- */
-
 .margen {
-    width: 100vw;
-    height: 5vw;
+    width: calc(var(--vw) * 100);
+    height: calc(var(--vw) * 5);
     background-color: snow;
     border: none; /*C-PURPLE*/
 }
@@ -76,12 +49,12 @@ img {
     justify-content: center;
     align-items: center;
     /*Ajuste para el menú superior*/
-    padding-top: 15vw;
+    padding-top: calc(var(--vw) * 15);
 }
 
 .tenista-info {
-    width: 100vw;
-    height: 50vw;
+    width: calc(var(--vw) * 100);
+    height: calc(var(--vw) * 50);
     border: none; /*C-LIME*/
     /*Degradado*/
     background: radial-gradient(
@@ -97,21 +70,21 @@ img {
 }
 
 .tenista-info-imagen {
-    width: 40vw;
-    height: 50vw;
+    width: calc(var(--vw) * 40);
+    height: calc(var(--vw) * 50);
     border: none; /*C-GOLD*/
 }
 
 .tenista-info-imagen img {
-    width: 40vw;
-    height: 50vw;
+    width: calc(var(--vw) * 40);
+    height: calc(var(--vw) * 50);
     object-fit: contain;
     object-position: right;
 }
 
 .tenista-info-basica {
-    width: 60vw;
-    height: 50vw;
+    width: calc(var(--vw) * 60);
+    height: calc(var(--vw) * 50);
     border: none;
     /*Flexbox*/
     display: flex;
@@ -121,8 +94,8 @@ img {
 }
 
 .tenista-info-nombre-y-club {
-    width: 50vw;
-    height: 16vw;
+    width: calc(var(--vw) * 50);
+    height: calc(var(--vw) * 16);
     border: none;
     /*Texto*/
     text-align: left;
@@ -131,17 +104,21 @@ img {
 
 /* Tabla */
 .tenista-info-datosbasicos {
-    width: 55vw;
-    height: 24vw;
+    width: calc(var(--vw) * 55);
+    height: calc(var(--vw) * 24);
     table-layout: fixed; /*Amazing*/
     /*Bordeciño*/
-    border: 0.3vw solid blue;
-    border-radius: 5vw;
+    border: calc(var(--vw) * 0.3);
+    border-style: solid;
+    border-color: blue;
+    border-radius: calc(var(--vw) * 5);
     border-spacing: 0; /*Importante*/
 }
 
 .tenista-info-datosbasicos tr:not(:last-child) td {
-    border-bottom: 0.3vw solid blue;
+    border-bottom: calc(var(--vw) * 0.3);
+    border-bottom-style: solid;
+    border-bottom-color: blue;
 }
 
 .tenista-info-datosbasicos td {
@@ -151,42 +128,42 @@ img {
 /* SPANS: clases solo pa formatear texto */
 .tenista-info-nombre {
     /*Texto*/
-    font-size: 6vw;
+    font-size: calc(var(--vw) * 6);
     font-weight: bolder;
     color: white;
 }
 
 .tenista-info-club {
     /*Texto*/
-    font-size: 3.6vw;
+    font-size: calc(var(--vw) * 3.6);
     font-weight: 500;
     color: lightslategray;
 }
 
 .tenista-info-dato {
     /*Texto*/
-    font-size: 5vw;
+    font-size: calc(var(--vw) * 5);
     font-weight: bolder;
     color: white;
 }
 
 .tenista-info-datodif {
     /*Texto*/
-    font-size: 4.6vw;
+    font-size: calc(var(--vw) * 4.6);
     font-weight: bolder;
     color: lightslategray;
 }
 
 .tenista-info-tipodato {
     /*Texto*/
-    font-size: 3vw;
+    font-size: calc(var(--vw) * 3);
     font-weight: 500;
     color: lightslategray;
 }
 
 .tenista-info-mejorranking {
     /*Texto*/
-    font-size: 2.6vw;
+    font-size: calc(var(--vw) * 2.6);
     font-weight: 500;
     color: lightslategray;
 }
@@ -194,7 +171,7 @@ img {
 /*-----------------------------------------------------------------------------------------------*/
 
 .tenista-data {
-    width: 100vw;
+    width: calc(var(--vw) * 100vw);
     /*NO ESPECIFICAMOS LA ALTURA YA QUE ES VARIABLE*/
     background-color: snow;
     border: none; /*C-VIOLET*/
@@ -206,13 +183,13 @@ img {
 }
 
 .tenista-seleccion {
-    width: 80vw;
-    height: 6vw;
+    width: calc(var(--vw) * 80);
+    height: calc(var(--vw) * 6);
     background-color: transparent;
     border: none; /*C-BLUE*/
     /*Flexbox*/
     display: flex;
-    gap: 8vw;
+    gap: calc(var(--vw) * 8);
     justify-content: center;
     align-items: center;
 }
@@ -224,7 +201,7 @@ img {
 .seleccion-modo {
     background-color: transparent;
     /*Texto cuando no está pulsado*/
-    font-size: 3vw;
+    font-size: calc(var(--vw) * 3);
     font-weight: bold;
     text-align: center;
     color: darkslategray;
@@ -233,7 +210,9 @@ img {
 }
 
 .seleccion-modo strong {
-    border-bottom: 0.6vw solid darkslategray;
+    border-bottom: calc(var(--vw) * 0.6);
+    border-bottom-style: solid;
+    border-bottom-color: darkslategray;
     /*Animación*/
     transition: border-color 1s ease;
 }
@@ -247,7 +226,7 @@ img {
 
 .seleccion-modo--activa {
     /*Texto cuando está pulsado*/
-    font-size: 3vw;
+    font-size: calc(var(--vw) * 3);
     font-weight: bold;
     text-align: center;
     color: blue;
@@ -267,25 +246,25 @@ img {
 
 /*WIP*/
 .tenista-stats {
-    width: 80vw;
+    width: calc(var(--vw) * 80);
     border: none;
-    font-size: 4.5vw;
+    font-size: calc(var(--vw) * 4.5);
     /*Flexbox*/
     display: flex;
     flex-direction: column;
 }
 
 .ts-tabla-doblefila {
-    width: 80vw;
-    height: 6.5vw;
+    width: calc(var(--vw) * 80);
+    height: calc(var(--vw) * 6.5);
     /*Flexbox*/
     display: flex;
     flex-direction: column;
 }
 
 .ts-tabla-fila {
-    width: 80vw;
-    height: 5.5vw;
+    width: calc(var(--vw) * 80);
+    height: calc(var(--vw) * 5.5);
     /*Flexbox*/
     display: flex;
     justify-content: space-between;
@@ -293,20 +272,20 @@ img {
 }
 
 .ts-tabla-izq {
-    width: 60vw;
+    width: calc(var(--vw) * 60);
     text-align: left;
-    font-size: 3vw;
+    font-size: calc(var(--vw) * 3);
 }
 
 .ts-tabla-der {
-    width: 10vw;
+    width: calc(var(--vw) * 10);
     text-align: right;
-    font-size: 3vw;
+    font-size: calc(var(--vw) * 3);
 }
 
 .barra-comparativa {
-    width: 80vw;
-    height: 1vw;
+    width: calc(var(--vw) * 80);
+    height: calc(var(--vw) * 1);
     background-color: lightgray;
     /*Básicamente vamos a mostrar el porcentaje del tenista2 por encima*/
     overflow: hidden;
@@ -316,7 +295,7 @@ img {
 
 .barra-porcentaje {
     width: 0%; /*Este valor se ajusta con h2h_porcentajes_barras.js*/
-    height: 1vw;
+    height: calc(var(--vw) * 1);
     background-color: blue;
     
     position: absolute;
@@ -329,34 +308,36 @@ img {
 /*-----------------------------------------------------------------------------------------------*/
 
 .caja-partidos-torneo {
-    width: 75vw;
+    width: calc(var(--vw) * 75);
     table-layout: fixed; /*Amazing*/
     /*Bordeciño*/
-    border: 0.3vw solid grey;
-    border-radius: 3vw;
+    border: calc(var(--vw) * 0.3);
+    border-style: solid;
+    border-color: grey;
+    border-radius: calc(var(--vw) * 3);
     border-spacing: 0; /*Importante*/
     /* Margen interior aka padding */
-    padding: 2vw;
+    padding: calc(var(--vw) * 2);
 }
 
 .resultados-del-torneo {
-    height: 8vw;
-    margin-left: 6vw;
-    margin-top: 1vw;
+    height: calc(var(--vw) * 8);
+    margin-left: calc(var(--vw) * 6);
+    margin-top: calc(var(--vw) * 1);
     /*Texto*/
     color: grey;
-    font-size: 2.5vw;
+    font-size: calc(var(--vw) * 2.5);
     font-weight: 400;
     text-align: left;
 }
 
 .partidos-torneo {
-    width: 70vw;
+    width: calc(var(--vw) * 70);
     display: inline-block; /*El padre es flexbox*/
 }
 
 .datos-torneo {
-    width: 75vw;
+    width: calc(var(--vw) * 75);
     font-weight: bolder;
     /*Flexbox*/
     display: flex;
@@ -365,13 +346,13 @@ img {
 }
 
 .categoria-torneo img {
-    width: 15vw;
+    width: calc(var(--vw) * 15);
     object-fit: contain;
-    padding: 2vw;
+    padding: calc(var(--vw) * 2);
 }
 
 .info-torneo {
-    margin-left: 2vw;
+    margin-left: calc(var(--vw) * 2);
     /*Flexbox*/
     display: flex;
     flex-direction: column;
@@ -381,14 +362,14 @@ img {
 
 .info-torneo-nombre {
     /*Texto*/
-    font-size: 4vw;
+    font-size: calc(var(--vw) * 4);
     font-weight: bold;
     color: black;
 }
 
 .info-torneo-otros {
     /*Texto*/
-    font-size: 3vw;
+    font-size: calc(var(--vw) * 3);
     font-weight: 500;
     color: black;
     text-align: left;
@@ -397,7 +378,7 @@ img {
 /*-----------------------------------------------------------------------------------------------*/
 
 .tenista-info-partidos {
-    width: 90vw;
+    width: calc(var(--vw) * 90);
     margin: 0 auto;
     border: none;
     /*Flexbox*/
@@ -422,14 +403,14 @@ img {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    gap: 1.5vw;
+    gap: calc(var(--vw) * 1.5);
     /* Texto */
-    font-size: 3vw;
+    font-size: calc(var(--vw) * 3);
     border: none;
 }
 
 .columna-lista-partidos {
-    height: 7vw;
+    height: calc(var(--vw) * 6);
     /*Flexbox*/
     display:flex;
     justify-content: center;
@@ -450,31 +431,62 @@ img {
 
 .leyenda {
     /* Texto */
-    font-size: 2.7vw;
+    font-size: calc(var(--vw) * 2.7);
     color: grey;
 }
 
 .w-l {
-    flex-basis: 3vw;
+    flex-basis: calc(var(--vw) * 3);
     font-weight: bolder;
     border: none;
 }
 
 .clp-rival {
-    flex-basis: 18vw;
+    flex-basis: calc(var(--vw) * 18);
     justify-content: flex-start; /*Texto alineado a la izquierda*/
     border: none;
 }
 
 .clp-ronda {
-    flex-basis: 10vw;
+    flex-basis: calc(var(--vw) * 10);
     border: none;
 }
 
 .clp-marcador {
-    flex-basis: 22vw;
+    flex-basis: calc(var(--vw) * 22);
     justify-content: flex-start; /*Texto alineado a la izquierda*/
     border: none;
 }
 
 /*-----------------------------------------------------------------------------------------------*/
+
+.dato-resumen-tipo {
+    width: calc(var(--vw) * 80);
+    height: calc(var(--vw) * 7);
+    padding-left: calc(var(--vw) * 5);
+    background-color: rgb(234, 234, 234);
+    /*Bordeciño*/
+    border-radius: calc(var(--vw) * 3);
+    border-spacing: 0; /*Importante*/
+    /*Flexbox*/
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /*Texto*/
+    font-size: calc(var(--vw) * 3.7);
+}
+
+.dato-resumen {
+    text-align: right;
+    padding-right: calc(var(--vw) * 3);
+}
+
+/*Reescribir el tipo de display para el resumen (necesito flexbox dirección columna)*/
+.seleccion-contenido.seleccion-contenido--activa[data-info="1"] {
+    /*Flexbox*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: calc(var(--vw) * 2);
+}

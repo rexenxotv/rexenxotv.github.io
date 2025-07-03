@@ -2,64 +2,37 @@
 body {
     margin: 0;
     font-family: sans-serif;
-    background-color: rgb(16, 32, 64);
-}
-
-/* ---------------INICIO CONFIG MENÚ SUPERIOR--------------- */
-
-.menu-superior {
-    width: 100vw;
-    height: 15vw;
     background-color: rgb(8, 16, 32);
-    border: none;
-    /*Flexbox*/
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /*Ajustes para que quede siempre arriba*/
-    position: fixed;
-    z-index: 100; /*Nos aseguramos que siempre esté encima*/
-}
-
-.boton-ver-apartados {
-    width: 15vw;
-    height: 15vw;
-    background-color: transparent;
-    border: none;
     /*Flexbox*/
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.logo-rexenxotv {
-    width: 85vw;
-    height: 15vw;
-    background-color: transparent;
-    border: none;
-    /*Flexbox*/
-    display: flex;
-    justify-content: right;
-    align-items: center;
+/* RATIO MÓVIL SIEMPRE: Ahora en vez de 10vw hay que hacer calc(var(--vw) * 10); */
+
+.ratio-movil {
+    /*Por defecto (modo móvil cuando vh > vw)*/
+    width: 100vw;
+    background: goldenrod;
+    overflow: hidden;
 }
 
-.logo-rexenxotv img {
-    height: 80%;
-    width: auto;
-    margin-top: 1vw;
-    margin-right: 2vw;
-    object-fit: contain;
+@media(min-aspect-ratio: 1/1) {
+    .ratio-movil {
+        width: 100vh;
+        background: goldenrod;
+        overflow: hidden;
+    }
 }
-
-/* ---------------FIN CONFIG MENÚ SUPERIOR--------------- */
 
 .pagina-principal {
-    width: 100vw;
+    width: calc(var(--vw) * 100);
     background-color: rgb(16, 32, 64);
     /*Ajuste para el menú superior*/
-    padding-top: 15vw;
+    padding-top: calc(var(--vw) * 15);
     /*Texto*/
-    font-size: 7vw;
+    font-size: calc(var(--vw) * 7);
     color: white;
     /*Flexbox*/
     display: flex;
@@ -83,11 +56,3 @@ body {
     text-decoration: none;
     color: purple;
 }
-
-/* IMPORTANTE: REESCRITURA PARA MÓVILES 
-@media (max-width: 800px), (pointer: coarse) {
-    /*Desactivar el hover
-    .desplegable:hover .desplegable-contenido {
-        display: none;
-    }
-}*/

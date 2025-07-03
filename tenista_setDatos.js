@@ -1,6 +1,6 @@
 import { getTenista, getPartidosTenista, getRankingsTenista, getTorneo, getResultados, getLiveRankings, calcularRanking } from "./firebase-init.js";
 import { actualizarTodasLasBarras } from "./tenista_porcentajes_barras.js";
-import { RawDataStatsTenistaPartido, StatsTenistaPartido, getRawData, getStatsPartido } from "./stats.js";
+import { RawDataStatsTenistaPartido, StatsTenistaPartido, getRawData } from "./stats.js";
 
 document.addEventListener('DOMContentLoaded', async() => {
     const parametros = new URLSearchParams(window.location.search);
@@ -77,6 +77,15 @@ document.addEventListener('DOMContentLoaded', async() => {
             spanDif.textContent = `−${diferenciaRanking}`;
             spanDif.style.color = 'red';
         }
+
+        // --------------------------------------- RESUMEN ---------------------------------------- //
+        // Primer torneo (aka debut)
+        const primerTorneo = await getTorneo(partidos[0].torneo);
+        document.getElementById('debut').textContent = `${primerTorneo.serie} ${primerTorneo.anho}`;
+        document.getElementById('mano-dominante').textContent = t.diestro ? 'Diestro': 'Zurdo';
+        document.getElementById('origen').textContent = t.origen ?? 'N/A';
+        const nTorneos = new Set(partidos.map(p => p.torneo)).size;
+        document.getElementById('nTorneos').textContent = nTorneos;
 
         // -------------------------------- ESTADÍSTICAS AVANZADAS -------------------------------- //
 
@@ -344,7 +353,7 @@ document.addEventListener('DOMContentLoaded', async() => {
                 // Barbarie: que sea clickable y te lleve AL PARTIDO
                 const linkMarcador = document.createElement('a');
                 linkMarcador.href = `/partido.html?id=${p.id}`;
-                linkMarcador.textContent = p.marcador || 'N/A';
+                linkMarcador.textContent = p.marcador || 'Withdraw';
                 marcador.appendChild(linkMarcador);
                 liPartido.appendChild(marcador);
 

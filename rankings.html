@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <!--This viewport element ensures the page renders at the width of the browser viewport, preventing mobile browsers from rendering pages wider than the viewport and then shrinking them down.-->
+        <meta name="viewport" content="width=device-width">
+        <!--Linkeando el archivo CSS-->
+        <link rel="stylesheet" href="rankings.css">
+        <!--Título de la página (cuando pones el ratón encima tal)-->
+        <title>Rankings | ATP Rexenxo</title>
+        <!-- JavaScript para garantizar ratio de móvil -->
+        <script src="ratio_movil.js"></script>
+        <!-- CONFIG MENÚ -->
+        <link rel="stylesheet" href="menu.css">
+        <script src="menu.js"></script>
+        <!-- Backend con Firebase -->
+        <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+        <script type="module" src="firebase-init.js"></script>
+        <!-- Configuración por defecto de la págin -->
+        <script type="module" src="rankings.js" defer></script>
+        <!-- JavaScript para cambiar la data que se muestra (TAL) -->
+        <script type="module" src="seleccionador.js" defer></script>
+        <!-- JavaScript para cargar los datos del tenista que indica el id -->
+        <script type="module" src="rankings_setDatos.js" defer></script>
+    </head>
+    <body>
+        <div class="ratio-movil">
+            <!-- CARGANDO... -->
+            <div id="cargando">
+                <div class="circulo-carga"></div>
+                <div class="cargando-texto">Cargandooo</div>
+            </div>
+            <!--MENÚ SUPERIOR-->
+            <div id="menu"></div>
+            <!-- ENCABEZADO -->
+            <div class="rankings-encabezado">
+                <div class="logo-h2h">
+                    <img src="media/logo/logo-atpr.png" alt="Logo H2H">
+                    RANKINGS
+                </div>
+            </div>
+            <!-- SELECTOR -->
+            <div class="rankings-seleccion">
+                <a href="#" class="seleccion-modo seleccion-modo--activa" data-boton="1">
+                    <strong>Live Ranking</strong>
+                </a>
+                <!-- Race to Contumil temporalmente desactivada style="display: none;" -->
+                <a href="#" class="seleccion-modo" data-boton="2">
+                    <strong>Race to Contumil</strong>
+                </a>
+                <a href="#" class="seleccion-modo" data-boton="3">
+                    <strong>Stats</strong>
+                </a>
+            </div>
+            <!-- LIVE RANKING -->
+            <div class="seleccion-contenido seleccion-contenido--activa" data-info="1"></div>
+            <div class="live-ranking">
+                <ul id="live-ranking-actual">
+
+                </ul>
+            </div>
+            <!-- RACE TO CONTUMIL // Temporalmente desactivada style="display: none;" -->
+            <div class="seleccion-contenido" data-info="2"></div>
+            <!-- STATS -->
+            <div class="seleccion-contenido" data-info="3"></div>
+        </div>
+    </body>
+</html>

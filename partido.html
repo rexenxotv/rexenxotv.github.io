@@ -8,6 +8,8 @@
         <link rel="stylesheet" href="partido.css">
         <!--Título de la página (cuando pones el ratón encima tal)-->
         <title>Stats Partido | ATP Rexenxo</title>
+        <!-- JavaScript para garantizar ratio de móvil -->
+        <script src="ratio_movil.js"></script>
         <!-- CONFIG MENÚ -->
         <link rel="stylesheet" href="menu.css">
         <script src="menu.js"></script>
@@ -19,68 +21,70 @@
         <script type="module" src="partido_setDatos.js" defer></script>
     </head>
     <body>
-        <!--MENÚ SUPERIOR-->
-        <div id="menu"></div>
-        <!--DATOS PARTIDO-->
-        <div class="partido">
-            <div class="datos-y-marcador">
-                <div class="fotos-tenistas">
-                    <div class="tenista1-imagen">
-                        <a href=""><img src="media/logo/logo-atpr.png"></a>
-                    </div>
-                    <div class="tenista2-imagen">
-                        <a href=""><img src="media/logo/logo-atpr.png"></a>
-                    </div>
-                </div>
-                <div class="torneo-y-marcador">
-                    <div class="info-torneo">
-                        <img src="media/logo/logo-atpr250.png">
-                        <div class="info-torneo-datos">
-                            <div class="info-torneo-nombre">Torneo</div>
-                            <div class="info-torneo-otros">Lugar (Superficie)</div>
+        <div class="ratio-movil">
+            <!--MENÚ SUPERIOR-->
+            <div id="menu"></div>
+            <!--DATOS PARTIDO-->
+            <div class="partido">
+                <div class="datos-y-marcador">
+                    <div class="fotos-tenistas">
+                        <div class="tenista1-imagen">
+                            <a href=""><img src="media/logo/logo-atpr.png"></a>
+                        </div>
+                        <div class="tenista2-imagen">
+                            <a href=""><img src="media/logo/logo-atpr.png"></a>
                         </div>
                     </div>
-                    <div class="info-partido-fecha-y-duracion">
-                        <div class="info-partido-fecha">1.1.2020</div>
-                        <div class="info-partido-duracion">1h1min</div>
-                    </div>
-                    <div class="marcador">
-                        <div class="marcador-fila" data-player="t1">
-                            <div class="mf-margen1"></div>
-                            <div class="mf-nombre1">TENISTA1</div>
-                            <div class="mf-set1"> </div>
-                            <div class="mf-set2"> </div>
-                            <div class="mf-set3"> </div>
-                            <div class="mf-juegoactual" style="display: none;">0</div>
+                    <div class="torneo-y-marcador">
+                        <div class="info-torneo">
+                            <img src="media/logo/logo-atpr250.png">
+                            <div class="info-torneo-datos">
+                                <div class="info-torneo-nombre">Torneo</div>
+                                <div class="info-torneo-otros">Lugar (Superficie)</div>
+                            </div>
                         </div>
-                        <div class="marcador-fila" data-player="t2">
-                            <div class="mf-margen2"></div>
-                            <div class="mf-nombre2">TENISTA2</div>
-                            <div class="mf-set1"> </div>
-                            <div class="mf-set2"> </div>
-                            <div class="mf-set3"> </div>
-                            <div class="mf-juegoactual" style="display: none;">0</div>
+                        <div class="info-partido-fecha-y-duracion">
+                            <div class="info-partido-fecha">1.1.2020</div>
+                            <div class="info-partido-duracion">1h1min</div>
                         </div>
-                    </div>
-                    <div class="ir-al-h2h">
-                        <a href="#">->Ver H2H<-</a>
+                        <div class="marcador">
+                            <div class="marcador-fila" data-player="t1">
+                                <div class="mf-margen1"></div>
+                                <div class="mf-nombre1">TENISTA1</div>
+                                <div class="mf-set1"> </div>
+                                <div class="mf-set2"> </div>
+                                <div class="mf-set3"> </div>
+                                <div class="mf-juegoactual" style="display: none;">0</div>
+                            </div>
+                            <div class="marcador-fila" data-player="t2">
+                                <div class="mf-margen2"></div>
+                                <div class="mf-nombre2">TENISTA2</div>
+                                <div class="mf-set1"> </div>
+                                <div class="mf-set2"> </div>
+                                <div class="mf-set3"> </div>
+                                <div class="mf-juegoactual" style="display: none;">0</div>
+                            </div>
+                        </div>
+                        <div class="ir-al-h2h">
+                            <a href="#">->Ver H2H<-</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="margen"></div>
-        <!-- Selector de la info del partido que se muestra -->
-        <div class="partido-seleccion">
-            <a href="#" class="seleccion-modo seleccion-modo--activa" data-boton="1">
-                <strong>Stats</strong>
-            </a>
-            <a href="#" class="seleccion-modo" data-boton="2">
-                <strong>Otros partidos</strong>
-            </a>
-        </div>
-        <!-- STATS PARTIDO -->
-        <div class="stats-partido">
+            <div class="margen"></div>
+            <!-- Selector de la info del partido que se muestra -->
+            <div class="partido-seleccion">
+                <a href="#" class="seleccion-modo seleccion-modo--activa" data-boton="1">
+                    <strong>Stats</strong>
+                </a>
+                <a href="#" class="seleccion-modo" data-boton="2">
+                    <strong>Otros partidos</strong>
+                </a>
+            </div>
+            <!-- STATS PARTIDO -->
+            <div class="stats-partido">
 
+            </div>
         </div>
     </body>
 </html>

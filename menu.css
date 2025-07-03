@@ -1,8 +1,8 @@
 /* ---------------INICIO CONFIG MENÚ SUPERIOR--------------- */
 
 .menu-superior {
-    width: 100vw;
-    height: 15vw;
+    width: calc(var(--vw) * 100);
+    height: calc(var(--vw) * 15);
     background-color: rgb(8, 16, 32);
     border: none;
     /*Flexbox*/
@@ -15,8 +15,8 @@
 }
 
 .boton-ver-apartados {
-    width: 15vw;
-    height: 15vw;
+    width: calc(var(--vw) * 15);
+    height: calc(var(--vw) * 15);
     background-color: transparent;
     border: none;
     /*Flexbox*/
@@ -26,8 +26,8 @@
 }
 
 .logo-rexenxotv {
-    width: 85vw;
-    height: 15vw;
+    width: calc(var(--vw) * 85);
+    height: calc(var(--vw) * 15);
     background-color: transparent;
     border: none;
     /*Flexbox*/
@@ -37,8 +37,8 @@
 }
 
 .logo-rexenxotv a {
-    width: 42vw;
-    height: 15vw;
+    width: calc(var(--vw) * 42);
+    height: calc(var(--vw) * 15);
     /*Flexbox*/
     display: flex;
     justify-content: right;
@@ -48,8 +48,8 @@
 .logo-rexenxotv img {
     height: 80%;
     width: auto;
-    margin-top: 1vw;
-    margin-right: 2vw;
+    margin-top: calc(var(--vw) * 1);
+    margin-right: calc(var(--vw) * 2);
     object-fit: contain;
 }
 
