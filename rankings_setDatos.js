@@ -1,4 +1,4 @@
-import { getTenista, getRankingsTenista, getLiveRankings, getRankingCompletoTenista, getTodosLosTenistas } from "./firebase-init.js";
+import { getTenista, getPartido, getLiveRankings, getRankingCompletoTenista, getTodosLosTenistas, getTorneo, getPartidosTenista } from "./firebase-init.js";
 import { RawDataStatsTenistaPartido, StatsTenistaPartido, getRawData } from "./stats.js";
 
 document.addEventListener('DOMContentLoaded', async() => {
@@ -28,6 +28,66 @@ document.addEventListener('DOMContentLoaded', async() => {
             if (ultimoClub && ultimoClub.fechaFin == null) club = ultimoClub.club;
         }
 
+        // Chekear el último partido del historial (siempre hay al menos uno) para saber el último torneo
+        const ultimo_partido = await getPartido(t.partidos[t.partidos.length - 1]);
+        const ultimo_torneo = await getTorneo(ultimo_partido.torneo);
+        let archivo_logo = "vacio";
+        if(ultimo_torneo.categoria != null) {
+            switch(ultimo_torneo.categoria) {
+                case "ATPR 250":
+                    archivo_logo = "logo-atpr250";
+                    break;
+                case "ATPR 500":
+                    archivo_logo = "logo-atpr500";
+                    break;
+                case "Masters 1000":
+                    archivo_logo = "logo-masters1000";
+                    break;
+                case "Challenger 125":
+                case "Challenger 100":
+                case "Challenger 75":
+                case "Challenger 50":
+                    archivo_logo = "logo-challenger";
+                    break;
+            }
+        }
+
+        // Cargamos las stats también (lo siento por la pantalla de carga)
+        // NA TARDA DEMASIADO TIENE QUE SER SU PROPIA PÁGINA LAS STATS
+        /**
+        const partidos = await getPartidosTenista(ID_tenista);
+        if(!partidos) {
+            console.error("Este tenista aún no jugó ningún partido:", ID_tenista);
+            return;
+        }
+        let statsTotales = new RawDataStatsTenistaPartido();
+        let nPartidosConStats = 0;
+
+        for(const p of partidos) {
+            // Si no es estado fulldata ignorar
+            if( p.estado != "fulldata") continue;
+
+            nPartidosConStats++;
+
+            try {
+                const [stats_t1, stats_t2] = getRawData(p);
+                if(p.tenista1 === ID_tenista) statsTotales.juntarCon(stats_t1);
+                else statsTotales.juntarCon(stats_t2);
+
+                // DEBUG
+                console.log(p.id + ": " + p.tenista1 + " vs " + p.tenista2);
+                console.log("stats " + p.tenista1);
+                console.log(stats_t1);
+                console.log("stats " + p.tenista2);
+                console.log(stats_t2);
+                console.log("stats acumuladas " + ID_tenista);
+                console.log(statsTotales);
+            } catch (e) {
+                console.warn(`No se pudieron obtener stats del partido ${p.id}`, e);
+            }
+        }
+        const stats = new StatsTenistaPartido(statsTotales); */
+
         console.log(ID_tenista);
         console.log(data);
 
@@ -39,7 +99,9 @@ document.addEventListener('DOMContentLoaded', async() => {
                 rankingAnterior: data.rankingAnterior,
                 puntos: data.puntos,
                 pps: data.puntosPorSets,
-                ppj: data.puntosPorJuegos
+                ppj: data.puntosPorJuegos,
+                ultimo_torneo: ultimo_torneo.serie + " " + ultimo_torneo.anho,
+                archivo_logo: archivo_logo
             });
         }
         // Si entra por aquí es que el tenista no jugó ningún torneo en ese periodo
@@ -48,11 +110,15 @@ document.addEventListener('DOMContentLoaded', async() => {
         }
     }
 
-    // Ordenamos liveranking_ordenado ;)
+    // Ahora tenemos el liveranking ordenado y en unrankeds los que no jugaron
     liveranking_ordenado.sort((a, b) => a.ranking - b.ranking);
 
-    // Ahora tenemos el liveranking ordenado y en unrankeds los que no jugaron
+    // Creamos los ul
     const ulLiveRanking = document.getElementById('live-ranking-actual');
+    const ulStats = document.getElementById('all-stats');
+    // UTF: ⇧ ⇩ ↺ ⯆▼▾▽ ⯅▲▴△ ⭡⭣
+
+    // Listado de tenistas
     for(const posicion of liveranking_ordenado) {
         if(!posicion) continue; // Miqueta de progamasió defensiva Joan
 
@@ -81,8 +147,12 @@ document.addEventListener('DOMContentLoaded', async() => {
             </div>
             <div>
                 <div class="lr-puntos">${posicion.puntos}</div>
-                <div class="lr-pps">${posicion.pps}</div>
-                <div class="lr-ppj">${posicion.ppj}</div>
+                <div class="lr-pps">PPS: ${posicion.pps}</div>
+                <div class="lr-ppj">PPJ: ${posicion.ppj}</div>
+            </div>
+            <div class="categoria-torneo">
+                ${posicion.ultimo_torneo}
+                <img src="media/logo/${posicion.archivo_logo}.png">
             </div>
         `;
 
@@ -99,11 +169,11 @@ document.addEventListener('DOMContentLoaded', async() => {
             divDif.style.color = 'lightslategray';
         }
         else if (diferenciaRanking < 0) {
-            divDif.textContent = `+${Math.abs(diferenciaRanking)}`;
+            divDif.textContent = `⭡${Math.abs(diferenciaRanking)}`;
             divDif.style.color = 'lime';
         }
         else {
-            divDif.textContent = `−${diferenciaRanking}`;
+            divDif.textContent = `⭣${diferenciaRanking}`;
             divDif.style.color = 'red';
         }
 

@@ -29,6 +29,9 @@
             <!-- CARGANDO... -->
             <div id="cargando">
                 <div class="circulo-carga"></div>
+                <div class="imagen-fija">
+                    <img src="media/logo/cargando.png" alt="...">
+                </div>
                 <div class="cargando-texto">Cargandooo</div>
             </div>
             <!--MENÚ SUPERIOR-->
@@ -46,7 +49,7 @@
                     <strong>Live Ranking</strong>
                 </a>
                 <!-- Race to Contumil temporalmente desactivada style="display: none;" -->
-                <a href="#" class="seleccion-modo" data-boton="2">
+                <a href="#" class="seleccion-modo" data-boton="2" style="display: none;">
                     <strong>Race to Contumil</strong>
                 </a>
                 <a href="#" class="seleccion-modo" data-boton="3">
@@ -54,16 +57,28 @@
                 </a>
             </div>
             <!-- LIVE RANKING -->
-            <div class="seleccion-contenido seleccion-contenido--activa" data-info="1"></div>
-            <div class="live-ranking">
-                <ul id="live-ranking-actual">
-
-                </ul>
+            <div class="seleccion-contenido seleccion-contenido--activa" data-info="1">
+                <div class="live-ranking">
+                    <ul id="live-ranking-actual">
+                        <div class="leyendas">
+                            <div class="leyenda" style="width: calc(var(--vw) * 10);">Rank</div>
+                            <div class="leyenda" style="width: calc(var(--vw) * 44);">Tenista</div>
+                            <div class="leyenda" style="width: calc(var(--vw) * 10);">Pts *</div>
+                            <div class="leyenda" style="width: calc(var(--vw) * 20);">Último torneo</div>
+                        </div>
+                    </ul>
+                    <div class="leyenda" style="display: none;">
+                        SIN RANKING
+                    </div>
+                </div>
             </div>
             <!-- RACE TO CONTUMIL // Temporalmente desactivada style="display: none;" -->
             <div class="seleccion-contenido" data-info="2"></div>
             <!-- STATS -->
             <div class="seleccion-contenido" data-info="3"></div>
+            <div class="stats">
+                <ul id="all-stats"></ul>
+            </div>
         </div>
     </body>
 </html>
