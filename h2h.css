@@ -621,9 +621,9 @@ img {
 }
 
 .selector-tenista ul li {
-    padding-left: calc(var(--vw) * 1);
-    padding-right: calc(var(--vw) * 1);
+    height: calc(var(--vw) * 3.2);
     cursor: pointer;
+    margin-top: calc(var(--vw) * 2);
 }
 
 .consejo {

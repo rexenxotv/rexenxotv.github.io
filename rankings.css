@@ -14,14 +14,14 @@ body {
 .ratio-movil {
     /*Por defecto (modo móvil cuando vh > vw)*/
     width: 100vw;
-    background: goldenrod;
+    background: snow;
     overflow: hidden;
 }
 
 @media(min-aspect-ratio: 1/1) {
     .ratio-movil {
         width: 100vh;
-        background: goldenrod;
+        background: snow;
         overflow: hidden;
     }
 }
@@ -323,7 +323,7 @@ img {
     color: lightslategray;
 }
 
-.categoria-torneo {
+.ultimo-torneo {
     width: calc(var(--vw) * 20);
     /*Texto*/
     text-align: center;
@@ -337,7 +337,7 @@ img {
     align-items: center;
 }
 
-.categoria-torneo img {
+.ultimo-torneo img {
     width: calc(var(--vw) * 15);
     max-height: calc(var(--vw) * 8);
     object-fit: contain;

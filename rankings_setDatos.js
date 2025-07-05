@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', async() => {
                 <div class="lr-pps">PPS: ${posicion.pps}</div>
                 <div class="lr-ppj">PPJ: ${posicion.ppj}</div>
             </div>
-            <div class="categoria-torneo">
+            <div class="ultimo-torneo">
                 ${posicion.ultimo_torneo}
                 <img src="media/logo/${posicion.archivo_logo}.png">
             </div>
@@ -169,12 +169,12 @@ document.addEventListener('DOMContentLoaded', async() => {
             divDif.style.color = 'lightslategray';
         }
         else if (diferenciaRanking < 0) {
-            divDif.textContent = `⭡${Math.abs(diferenciaRanking)}`;
+            divDif.textContent = `▴${Math.abs(diferenciaRanking)}`;
             divDif.style.color = 'lime';
         }
         else {
             divDif.textContent = `⭣${diferenciaRanking}`;
-            divDif.style.color = 'red';
+            divDif.style.color = '▾red';
         }
 
         // Lo añadimos a la lista
