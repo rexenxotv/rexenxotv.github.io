@@ -169,11 +169,11 @@ document.addEventListener('DOMContentLoaded', async() => {
             divDif.style.color = 'lightslategray';
         }
         else if (diferenciaRanking < 0) {
-            divDif.textContent = `▴ ${Math.abs(diferenciaRanking)}`;
+            divDif.textContent = `⯅ ${Math.abs(diferenciaRanking)}`;
             divDif.style.color = 'lime';
         }
         else {
-            divDif.textContent = `▾ ${diferenciaRanking}`;
+            divDif.textContent = `⯆ ${diferenciaRanking}`;
             divDif.style.color = 'red';
         }
 

@@ -44,8 +44,8 @@ document.addEventListener('DOMContentLoaded', async() => {
 
         // Datos calculados (stats)
         const titulos = partidos.filter(p => p.ronda === 'F' && p.ganador === ID_tenista).length;
-        const victorias = partidos.filter(p => p.ganador === ID_tenista).length;
-        const derrotas = partidos.filter(p => p.ganador !== ID_tenista && p.ganador != null).length;
+        const victorias = partidos.filter(p => p.ganador === ID_tenista && p.marcador!== "Withdraw").length;
+        const derrotas = partidos.filter(p => p.ganador !== ID_tenista && p.marcador!== "Withdraw").length;
         const [rankingActual, rankingAnterior, mejorRanking, fechaMR] = await getRankingsTenista(ID_tenista);
         const diferenciaRanking = rankingActual - rankingAnterior;
         // Actualizamos estos datos obtenidos en el html

@@ -23,6 +23,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    border: 2px solid lime;
 }
 
 .logo-rexenxotv {
@@ -54,3 +55,55 @@
 }
 
 /* ---------------FIN CONFIG MENÚ SUPERIOR--------------- */
+
+/* ---------------INICIO CONFIG MENÚ LATERAL--------------- */
+
+#menu-lateral {
+    position: fixed;
+    top: 0;
+    left: -100%; /* Oculto fuera del viewport */
+    width: calc(var(--vw) * 50);
+    height: 100vh;
+    background-color: rgb(8, 16, 32);
+    z-index: 100;
+    transition: left 0.3s ease;
+    /*box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);*/
+    padding: calc(var(--vw) * 1);
+}
+
+/*Cuando se muestra el menú...*/
+#menu-lateral.activo {
+    left: 0;
+}
+
+/*Quitar estilos por defecto*/
+#menu-lateral ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#menu-lateral li {
+    height: calc(var(--vw) * 15);
+    /*Flexbox*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+}
+
+#menu-lateral li a {
+    display: block;
+    /*Texto*/
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    font-size: calc(var(--vw) * 6);
+}
+
+.boton-ver-menos {
+    width: calc(var(--vw) * 15);
+    border: 2px solid lime;
+}
+
+/* ---------------FIN CONFIG MENÚ LATERAL--------------- */
