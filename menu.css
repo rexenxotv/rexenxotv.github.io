@@ -23,7 +23,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 2px solid lime;
+}
+
+.boton-ver-apartados img {
+    width: calc(var(--vw) * 8);
+    height: calc(var(--vw) * 8);
+    object-fit: contain;
+    /*Pa invertirla de negro a blanco*/
+    filter: invert(1);
 }
 
 .logo-rexenxotv {
@@ -62,13 +69,17 @@
     position: fixed;
     top: 0;
     left: -100%; /* Oculto fuera del viewport */
-    width: calc(var(--vw) * 50);
+    width: calc(var(--vw) * 60);
     height: 100vh;
     background-color: rgb(8, 16, 32);
     z-index: 100;
     transition: left 0.3s ease;
     /*box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);*/
     padding: calc(var(--vw) * 1);
+    /*Bordeciño*/
+    border-top-right-radius: calc(var(--vw) * 14);
+    border-bottom-right-radius: calc(var(--vw) * 14);
+    border-spacing: 0; /*Importante*/
 }
 
 /*Cuando se muestra el menú...*/
@@ -76,20 +87,25 @@
     left: 0;
 }
 
-/*Quitar estilos por defecto*/
 #menu-lateral ul {
+    margin-top: calc(var(--vw) * 5);
+    /*Quitar estilos por defecto*/
     list-style: none;
-    margin: 0;
     padding: 0;
-}
-
-#menu-lateral li {
-    height: calc(var(--vw) * 15);
     /*Flexbox*/
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: left;
+    align-items: center;
+}
+
+#menu-lateral li {
+    width: calc(var(--vw) * 55);
+    height: calc(var(--vw) * 12);
+    /*Flexbox*/
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 #menu-lateral li a {
@@ -98,12 +114,33 @@
     text-decoration: none;
     color: white;
     font-weight: bold;
-    font-size: calc(var(--vw) * 6);
+    font-size: calc(var(--vw) * 5);
+}
+
+#menu-lateral img {
+    width: calc(var(--vw) * 6);
+    height: calc(var(--vw) * 6);
+    object-fit: contain;
+    margin-right: calc(var(--vw) * 2);
+    /*Pa invertirla de negro a blanco*/
+    filter: invert(1);
 }
 
 .boton-ver-menos {
-    width: calc(var(--vw) * 15);
-    border: 2px solid lime;
+    height: calc(var(--vw) * 13);
+    width: calc(var(--vw) * 13);
+    /*Flexbox*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.boton-ver-menos img {
+    width: calc(var(--vw) * 7);
+    height: calc(var(--vw) * 7);
+    object-fit: contain;
+    /*Pa invertirla de negro a blanco*/
+    filter: invert(1);
 }
 
 /* ---------------FIN CONFIG MENÚ LATERAL--------------- */
