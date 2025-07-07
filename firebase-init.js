@@ -56,6 +56,14 @@ export async function getTorneo(id) {
     return snapshot.val();
 }
 
+export async function getIDsTorneos() {
+    const snapshot = await get(ref(db, 'torneos'));
+    if(!snapshot.exists()) return []; // Si hubiera un error devuelve una lista vacía
+
+    const data = snapshot.val();// Objeto de IDs
+    return Object.keys(data);   // Devuelve el listado de IDs
+}
+
 export async function getPista(id) {
     const snapshot = await get(child(ref(db), `pistas/${id}`));
     if (!snapshot.exists()) throw new Error(`No se encontró la pista: ${id}`);
@@ -107,7 +115,7 @@ export async function getPartidosTenista(ID_tenista) {
     return partidos;
 }
 
-export async function getTodosLosTenistas() {
+export async function getIDsTenistas() {
     const snapshot = await get(ref(db, 'tenistas'));
     if(!snapshot.exists()) return []; // Si hubiera un error devuelve una lista vacía
 

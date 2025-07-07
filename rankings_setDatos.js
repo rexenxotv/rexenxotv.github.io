@@ -1,4 +1,4 @@
-import { getTenista, getPartido, getLiveRankings, getRankingCompletoTenista, getTodosLosTenistas, getTorneo, getPartidosTenista } from "./firebase-init.js";
+import { getTenista, getPartido, getLiveRankings, getRankingCompletoTenista, getIDsTenistas, getTorneo, getPartidosTenista } from "./firebase-init.js";
 import { RawDataStatsTenistaPartido, StatsTenistaPartido, getRawData } from "./stats.js";
 
 document.addEventListener('DOMContentLoaded', async() => {
@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', async() => {
     }
 
     // Obtenemos los IDs de todos los tenistas
-    const lista_tenistas = await getTodosLosTenistas();
+    const lista_tenistas = await getIDsTenistas();
 
     // El primero siempre debe ser el "live", se podría comprobar con el atributo de todos modos
     // Live ranking actual por defecto (se puede cambiar a uno anterior)

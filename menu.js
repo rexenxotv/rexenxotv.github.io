@@ -21,5 +21,16 @@ document.addEventListener('DOMContentLoaded', () => {
             menuLateral.classList.remove("activo");
         });
 
+        // queda pal futuro
+        // Añadir torneos al submenú de torneos
+        /* 
+        const IDsTorneos = getIDsTorneos();
+        const listaTorneos = document.getElementById("lista-torneos");
+
+        IDsTorneos.forEach(nombre => {
+            const li = document.createElement("li");
+            li.innerHTML = `<a href="torneo.html?id=${nombre}">${nombre}</a>`;
+            listaTorneos.appendChild(li);
+        });*/
     });
 });

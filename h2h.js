@@ -1,4 +1,4 @@
-import { getTodosLosTenistas } from './firebase-init.js';
+import { getIDsTenistas } from './firebase-init.js';
 import { setDatosH2H } from './h2h_setDatos.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if(cacheTenistas.length === 0) {
-            cacheTenistas = await getTodosLosTenistas();
+            cacheTenistas = await getIDsTenistas();
         }
         mostrarOpciones(boton1, boton2, lista1, cacheTenistas, true);
         
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if(cacheTenistas.length === 0) {
-            cacheTenistas = await getTodosLosTenistas();
+            cacheTenistas = await getIDsTenistas();
         }
         mostrarOpciones(boton2, boton1, lista2, cacheTenistas, false);
     });
