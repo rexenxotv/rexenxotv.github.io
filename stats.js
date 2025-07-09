@@ -863,7 +863,8 @@ export function getRawData(partido) {
     let n1PU = 0;
     let n2PU = 0;
     // Mensajes
-    let nWarnings = 0;
+    let nWarningsT1 = 0;
+    let nWarningsT2 = 0;
     let RET1 = false;
     let RET2 = false;
     /** 
@@ -902,11 +903,13 @@ export function getRawData(partido) {
         // 2P ---> puntos perdidos con segundo saque
         n2P = contarVeces("2P") + contarVeces("2PU");
 
-        // Warnings T1
-        nWarnings = contarVeces("W1");
+        // Warnings
+        nWarningsT1 = contarVeces("W1");
+        nWarningsT2 = contarVeces("W2");
 
         // (2.B) Transformar las veces que sale cada tipopunto a rawData
-        rawData_t1.nWarnings += nWarnings;
+        rawData_t1.nWarnings += nWarningsT1;
+        rawData_t2.nWarnings += nWarningsT2;
         // SAQUES (T1)
         rawData_t1.nAces += n1A + n2A;
         rawData_t1.nPrimerSaque += n1 + n1A + n1P;
@@ -927,7 +930,6 @@ export function getRawData(partido) {
         rawData_t2.nJuegosRestando++;
 
         // (2.C) Quién ganó el juego y si fue juego en blanco
-
         // TODO TO-DO PAFACER: gestionar RET1 RET2
 
         // Ver de qué tipo es el último punto para saber quién ganó el juego
@@ -980,11 +982,11 @@ export function getRawData(partido) {
     }
 
     // (3) Procesar la info de los juegos en los que saca T2 (los tiebreaks van a parte)
-    for(let sacaT1 = 1; sacaT1 < nJuegos; sacaT1+=2) {
+    for(let sacaT2 = 1; sacaT2 < nJuegos; sacaT2+=2) {
         // Saltar los tiebreaks
-        if(indicesTiebreak.includes(sacaT1)) continue;
+        if(indicesTiebreak.includes(sacaT2)) continue;
 
-        dataJuego = partido.data[sacaT1];
+        dataJuego = partido.data[sacaT2];
 
         // (3.A) Contar cada tipopunto/mensaje
         // TODO TO-DO PAFACER: CREAR UNA FUNCIÓN CONTARVECES(PUNTO) PA MODULARIZAR N SHIT
@@ -1004,10 +1006,12 @@ export function getRawData(partido) {
         n2P = contarVeces("2P") + contarVeces("2PU");
 
         // Warnings T2
-        nWarnings = contarVeces("W2");
+        nWarningsT1 = contarVeces("W1");
+        nWarningsT2 = contarVeces("W2");
 
         // (3.B) Transformar las veces que sale cada tipopunto a rawData
-        rawData_t2.nWarnings += nWarnings;
+        rawData_t1.nWarnings += nWarningsT1;
+        rawData_t2.nWarnings += nWarningsT2;
         // SAQUES (T1)
         rawData_t2.nAces += n1A + n2A;
         rawData_t2.nPrimerSaque += n1 + n1A + n1P;
@@ -1080,11 +1084,121 @@ export function getRawData(partido) {
 
     }
 
-    // (4) Procesar la info de los tiebreaks
-    /** 
+    // (4) Procesar la info de los tiebreaks (se viene terroristada)
     for(const indice of indicesTiebreak) {
+        const dataTiebreak = partido.data[indice];
+        const puntosTiebreak = dataTiebreak.trim().split(" "); // Pasamos el string a array
 
-    }*/
+        // (4.A) Separar los puntos en los que sacó cada uno
+        const puntosTiebreakSacaT1 = [puntosTiebreak[0]];
+        const puntosTiebreakSacaT2 = [];
+        let sacaT1 = true;
+        // Supusimos que empieza sacando t1, corregimos si no es cierto
+        if( indice % 2 !== 0 ) {
+            sacaT1 = false;
+            puntosTiebreakSacaT1.pop();
+            puntosTiebreakSacaT2.push(puntosTiebreak[0]);
+        }
+        // Vamos añadiendo 2 puntos a cada uno (el primero ya se procesó)
+        let esSegundoPuntoSacando = false;
+        sacaT1 = !sacaT1; // Cambiamos el tenista que saca después del primer punto :P
+        for (let i = 1; i < puntosTiebreak.length; i++) {
+            if (sacaT1) puntosTiebreakSacaT1.push(puntosTiebreak[i]);
+            else puntosTiebreakSacaT2.push(puntosTiebreak[i]);
+            // Actualizamos quién tiene el turno ahora
+            if(esSegundoPuntoSacando) {
+                sacaT1 = !sacaT1;
+            }
+            esSegundoPuntoSacando = !esSegundoPuntoSacando;
+        }
+
+        // (4.B) Contar cada tipopunto/mensaje de T1 ------------------------------------------- //
+        dataJuego = puntosTiebreakSacaT1.join(" ");
+        console.log(dataJuego);
+        // TODO TO-DO PAFACER: CREAR UNA FUNCIÓN CONTARVECES(PUNTO) PA MODULARIZAR N SHIT
+        // 1 ---> puntos ganados con primer saque
+        n1 = contarVeces("1") + contarVeces("1U");
+        // 2 ---> puntos ganados con segundo saque
+        n2 = contarVeces("2") + contarVeces("2U");
+        // 3 ---> dobles faltas
+        n3 = contarVeces("3");
+        // 1A ---> puntos ganados con ace en primer saque
+        n1A = contarVeces("1A") + contarVeces("1AU");
+        // 2A ---> puntos ganados con ace en segundo saque
+        n2A = contarVeces("2A") + contarVeces("2AU");
+        // 1P ---> puntos perdidos con primer saque
+        n1P = contarVeces("1P") + contarVeces("1PU");
+        // 2P ---> puntos perdidos con segundo saque
+        n2P = contarVeces("2P") + contarVeces("2PU");
+
+        // Warnings
+        nWarningsT1 = contarVeces("W1");
+        nWarningsT2 = contarVeces("W2");
+
+        // Transformar las veces que sale cada tipopunto a rawData
+        rawData_t1.nWarnings += nWarningsT1;
+        rawData_t2.nWarnings += nWarningsT2;
+        // SAQUES (T1)
+        rawData_t1.nAces += n1A + n2A;
+        rawData_t1.nPrimerSaque += n1 + n1A + n1P;
+        rawData_t1.nSegundoSaque += n2 + n2A + n2P;
+        rawData_t1.nSaques += (n1 + n1A + n1P) + (n2 + n2A + n2P);
+        rawData_t1.nDoblesFaltas += n3;
+        rawData_t1.nPG_primerSaque += n1 + n1A;
+        rawData_t1.nPG_segundoSaque += n2 + n2A;
+        rawData_t1.nPG_saque += n1 + n1A + n2 + n2A;
+        // RESTOS (T2)
+        rawData_t2.nRestos += (n1 + n1A + n1P) + (n2 + n2A + n2P);
+        rawData_t2.nRestosPrimerSaque += n1 + n1A + n1P;
+        rawData_t2.nRestosSegundoSaque += n2 + n2A + n2P;
+        rawData_t2.nPG_restando += n1P + n2P + n3;
+        rawData_t2.nPG_restandoPrimerSaque += n1P;
+        rawData_t2.nPG_restandoSegundoSaque += n2P;
+
+        // (4.C) Contar cada tipopunto/mensaje de T2 ------------------------------------------- //
+        dataJuego = puntosTiebreakSacaT2.join(" ");
+        console.log(dataJuego);
+        // TODO TO-DO PAFACER: CREAR UNA FUNCIÓN CONTARVECES(PUNTO) PA MODULARIZAR N SHIT
+        // 1 ---> puntos ganados con primer saque
+        n1 = contarVeces("1") + contarVeces("1U");
+        // 2 ---> puntos ganados con segundo saque
+        n2 = contarVeces("2") + contarVeces("2U");
+        // 3 ---> dobles faltas
+        n3 = contarVeces("3");
+        // 1A ---> puntos ganados con ace en primer saque
+        n1A = contarVeces("1A");
+        // 2A ---> puntos ganados con ace en segundo saque
+        n2A = contarVeces("2A");
+        // 1P ---> puntos perdidos con primer saque
+        n1P = contarVeces("1P") + contarVeces("1PU");
+        // 2P ---> puntos perdidos con segundo saque
+        n2P = contarVeces("2P") + contarVeces("2PU");
+
+        // Warnings T2
+        nWarningsT1 = contarVeces("W1");
+        nWarningsT2 = contarVeces("W2");
+
+        // Transformar las veces que sale cada tipopunto a rawData
+        rawData_t1.nWarnings += nWarningsT1;
+        rawData_t2.nWarnings += nWarningsT2;
+        // SAQUES (T1)
+        rawData_t2.nAces += n1A + n2A;
+        rawData_t2.nPrimerSaque += n1 + n1A + n1P;
+        rawData_t2.nSegundoSaque += n2 + n2A + n2P;
+        rawData_t2.nSaques += (n1 + n1A + n1P) + (n2 + n2A + n2P);
+        rawData_t2.nDoblesFaltas += n3;
+        rawData_t2.nPG_primerSaque += n1 + n1A;
+        rawData_t2.nPG_segundoSaque += n2 + n2A;
+        rawData_t2.nPG_saque += n1 + n1A + n2 + n2A;
+        // RESTOS (T2)
+        rawData_t1.nRestos += (n1 + n1A + n1P) + (n2 + n2A + n2P);
+        rawData_t1.nRestosPrimerSaque += n1 + n1A + n1P;
+        rawData_t1.nRestosSegundoSaque += n2 + n2A + n2P;
+        rawData_t1.nPG_restando += n1P + n2P + n3;
+        rawData_t1.nPG_restandoPrimerSaque += n1P;
+        rawData_t1.nPG_restandoSegundoSaque += n2P;
+
+    }
 
     return [rawData_t1, rawData_t2];
 }

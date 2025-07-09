@@ -22,20 +22,6 @@ document.addEventListener('DOMContentLoaded', async() => {
         // Actualizamos toda la información del partido, imágenes, etc.----------------------------
         // Recordatorio --> campos de un partido que pueden ser null: árbitro, data
         // (pista y fecha si es Withdraw)
-        
-        // Obtenemos la pista en la que se jugó el partido
-        const pista = await getPista(p.pista);
-        if(!pista) {
-            console.error("No se encontró la pista con ID:", p.pista);
-            return;
-        }
-        
-        // Ficha técnica
-        document.getElementById("fecha").textContent = p.fecha || "?";
-        document.getElementById("lugar").textContent = pista.lugar || "?";
-        document.getElementById("pista").textContent = pista.nombre || "?";
-        document.getElementById("superficie").textContent = pista.tipo || "?";
-        document.getElementById("arbitro").textContent = p.arbitro || "?";
 
         // Datos del torneo
         const t = await getTorneo(p.torneo);
@@ -97,11 +83,21 @@ document.addEventListener('DOMContentLoaded', async() => {
         // (si es WC, LL, PR, etc. se le baja la fuente) -> font-size: calc(var(--vw) * 2.6);
 
         // Nombres
-        marcador_ganador.querySelector('.m-nombre').textContent = ganador.toUpperCase();
-        marcador_perdedor.querySelector('.m-nombre').textContent = perdedor.toUpperCase();
+        marcador_ganador.querySelector('.m-nombre a').textContent = ganador.toUpperCase();
+        marcador_perdedor.querySelector('.m-nombre a').textContent = perdedor.toUpperCase();
+        marcador_ganador.querySelector('.m-nombre a').href = `tenista.html?id=${ganador}`;
+        marcador_perdedor.querySelector('.m-nombre a').href = `tenista.html?id=${perdedor}`;
 
         // Meu home: existen partidos 'nojugados' ---> Withdraws
-        if(p.estado === "nojugado") return;
+        if(p.estado === "nojugado") {
+            // Tocamos algunas cosas y ya
+            marcador_ganador.querySelector('#set1').style.display = "none";
+            marcador_perdedor.querySelector('#set1').style.display = "none";
+            marcador_ganador.querySelector('.m-nombre').style.width = "70vw";
+            marcador_perdedor.querySelector('.m-nombre').style.width = "70vw";
+            document.querySelector('.final').textContent = `${ganador} avanza ya que ${perdedor} se retiró del torneo...`;
+            return;
+        }
 
         // Duración
         if(p.mins === 0) document.querySelector('.duracion').textContent = " ";
@@ -199,6 +195,7 @@ document.addEventListener('DOMContentLoaded', async() => {
         marcador_ganador.querySelector('.m-nombre').style.width = `${libre}vw`;
         marcador_perdedor.querySelector('.m-nombre').style.width = `${libre}vw`;
 
+        console.log(p);
         // Mensaje final
         if(info_marcador_extras[info_marcador_extras.length - 1] === "RET") {
             document.querySelector('.final').textContent = `${perdedor} se ve forzado a retirarse... ${ganador} gana.`;
@@ -361,8 +358,22 @@ document.addEventListener('DOMContentLoaded', async() => {
             <br>${rawData_t2.nMatchpointsSalvados}/${rawData_t2.nMatchpointsEnContra}
             `;
 
+        // ----------------------------------- FICHA TÉCNICA ----------------------------------- //
+            
+        // Se hace al final para garantizar que la pista existe (no es Withdraw)
+        const pista = await getPista(p.pista);
+        if(!pista) {
+            console.error("No se encontró la pista con ID:", p.pista);
+        }
+        
+        // Ficha técnica
+        document.getElementById("fecha").textContent = p.fecha || "?";
+        document.getElementById("lugar").textContent = pista.lugar || "?";
+        document.getElementById("pista").textContent = pista.nombre || "?";
+        document.getElementById("superficie").textContent = pista.tipo || "?";
+        document.getElementById("arbitro").textContent = p.arbitro || "?";
 
-        // Actualizar las barras y porcentajes visuales !! ---------------------------------------- //
+        // ------------------ Actualizar las barras y porcentajes visuales !! ------------------ //
         actualizarTodasLasBarras();
     }
     catch (error) {
