@@ -29,10 +29,10 @@ async function setDatosH2H(ID_tenista1, ID_tenista2) {
         document.querySelector("#botonBuscarTenista2").textContent = `${ID_tenista2}`;
         // VS Victorias
         const nEnfrentamientos = partidos_t1.filter(p =>
-            p.tenista1 === ID_tenista2 || p.tenista2 === ID_tenista2
+            (p.tenista1 === ID_tenista2 || p.tenista2 === ID_tenista2) && p.marcador!== "Withdraw"
         ).length;
         const t1_gana_a_t2 = partidos_t1.filter(p =>
-            (p.tenista1 === ID_tenista2 || p.tenista2 === ID_tenista2) && p.ganador === ID_tenista1
+            (p.tenista1 === ID_tenista2 || p.tenista2 === ID_tenista2) && (p.ganador === ID_tenista1 && p.marcador!== "Withdraw")
         ).length;
         document.querySelector('.victorias-tenista1 strong').textContent = t1_gana_a_t2;
         document.querySelector('.victorias-tenista2 strong').textContent = nEnfrentamientos-t1_gana_a_t2;
@@ -56,8 +56,8 @@ async function setDatosH2H(ID_tenista1, ID_tenista2) {
         document.getElementById('ranking').querySelector('.h2h-info-tabla-der strong').textContent = ranking_t2;
 
         // Mano dominante ------------------------------------------------------------------------- //
-        document.getElementById('mano-dominante').querySelector('.h2h-info-tabla-izq strong').textContent = t1.diestro ? 'Diestro': 'Zurdo';
-        document.getElementById('mano-dominante').querySelector('.h2h-info-tabla-der strong').textContent = t2.diestro ? 'Diestro': 'Zurdo';
+        document.getElementById('mano-dominante').querySelector('.h2h-info-tabla-izq strong').textContent = t1.diestro ? 'Diestra': 'Zurda';
+        document.getElementById('mano-dominante').querySelector('.h2h-info-tabla-der strong').textContent = t2.diestro ? 'Diestra': 'Zurda';
         
         // Año debut ------------------------------------------------------------------------------ //
         document.getElementById('debut').querySelector('.h2h-info-tabla-izq strong').textContent = t1.debut ?? 'N/A';
@@ -65,10 +65,10 @@ async function setDatosH2H(ID_tenista1, ID_tenista2) {
         
         // Victorias y derrotas ------------------------------------------------------------------- //
         // Cálculo
-        const victorias_t1 = partidos_t1.filter(p => p.ganador === ID_tenista1).length;
-        const derrotas_t1 = partidos_t1.filter(p => p.ganador !== ID_tenista1 && p.ganador != null).length;
-        const victorias_t2 = partidos_t2.filter(p => p.ganador === ID_tenista2).length;
-        const derrotas_t2 = partidos_t2.filter(p => p.ganador !== ID_tenista2 && p.ganador != null).length;
+        const victorias_t1 = partidos_t1.filter(p => p.ganador === ID_tenista1 && p.marcador!== "Withdraw").length;
+        const derrotas_t1 = partidos_t1.filter(p => p.ganador !== ID_tenista1 && p.marcador!== "Withdraw").length;
+        const victorias_t2 = partidos_t2.filter(p => p.ganador === ID_tenista2 && p.marcador!== "Withdraw").length;
+        const derrotas_t2 = partidos_t2.filter(p => p.ganador !== ID_tenista2 && p.marcador!== "Withdraw").length;
         // Actualización
         document.getElementById('victorias-derrotas').querySelector('.h2h-info-tabla-izq strong').textContent = `${victorias_t1}/${derrotas_t1}`;
         document.getElementById('victorias-derrotas').querySelector('.h2h-info-tabla-der strong').textContent = `${victorias_t2}/${derrotas_t2}`;
@@ -237,7 +237,7 @@ async function setDatosH2H(ID_tenista1, ID_tenista2) {
         ul.innerHTML = ''; // Limpiamos antes de añadir nada
 
         const partidosH2H = partidos_t1.filter(p =>
-            p.tenista1 === ID_tenista2 || p.tenista2 === ID_tenista2
+            (p.tenista1 === ID_tenista2 || p.tenista2 === ID_tenista2) && p.marcador!== "Withdraw"
         );
 
         // Si no han jugado ningún partido todavía
@@ -250,60 +250,34 @@ async function setDatosH2H(ID_tenista1, ID_tenista2) {
         for (let i = partidosH2H.length - 1; i >= 0; i--) {
             const p = partidosH2H[i]; // FOR invertido (crazy shi)
 
+            const objetoTorneo = await getTorneo(p.torneo);
+
             const li = document.createElement('li');
             li.classList.add('fila-info-partido');
 
-            // AÑO
-            const anho = document.createElement('div');
-            anho.textContent = p.fecha.split('.')[2] || 'N/A';
-            anho.classList.add('columna-lista-partidos', 'clp-anho');
-            li.appendChild(anho);
+            // v2: innerHTML (más conciso)
+            li.innerHTML = `
+                <div class="columna-lista-partidos clp-anho">${p.fecha?.split('.')[2] || 'N/A'}</div>
+                <div class="columna-lista-partidos circulito-ganador"></div>
+                <div class="columna-lista-partidos clp-ganador">
+                    <a href="/tenista.html?id=${p.ganador}">${p.ganador || 'N/A'}</a>
+                </div>
+                <div class="columna-lista-partidos clp-torneo">
+                    <a href="/torneos/${objetoTorneo?.serie || ''}">${objetoTorneo?.serie || 'N/A'}</a>
+                </div>
+                <div class="columna-lista-partidos clp-ronda">
+                    <a href="/partido.html?id=${p.id}">${p.ronda || 'N/A'}</a>
+                </div>
+                <div class="columna-lista-partidos clp-marcador">
+                    <a href="/partido.html?id=${p.id}">${p.marcador || 'N/A'}</a>
+                </div>
+            `;
 
             // GANADOR (CÍRCULO porque es demasiado chikito pa la imagen)
-            const circulo = document.createElement('div');
-            circulo.classList.add('columna-lista-partidos', 'circulito-ganador');
+            const circulo = li.querySelector('.circulito-ganador');
             if (p.ganador === ID_tenista1) circulo.style.background = 'blue';
             else if (p.ganador === ID_tenista2) circulo.style.background = 'yellow';
             else circulo.style.background = 'grey';
-            li.appendChild(circulo);
-
-            // GANADOR (NOMBRE)
-            const ganador = document.createElement('div');
-            ganador.classList.add('columna-lista-partidos', 'clp-ganador');
-            // Barbarie: que sea clickable y te lleve al perfil del tenista
-            const linkGanador = document.createElement('a');
-            linkGanador.href = `/tenista.html?id=${p.ganador}`;
-            linkGanador.textContent = p.ganador || 'N/A';
-            ganador.appendChild(linkGanador);
-            li.appendChild(ganador);
-
-            const torneo = document.createElement('div');
-            torneo.classList.add('columna-lista-partidos', 'clp-torneo');
-            // Barbarie: que sea clickable y te lleve al perfil del torneo
-            const linkTorneo = document.createElement('a');
-            const objetoTorneo = await getTorneo(p.torneo);
-            linkTorneo.href = `/torneos/${objetoTorneo.serie}`;
-            linkTorneo.textContent = objetoTorneo.serie || 'N/A';
-            torneo.appendChild(linkTorneo);
-            li.appendChild(torneo);
-            
-            const ronda = document.createElement('div');
-            ronda.classList.add('columna-lista-partidos', 'clp-ronda');
-            // Barbarie: que sea clickable y te lleve AL PARTIDO
-            const linkRonda = document.createElement('a');
-            linkRonda.href = `/partido.html?id=${p.id}`;
-            linkRonda.textContent = p.ronda || 'N/A';
-            ronda.appendChild(linkRonda);
-            li.appendChild(ronda);
-
-            const marcador = document.createElement('div');
-            marcador.classList.add('columna-lista-partidos', 'clp-marcador');
-            // Barbarie: que sea clickable y te lleve AL PARTIDO
-            const linkMarcador = document.createElement('a');
-            linkMarcador.href = `/partido.html?id=${p.id}`;
-            linkMarcador.textContent = p.marcador || 'N/A';
-            marcador.appendChild(linkMarcador);
-            li.appendChild(marcador);
 
             ul.appendChild(li);
         };

@@ -2,7 +2,7 @@
 body {
     margin: 0;
     font-family: sans-serif;
-    background-color: rgb(16, 32, 64);
+    background-color: gold;
     /*Flexbox*/
     display: flex;
     justify-content: center;
@@ -38,6 +38,26 @@ img {
     background-color: rgb(16, 32, 64);
 }
 
+.logo-h2h {
+    width: calc(var(--vw) * 100);
+    height: calc(var(--vw) * 8);
+    margin-top: calc(var(--vw) * 4);
+    /*Texto porque el HEAD2HEAD no es de la imagen todavía (T.T)*/
+    font-size: calc(var(--vw) * 5);
+    font-weight: 600;
+    color: white;
+    /*Flexbox*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-h2h img {
+    height: 90%;
+    width: auto;
+    margin-bottom: calc(var(--vw) * 1);
+}
+
 /*-----------------------------------------------------------------------------------------------*/
 
 .partido {
@@ -52,43 +72,8 @@ img {
 }
 
 .datos-y-marcador {
-    width: calc(var(--vw) * 98);
-    height: calc(var(--vw) * 50);
-    background-color: transparent;
-    border: none; /*C-LIME*/
-    /*Flexbox*/
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.torneo-y-marcador {
-    width: calc(var(--vw) * 64);
-    height: calc(var(--vw) * 50);
-    /*Flexbox*/
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-right: calc(var(--vw) * 4);
-}
-
-.info-torneo {
-    width: calc(var(--vw) * 64);
-    /*Flexbox*/
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.info-torneo img {
-    object-fit: contain;
-    padding: calc(var(--vw) * 2);
-    border: none;
-    width: calc(var(--vw) * 20);
-}
-
-.info-torneo-datos {
+    width: calc(var(--vw) * 100);
+    padding: calc(var(--vw) * 5);
     /*Flexbox*/
     display: flex;
     flex-direction: column;
@@ -96,12 +81,32 @@ img {
     align-items: center;
 }
 
-.info-torneo-nombre {
+.datos {
+    width: calc(var(--vw) * 80);
+    height: calc(var(--vw) * 25);
+    /*Flexbox*/
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.datos-torneo {
+    width: calc(var(--vw) * 30);
+    height: calc(var(--vw) * 20);
+    margin-left: calc(var(--vw) * 5);
+    margin-right: calc(var(--vw) * 5);
+    /*Flexbox*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.torneo-nombre {
     width: calc(var(--vw) * 40);
-    height: calc(var(--vw) * 10);
-    border: none;
+    height: calc(var(--vw) * 14);
     /*Texto*/
-    font-size: calc(var(--vw) * 4);
+    font-size: calc(var(--vw) * 5);
     font-weight: bold;
     text-align: center;
     color: white;
@@ -111,171 +116,134 @@ img {
     align-items: center;
 }
 
-.info-torneo-otros {
+.torneo-ronda {
     width: calc(var(--vw) * 40);
+    height: calc(var(--vw) * 4);
+    border: 2px solid greenyellow;
     border: none;
     /*Texto*/
     font-size: calc(var(--vw) * 3);
     text-align: center;
     color: white;
+}
+
+.tenista1-nombre {
+    width: calc(var(--vw) * 25);
+    height: calc(var(--vw) * 15);
+    background-color: transparent;
+    border: none;
     /*Flexbox*/
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.info-partido-fecha-y-duracion {
-    width: calc(var(--vw) * 64);
-    height: calc(var(--vw) * 7);
-    /*Flexbox*/
-    display: flex;
-    justify-content: space-between;
-    align-items: end;
+.tenista1-nombre a {
+    /*Corrigiendo el estilo por defecto*/
+    text-decoration: none;
+    /*Ajustar el tamaño de letra al tamaño de pantalla*/
+    font-size: calc(var(--vw) * 4);
+    text-align: center;
+    color: white;
+}
+
+.duracion {
+    width: calc(var(--vw) * 79);
+    /*Texto*/
+    font-size: calc(var(--vw) * 3);
+    text-align: right;
+    color: lightgray;
+}
+
+.final {
+    width: calc(var(--vw) * 79);
+    height: calc(var(--vw) * 6);
+    margin-top: calc(var(--vw) * 2);
     /*Texto*/
     font-size: calc(var(--vw) * 3);
     text-align: left;
     color: lightgray;
+    /*Flexbox*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .marcador {
-    width: calc(var(--vw) * 64);
+    width: calc(var(--vw) * 80);
     height: calc(var(--vw) * 16);
+    overflow: hidden;
+    background: radial-gradient(
+        circle at left bottom,
+        rgb(0, 0, 64) 0%,
+        rgb(16, 16, 128) 60%,
+        rgb(32, 32, 255) 90%
+    );
     /*Flexbox*/
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    /*Bordes*/
+    border: calc(var(--vw) * 0.6);
+    border-style: solid;
+    border-color: rgb(32, 32, 255);
+    border-radius: calc(var(--vw) * 2);
 }
 
 .marcador-fila {
-    width: calc(var(--vw) * 64);
     height: calc(var(--vw) * 8);
     /*Flexbox*/
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
 }
 
-.mf-margen1 {
-    width: calc(var(--vw) * 6);
-    height: calc(var(--vw) * 8);
-    background-color: rgb(16, 64, 32);
-}
-
-.mf-nombre1 {
-    width: calc(var(--vw) * 34);
-    height: calc(var(--vw) * 8);
-    background-color: rgb(16, 64, 32);
-    /*Flexbox*/
-    display: flex;
-    align-items: center;
+.m-seeding {
+    width: calc(var(--vw) * 5);
+    margin-right: calc(var(--vw) * 2);
     /*Texto*/
     font-size: calc(var(--vw) * 3);
+    font-weight: bolder;
+    text-align: right;
+    color: lightgrey;
+}
+
+.m-nombre {
+    width: calc(var(--vw) * 62);
+    /*Texto*/
+    font-size: calc(var(--vw) * 3.6);
     font-weight: bolder;
     text-align: left;
     color: white;
 }
 
-.mf-margen2 {
-    width: calc(var(--vw) * 6);
-    height: calc(var(--vw) * 8);
-    background-color: rgb(16, 64, 32);
-}
-
-.mf-nombre2 {
-    width: calc(var(--vw) * 34);
-    height: calc(var(--vw) * 8);
-    background-color: rgb(16, 64, 32);
-    /*Flexbox*/
-    display: flex;
-    align-items: center;
+.m-set {
+    width: calc(var(--vw) * 8);
     /*Texto*/
-    font-size: calc(var(--vw) * 3);
-    font-weight: bolder;
-    text-align: left;
-    color: white;
-}
-
-.mf-juegoactual {
-    width: calc(var(--vw) * 10);
-    height: calc(var(--vw) * 8);
-    background-color: rgb(0, 0, 32);
-    border: calc(var(--vw) * 0.4);
-    border-style: solid;
-    border-color: lightgray;
-    /*Flexbox*/
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /*Texto*/
-    font-size: calc(var(--vw) * 5);
+    font-size: calc(var(--vw) * 4.5);
     font-weight: bolder;
     color: white;
-}
-
-.mf-set1 {
-    width: calc(var(--vw) * 8);
-    height: calc(var(--vw) * 8);
-    background-color: snow;
-    border: calc(var(--vw) * 0.4);
-    border-style: solid;
-    border-color: lightgray;
     /*Flexbox*/
     display: flex;
     justify-content: center;
     align-items: center;
-    /*Texto*/
-    font-size: calc(var(--vw) * 5);
-    font-weight: bolder;
-    color: black;
 }
 
-.mf-set2 {
-    width: calc(var(--vw) * 8);
-    height: calc(var(--vw) * 8);
-    background-color: snow;
-    border: calc(var(--vw) * 0.4);
-    border-style: solid;
-    border-color: lightgray;
-    /*Flexbox*/
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /*Texto*/
-    font-size: calc(var(--vw) * 5);
-    font-weight: bolder;
-    color: black;
-}
-
-.mf-set3 {
-    width: calc(var(--vw) * 8);
-    height: calc(var(--vw) * 8);
-    background-color: snow;
-    border: calc(var(--vw) * 0.4);
-    border-style: solid;
-    border-color: lightgray;
-    /*Flexbox*/
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /*Texto*/
-    font-size: calc(var(--vw) * 5);
-    font-weight: bolder;
-    color: black;
-}
-
-.marcador-sets {
-    width: calc(var(--vw) * 24);
-    height: calc(var(--vw) * 16);
-    background-color: snow;
-    border: calc(var(--vw) * 0.4);
-    border-style: solid;
-    border-color: lightgray;
-}
-
-.marcador-ja-t {
-    height: calc(var(--vw) * 6);
+.m-juego {
+    width: calc(var(--vw) * 7);
+    height: calc(var(--vw) * 5.2);
+    background-color: white;
+    border-radius: calc(var(--vw) * 1);
     margin-left: calc(var(--vw) * 1);
+    /*Texto*/
+    font-size: calc(var(--vw) * 4.2);
+    font-weight: bolder;
+    color: black;
+    /*Flexbox*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /*-----------------------------------------------------------------------------------------------*/
@@ -290,11 +258,11 @@ img {
     align-items: center;
 }
 
-.tenista1-imagen {
+.tenista-imagen {
     width: calc(var(--vw) * 20);
     height: calc(var(--vw) * 20);
     background-color: transparent;
-    border: calc(var(--vw) * 0.6);
+    border: calc(var(--vw) * 0.7);
     border-style: solid;
     border-color: blue;
     /*Realmente este div es un círculo*/
@@ -303,23 +271,10 @@ img {
     overflow: hidden;   /*Esto hace que todo lo que está por fuera del círculo no se vea*/
 }
 
-.tenista1-imagen img {
+.tenista-imagen img {
     width: 100%;
     height: 100%;
     object-fit: cover; /*No queremos ajustar la imagen a dentro del círculo*/
-}
-
-.tenista2-imagen {
-    width: calc(var(--vw) * 20);
-    height: calc(var(--vw) * 20);
-    background-color: transparent;
-    border: calc(var(--vw) * 0.6);
-    border-style: solid;
-    border-color: yellow;
-    /*Realmente este div es un círculo*/
-    border-radius: 50%; /*Esto le da la forma de círculo*/
-    box-sizing: border-box;
-    overflow: hidden;   /*Esto hace que todo lo que está por fuera del círculo no se vea*/
 }
 
 .tenista2-imagen img {
@@ -329,23 +284,21 @@ img {
 }
 
 .ir-al-h2h {
-    height: calc(var(--vw) * 10);
-    /*Flexbox*/
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+    margin-bottom: calc(var(--vw) * 5);
+    padding-top: calc(var(--vw) * 1.5);
 }
 
 .ir-al-h2h a {
     height: calc(var(--vw) * 4.5);
     width: calc(var(--vw) * 22.5);
     display: block;
-    background-color: purple;
+    /*Corrigiendo estilo por defecto*/
+    text-decoration: none;
     /*Texto*/
+    font-size: calc(var(--vw) * 3);
     font-weight: bold;
     text-align: center;
-    text-decoration: none;
-    color: lime;
+    color: rgb(16, 32, 64);
 }
 
 /*-----------------------------------------------------------------------------------------------*/
@@ -354,21 +307,16 @@ img {
     width: calc(var(--vw) * 100);
     height: calc(var(--vw) * 8);
     background-color: snow;
-    border: none; /*C-BLUE*/
+    padding-left: calc(var(--vw) * 8);
     /*Flexbox*/
     display: flex;
-    gap: calc(var(--vw) * 8);
     justify-content: left;
     align-items: center;
-}
-
-.tenista-seleccion a {
-    border: none; /*C-BLUE*/
+    gap: calc(var(--vw) * 8);
 }
 
 .seleccion-modo {
     height: calc(var(--vw) * 6);
-    background-color: transparent;
     /*Texto cuando no está pulsado*/
     font-size: calc(var(--vw) * 3);
     font-weight: bold;
@@ -400,10 +348,164 @@ img {
     color: blue;
 }
 
+.seleccion-contenido {
+    /*Si no está pulsada la opción para verlo, se oculta*/
+    display: none;
+}
+
+.seleccion-contenido--activa {
+    background-color: snow;
+    color: black;
+    /*Flexbox*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 /*-----------------------------------------------------------------------------------------------*/
 
-.stats-partido {
-    width: calc(var(--vw) * 100);
-    height: calc(var(--vw) * 200);
-    background-color: snow;
+.tabla-stats {
+    width: calc(var(--vw) * 90);
+    /*Flexbox*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /*Texto*/
+    font-size: calc(var(--vw) * 4);
+    text-align: center;
+    color: black;
+    /*Quitar estilos por defecto*/
+    list-style: none;
+    padding: 0;
+}
+
+.tabla-stats li {
+    width: calc(var(--vw) * 90);
+    /*Flexbox*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /*Quitar estilos por defecto*/
+    list-style: none;
+    padding: calc(var(--vw) * 2);
+    /*Flexbox*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*Bordes*/
+    border-top: calc(var(--vw) * 0.3);
+    border-top-style: solid;
+    border-top-color: gray;
+    border-left: calc(var(--vw) * 0.3);
+    border-left-style: solid;
+    border-left-color: gray;
+    border-right: calc(var(--vw) * 0.3);
+    border-right-style: solid;
+    border-right-color: gray;
+}
+
+.tabla-stats li:last-child {
+    /*El último es el único que tiene borde inferior*/
+    border-bottom: calc(var(--vw) * 0.3);
+    border-bottom-style: solid;
+    border-bottom-color: gray;
+}
+
+.dato-t1 {
+    width: calc(var(--vw) * 10);
+    text-align: left;
+    /*Texto*/
+    font-size: calc(var(--vw) * 3.2);
+}
+
+.dato-t2 {
+    width: calc(var(--vw) * 10);
+    text-align: right;
+    /*Texto*/
+    font-size: calc(var(--vw) * 3.2);
+}
+
+.barra-t1 {
+    width: calc(var(--vw) * 35);
+    height: calc(var(--vw) * 2);
+    background-color: lightgray;
+    /*Vamos a mostrar el porcentaje por encima*/
+    overflow: hidden;
+    position: relative;
+}
+
+.relleno-barra-t1 {
+    width: 0%; /*Este valor se ajusta con partido_porcentajes_barras.js*/
+    height: calc(var(--vw) * 2);
+    background-color: blue;
+    /*Ajustes para mostrarlo bien por encima*/
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    /*Animación (nah insano)*/
+    transition: width 0.8s ease-in;
+}
+
+.barra-t2 {
+    width: calc(var(--vw) * 35);
+    height: calc(var(--vw) * 2);
+    background-color: lightgray;
+    /*Vamos a mostrar el porcentaje por encima*/
+    overflow: hidden;
+    position: relative;
+}
+
+.relleno-barra-t2 {
+    width: 0%; /*Este valor se ajusta con partido_porcentajes_barras.js*/
+    height: calc(var(--vw) * 2);
+    background-color: navy;
+    /*Ajustes para mostrarlo bien por encima*/
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    /*Animación (nah insano)*/
+    transition: width 0.8s ease-in;
+}
+
+/*-----------------------------------------------------------------------------------------------*/
+
+.ficha-tecnica-tipo {
+    width: calc(var(--vw) * 80);
+    height: calc(var(--vw) * 7);
+    padding-left: calc(var(--vw) * 5);
+    background-color: rgb(234, 234, 234);
+    /*Bordeciño*/
+    border-radius: calc(var(--vw) * 3);
+    border-spacing: 0; /*Importante*/
+    /*Flexbox*/
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /*Texto*/
+    font-size: calc(var(--vw) * 3.7);
+}
+
+.ficha-tecnica-dato {
+    text-align: right;
+    padding-right: calc(var(--vw) * 3);
+}
+
+/*Reescribir el tipo de display para la ficha técnica (gap y padding)*/
+.seleccion-contenido.seleccion-contenido--activa[data-info="2"] {
+    padding: calc(var(--vw) * 4);
+    gap: calc(var(--vw) * 2);
+}
+
+/*-----------------------------------------------------------------------------------------------*/
+
+.flex {
+    /*Flexbox*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

@@ -2,7 +2,7 @@
 body {
     margin: 0;
     font-family: sans-serif;
-    background-color: rgb(8, 16, 32);
+    background-color: snow;
     /*Flexbox*/
     display: flex;
     justify-content: center;
@@ -14,14 +14,14 @@ body {
 .ratio-movil {
     /*Por defecto (modo móvil cuando vh > vw)*/
     width: 100vw;
-    background: goldenrod;
+    background: snow;
     overflow: hidden;
 }
 
 @media(min-aspect-ratio: 1/1) {
     .ratio-movil {
         width: 100vh;
-        background: goldenrod;
+        background: snow;
         overflow: hidden;
     }
 }

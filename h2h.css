@@ -14,14 +14,14 @@ body {
 .ratio-movil {
     /*Por defecto (modo móvil cuando vh > vw)*/
     width: 100vw;
-    background: goldenrod;
+    background: rgb(8, 16, 32);
     overflow: hidden;
 }
 
 @media(min-aspect-ratio: 1/1) {
     .ratio-movil {
         width: 100vh;
-        background: goldenrod;
+        background: rgb(8, 16, 32);
         overflow: hidden;
     }
 }
@@ -64,9 +64,9 @@ img {
 
 .logo-h2h {
     width: calc(var(--vw) * 100);
-    height: calc(var(--vw) * 10);
-    background-color: transparent;
-    border: none;
+    height: calc(var(--vw) * 8);
+    margin-top: calc(var(--vw) * 4);
+    margin-bottom: calc(var(--vw) * 1);
     /*Texto porque el HEAD2HEAD no es de la imagen todavía (T.T)*/
     font-size: calc(var(--vw) * 5);
     font-weight: 600;
@@ -470,6 +470,8 @@ img {
     width: fit-content;
     display: block;
     margin: 1rem auto;
+    /*Texto*/
+    font-size: calc(var(--vw) * 3);
 }
 
 /*-----------------------------------------------------------------------------------------------*/

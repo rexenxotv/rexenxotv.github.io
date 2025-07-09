@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', async() => {
         // Primer torneo (aka debut)
         const primerTorneo = await getTorneo(partidos[0].torneo);
         document.getElementById('debut').textContent = `${primerTorneo.serie} ${primerTorneo.anho}`;
-        document.getElementById('mano-dominante').textContent = t.diestro ? 'Diestro': 'Zurdo';
+        document.getElementById('mano-dominante').textContent = t.diestro ? 'Diestra': 'Zurda';
         document.getElementById('origen').textContent = t.origen ?? 'N/A';
         const nTorneos = new Set(partidos.map(p => p.torneo)).size;
         document.getElementById('nTorneos').textContent = nTorneos;
@@ -220,22 +220,10 @@ document.addEventListener('DOMContentLoaded', async() => {
             // Se recorren al revés por eso .reverse(),
             // .slice() para que no cambie el orden del array original)
         for(const torneo of partidosPorTorneo.slice().reverse()) {
-            const li = document.createElement('li');
-            li.classList.add('caja-partidos-torneo');
 
-            // Datos del torneo
-            const datosTorneo = document.createElement('div');
-            datosTorneo.classList.add('datos-torneo');
             const objetoTorneo = await getTorneo(torneo.id);
 
-            // Nombre, año, lugar, superficie...
-            const infoTorneo = document.createElement('div');
-            infoTorneo.classList.add('info-torneo');
-            const nombreTorneo = document.createElement('div');
-            nombreTorneo.classList.add('info-torneo-nombre');
-            nombreTorneo.textContent = `${objetoTorneo.serie} ${objetoTorneo.anho}`;
-            const infoTorneoOtros = document.createElement('div');
-            infoTorneoOtros.classList.add('info-torneo-otros');
+            // Preparar el campo de fechas
             let fechas = `${objetoTorneo.fechaInicio} - LIVE`;
             if(objetoTorneo.fechaFin) {
                 if(objetoTorneo.fechaInicio === objetoTorneo.fechaFin) {
@@ -245,17 +233,9 @@ document.addEventListener('DOMContentLoaded', async() => {
                     fechas = `${objetoTorneo.fechaInicio} - ${objetoTorneo.fechaFin}`;
                 }
             }
-            infoTorneoOtros.innerHTML = `${fechas}<br>${objetoTorneo.ubicacion} | ${objetoTorneo.superficie}`;
-            infoTorneo.appendChild(nombreTorneo);
-            infoTorneo.appendChild(infoTorneoOtros);
 
-            // Categoría del torneo
-            const categoriaTorneo = document.createElement("div");
-            categoriaTorneo.classList.add('categoria-torneo');
-
+            let archivo_logo = "";
             if(objetoTorneo.categoria != null) {
-                const categoriaTorneoIMG = document.createElement("img");
-                let archivo_logo;
                 switch(objetoTorneo.categoria) {
                     case "ATPR 250":
                         archivo_logo = "logo-atpr250";
@@ -273,89 +253,62 @@ document.addEventListener('DOMContentLoaded', async() => {
                         archivo_logo = "logo-challenger";
                         break;
                 }
-                categoriaTorneoIMG.src = `media/logo/${archivo_logo}.png`;
-                categoriaTorneo.appendChild(categoriaTorneoIMG);
             }
 
-            // Montamos la jerarquía
-            datosTorneo.appendChild(categoriaTorneo);
-            datosTorneo.appendChild(infoTorneo);
-            li.appendChild(datosTorneo);
+            // v2: innerHTML (más conciso) 
+            const li = document.createElement('li');
+            li.classList.add('caja-partidos-torneo');
+            li.innerHTML = `
+                <div class="datos-torneo">
+                    <div class="categoria-torneo">
+                        ${archivo_logo ? `<img src="media/logo/${archivo_logo}.png">` : ''}
+                    </div>
+                    <div class="info-torneo">
+                        <div class="info-torneo-nombre">${objetoTorneo.serie} ${objetoTorneo.anho}</div>
+                        <div class="info-torneo-otros">
+                            ${fechas}<br>${objetoTorneo.ubicacion} | ${objetoTorneo.superficie}
+                        </div>
+                    </div>
+                </div>
+                <ul class="partidos-torneo">
+                    <li class="fila-info-partido">
+                        <div class="columna-lista-partidos leyenda clp-ronda">Ronda</div>
+                        <div class="columna-lista-partidos leyenda clp-rival">Rival</div>
+                        <div class="columna-lista-partidos leyenda w-l"></div>
+                        <div class="columna-lista-partidos leyenda clp-marcador">Marcador</div>
+                    </li>
+                </ul>
+            `;
 
-            // Lista de partidos
-            const ulPartidos = document.createElement('ul');
-            ulPartidos.classList.add('partidos-torneo');
-            // Leyenda
-            const liLeyendas = document.createElement('li');
-            liLeyendas.classList.add('fila-info-partido');
-            // RONDA
-            const ronda = document.createElement('div');
-            ronda.classList.add('columna-lista-partidos', 'leyenda', 'clp-ronda');
-            ronda.textContent = "Ronda";
-            liLeyendas.appendChild(ronda);
-            // RIVAL
-            const rival = document.createElement('div');
-            rival.classList.add('columna-lista-partidos', 'leyenda', 'clp-rival');
-            rival.textContent = "Rival";
-            liLeyendas.appendChild(rival);
-            // Hueco en donde va la X o ✓
-            const hueco = document.createElement('div');
-            hueco.classList.add('columna-lista-partidos', 'leyenda', 'w-l');
-            liLeyendas.appendChild(hueco);
-            // MARCADOR
-            const marcador = document.createElement('div');
-            marcador.classList.add('columna-lista-partidos', 'leyenda', 'clp-marcador');
-            marcador.textContent = "Marcador";
-            liLeyendas.appendChild(marcador);
-            ulPartidos.appendChild(liLeyendas);
+            // El ulPartidos al que añadiremos ahora los partidos jugados en el torneo
+            const ulPartidos = li.querySelector('ul.partidos-torneo');
 
             // Se recorren al revés por eso .reverse(),
             // .slice() para que no cambie el orden del array original)
             for(const p of torneo.partidos.slice().reverse()) {
                 const liPartido = document.createElement('li');
                 liPartido.classList.add('fila-info-partido');
-
-                // RONDA
-                const ronda = document.createElement('div');
-                ronda.classList.add('columna-lista-partidos', 'clp-ronda');
-                ronda.textContent = p.ronda || 'N/A';
-                liPartido.appendChild(ronda);
-
-                // GANADOR (NOMBRE)
-                const ganador = document.createElement('div');
-                ganador.classList.add('columna-lista-partidos', 'clp-rival');
-                // Barbarie: que sea clickable y te lleve al perfil del tenista
-                const linkGanador = document.createElement('a');
+                
+                // Chekeos pal innerHTML
+                const loGana = p.ganador === ID_tenista;
                 let rival = p.tenista1;
                 if(p.tenista1 === ID_tenista) {
                     rival = p.tenista2;
                 }
-                linkGanador.href = `/tenista.html?id=${rival}`;
-                linkGanador.textContent = rival || 'N/A';
-                ganador.appendChild(linkGanador);
-                liPartido.appendChild(ganador);
 
-                // ¿Gana o pierde? ✓ vs X
-                const wl = document.createElement('div');
-                wl.classList.add('columna-lista-partidos', 'w-l');
-                if (p.ganador === ID_tenista) {
-                    wl.textContent = '✓';
-                    wl.style.color = 'lime';
-                }
-                else {
-                    wl.textContent = 'X';
-                    wl.style.color = 'red';
-                }
-                liPartido.appendChild(wl);
-
-                const marcador = document.createElement('div');
-                marcador.classList.add('columna-lista-partidos', 'clp-marcador');
-                // Barbarie: que sea clickable y te lleve AL PARTIDO
-                const linkMarcador = document.createElement('a');
-                linkMarcador.href = `/partido.html?id=${p.id}`;
-                linkMarcador.textContent = p.marcador || 'Withdraw';
-                marcador.appendChild(linkMarcador);
-                liPartido.appendChild(marcador);
+                // v2: innerHTML (más conciso)
+                liPartido.innerHTML = `
+                    <div class="columna-lista-partidos clp-ronda">${p.ronda || 'N/A'}</div>
+                    <div class="columna-lista-partidos clp-rival">
+                        <a href="/tenista.html?id=${rival}">${rival}</a>
+                    </div>
+                    <div class="columna-lista-partidos w-l" style="color: ${loGana ? 'lime' : 'red'}">
+                        ${loGana ? '✓' : 'X'}
+                    </div>
+                    <div class="columna-lista-partidos clp-marcador">
+                        <a href="/partido.html?id=${p.id}">${p.marcador}</a>
+                    </div>
+                `;
 
                 // Lo añadimos a la lista de partidos
                 ulPartidos.appendChild(liPartido);

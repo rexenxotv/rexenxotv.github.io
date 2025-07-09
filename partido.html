@@ -17,6 +17,8 @@
         <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
         <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
         <script type="module" src="firebase-init.js"></script>
+        <!-- JavaScript para cambiar la data que se muestra (Stats/Ficha técnica) -->
+        <script type="module" src="seleccionador.js" defer></script>
         <!-- JavaScript para cargar los datos del partido que indica el id -->
         <script type="module" src="partido_setDatos.js" defer></script>
     </head>
@@ -26,64 +28,261 @@
             <div id="menu"></div>
             <!--DATOS PARTIDO-->
             <div class="partido">
+                <div class="logo-h2h">
+                    <img src="media/logo/logo-atpr.png" alt="Logo H2H">
+                    MARCADORES
+                </div>
                 <div class="datos-y-marcador">
-                    <div class="fotos-tenistas">
-                        <div class="tenista1-imagen">
+                    <div class="datos">
+                        <div class="tenista-imagen" id="it1">
                             <a href=""><img src="media/logo/logo-atpr.png"></a>
                         </div>
-                        <div class="tenista2-imagen">
+                        <div class="datos-torneo">
+                            <div class="torneo-nombre">Torneo</div>
+                            <div class="torneo-ronda">Ronda</div>
+                        </div>
+                        <div class="tenista-imagen" id="it2">
                             <a href=""><img src="media/logo/logo-atpr.png"></a>
                         </div>
                     </div>
-                    <div class="torneo-y-marcador">
-                        <div class="info-torneo">
-                            <img src="media/logo/logo-atpr250.png">
-                            <div class="info-torneo-datos">
-                                <div class="info-torneo-nombre">Torneo</div>
-                                <div class="info-torneo-otros">Lugar (Superficie)</div>
-                            </div>
-                        </div>
-                        <div class="info-partido-fecha-y-duracion">
-                            <div class="info-partido-fecha">1.1.2020</div>
-                            <div class="info-partido-duracion">1h1min</div>
-                        </div>
+                    <div class="marcador2">
+                        <div class="duracion"></div>
                         <div class="marcador">
                             <div class="marcador-fila" data-player="t1">
-                                <div class="mf-margen1"></div>
-                                <div class="mf-nombre1">TENISTA1</div>
-                                <div class="mf-set1"> </div>
-                                <div class="mf-set2"> </div>
-                                <div class="mf-set3"> </div>
-                                <div class="mf-juegoactual" style="display: none;">0</div>
+                                <!-- Cuando el seeding es "WC", "LL", etc se baja el tamaño de fuente -->
+                                <div class="m-seeding" style="font-size: calc(var(--vw) * 2.6);">WC</div>
+                                <div class="m-nombre">TENISTA1</div>
+                                <div class="m-servicio" style="display: none;"><img src=""></div>
+                                <div class="m-set" id="set1">0</div>
+                                <div class="m-set" id="set2" style="display: none;">0</div>
+                                <div class="m-set" id="set3" style="display: none;">0</div>
+                                <!-- Cuando el marcador pone "AD" hay que bajarle el tamaño de fuente -->
+                                <div class="m-juego" style="display: none;">0</div>
                             </div>
                             <div class="marcador-fila" data-player="t2">
-                                <div class="mf-margen2"></div>
-                                <div class="mf-nombre2">TENISTA2</div>
-                                <div class="mf-set1"> </div>
-                                <div class="mf-set2"> </div>
-                                <div class="mf-set3"> </div>
-                                <div class="mf-juegoactual" style="display: none;">0</div>
+                                <div class="m-seeding">5</div>
+                                <div class="m-nombre">TENISTA2</div>
+                                <div class="m-servicio" style="display: none;"><img src=""></div>
+                                <div class="m-set" id="set1">0</div>
+                                <div class="m-set" id="set2" style="display: none;">0</div>
+                                <div class="m-set" id="set3" style="display: none;">0</div>
+                                <!-- Cuando el marcador pone "AD" hay que bajarle el tamaño de fuente -->
+                                <div class="m-juego" style="display: none;">40</div>
                             </div>
                         </div>
-                        <div class="ir-al-h2h">
-                            <a href="#">->Ver H2H<-</a>
-                        </div>
+                        <div class="final"></div>
                     </div>
                 </div>
             </div>
-            <div class="margen"></div>
             <!-- Selector de la info del partido que se muestra -->
             <div class="partido-seleccion">
                 <a href="#" class="seleccion-modo seleccion-modo--activa" data-boton="1">
                     <strong>Stats</strong>
                 </a>
                 <a href="#" class="seleccion-modo" data-boton="2">
-                    <strong>Otros partidos</strong>
+                    <strong>Ficha técnica</strong>
                 </a>
             </div>
             <!-- STATS PARTIDO -->
-            <div class="stats-partido">
-
+            <div class="seleccion-contenido seleccion-contenido--activa" data-info="1">
+                <ul class="tabla-stats">
+                    <li><strong>SAQUE</strong></li>
+                    <li>
+                        Aces
+                        <div class="flex" id="aces">
+                            <div class="dato-t1">0</div>
+                            <div class="barra-t1"><div class="relleno-barra-t1"></div></div>
+                            <div class="barra-t2"><div class="relleno-barra-t2"></div></div>
+                            <div class="dato-t2">0</div>
+                        </div>
+                    </li>
+                    <li>
+                        Dobles Faltas
+                        <div class="flex" id="doblesFaltas">
+                            <div class="dato-t1">0</div>
+                            <div class="barra-t1"><div class="relleno-barra-t1"></div></div>
+                            <div class="barra-t2"><div class="relleno-barra-t2"></div></div>
+                            <div class="dato-t2">0</div>
+                        </div>
+                    </li>
+                    <li>
+                        Primer saque
+                        <div class="flex" id="p_primerSaque">
+                            <div class="dato-t1">0%<br>0/0</div>
+                            <div class="barra-t1"><div class="relleno-barra-t1"></div></div>
+                            <div class="barra-t2"><div class="relleno-barra-t2"></div></div>
+                            <div class="dato-t2">0%<br>0/0</div>
+                        </div>
+                    </li>
+                    <li>
+                        Puntos ganados con primer saque
+                        <div class="flex" id="p_PG_primerSaque">
+                            <div class="dato-t1">0%<br>0/0</div>
+                            <div class="barra-t1"><div class="relleno-barra-t1"></div></div>
+                            <div class="barra-t2"><div class="relleno-barra-t2"></div></div>
+                            <div class="dato-t2">0%<br>0/0</div>
+                        </div>
+                    </li>
+                    <li>
+                        Puntos ganados con segundo saque
+                        <div class="flex" id="p_PG_segundoSaque">
+                            <div class="dato-t1">0%<br>0/0</div>
+                            <div class="barra-t1"><div class="relleno-barra-t1"></div></div>
+                            <div class="barra-t2"><div class="relleno-barra-t2"></div></div>
+                            <div class="dato-t2">0%<br>0/0</div>
+                        </div>
+                    </li>
+                    <li>
+                        Breakpoints salvados
+                        <div class="flex" id="p_breakpointsSalvados">
+                            <div class="dato-t1">0%<br>0/0</div>
+                            <div class="barra-t1"><div class="relleno-barra-t1"></div></div>
+                            <div class="barra-t2"><div class="relleno-barra-t2"></div></div>
+                            <div class="dato-t2">0%<br>0/0</div>
+                        </div>
+                    </li>
+                    <li>
+                        Juegos ganados sacando
+                        <div class="flex" id="p_JG_sacando">
+                            <div class="dato-t1">0%<br>0/0</div>
+                            <div class="barra-t1"><div class="relleno-barra-t1"></div></div>
+                            <div class="barra-t2"><div class="relleno-barra-t2"></div></div>
+                            <div class="dato-t2">0%<br>0/0</div>
+                        </div>
+                    </li>
+                    <li><strong>RESTO</strong></li>
+                    <li>
+                        PPGG restando primer saque
+                        <div class="flex" id="p_PG_restandoPrimerSaque">
+                            <div class="dato-t1">0%<br>0/0</div>
+                            <div class="barra-t1"><div class="relleno-barra-t1"></div></div>
+                            <div class="barra-t2"><div class="relleno-barra-t2"></div></div>
+                            <div class="dato-t2">0%<br>0/0</div>
+                        </div>
+                    </li>
+                    <li>
+                        PPGG restando segundo saque
+                        <div class="flex" id="p_PG_restandoSegundoSaque">
+                            <div class="dato-t1">0%<br>0/0</div>
+                            <div class="barra-t1"><div class="relleno-barra-t1"></div></div>
+                            <div class="barra-t2"><div class="relleno-barra-t2"></div></div>
+                            <div class="dato-t2">0%<br>0/0</div>
+                        </div>
+                    </li>
+                    <li>
+                        Breakpoints convertidos
+                        <div class="flex" id="p_breakpointsConvertidos">
+                            <div class="dato-t1">0%<br>0/0</div>
+                            <div class="barra-t1"><div class="relleno-barra-t1"></div></div>
+                            <div class="barra-t2"><div class="relleno-barra-t2"></div></div>
+                            <div class="dato-t2">0%<br>0/0</div>
+                        </div>
+                    </li>
+                    <li>
+                        Juegos ganados restando
+                        <div class="flex" id="p_JG_restando">
+                            <div class="dato-t1">0%<br>0/0</div>
+                            <div class="barra-t1"><div class="relleno-barra-t1"></div></div>
+                            <div class="barra-t2"><div class="relleno-barra-t2"></div></div>
+                            <div class="dato-t2">0%<br>0/0</div>
+                        </div>
+                    </li>
+                    <li><strong>MOMENTOS CRÍTICOS</strong></li>
+                    <li>
+                        Tiebreaks ganados
+                        <div class="flex" id="tiebreaksGanados">
+                            <div class="dato-t1">0</div>
+                            <div class="barra-t1"><div class="relleno-barra-t1"></div></div>
+                            <div class="barra-t2"><div class="relleno-barra-t2"></div></div>
+                            <div class="dato-t2">0</div>
+                        </div>
+                    </li>
+                    <li>
+                        Setpoints convertidos
+                        <div class="flex" id="p_setpointsConvertidos">
+                            <div class="dato-t1">0%<br>0/0</div>
+                            <div class="barra-t1"><div class="relleno-barra-t1"></div></div>
+                            <div class="barra-t2"><div class="relleno-barra-t2"></div></div>
+                            <div class="dato-t2">0%<br>0/0</div>
+                        </div>
+                    </li>
+                    <li>
+                        Setpoints salvados
+                        <div class="flex" id="p_setpointsSalvados">
+                            <div class="dato-t1">0%<br>0/0</div>
+                            <div class="barra-t1"><div class="relleno-barra-t1"></div></div>
+                            <div class="barra-t2"><div class="relleno-barra-t2"></div></div>
+                            <div class="dato-t2">0%<br>0/0</div>
+                        </div>
+                    </li>
+                    <li>
+                        Matchpoints convertidos
+                        <div class="flex" id="p_matchpointsConvertidos">
+                            <div class="dato-t1">0%<br>0/0</div>
+                            <div class="barra-t1"><div class="relleno-barra-t1"></div></div>
+                            <div class="barra-t2"><div class="relleno-barra-t2"></div></div>
+                            <div class="dato-t2">0%<br>0/0</div>
+                        </div>
+                    </li>
+                    <li>
+                        Matchpoints salvados
+                        <div class="flex" id="p_matchpointsSalvados">
+                            <div class="dato-t1">0%<br>0/0</div>
+                            <div class="barra-t1"><div class="relleno-barra-t1"></div></div>
+                            <div class="barra-t2"><div class="relleno-barra-t2"></div></div>
+                            <div class="dato-t2">0%<br>0/0</div>
+                        </div>
+                    </li>
+                    <li><strong>OTROS</strong></li>
+                    <li>
+                        Juegos en blanco
+                        <div class="flex" id="juegosEnBlanco">
+                            <div class="dato-t1">0</div>
+                            <div class="barra-t1"><div class="relleno-barra-t1"></div></div>
+                            <div class="barra-t2"><div class="relleno-barra-t2"></div></div>
+                            <div class="dato-t2">0</div>
+                        </div>
+                    </li>
+                    <li>
+                        Mejor racha de puntos ganados
+                        <div class="flex" id="MRPG">
+                            <div class="dato-t1">0</div>
+                            <div class="barra-t1"><div class="relleno-barra-t1"></div></div>
+                            <div class="barra-t2"><div class="relleno-barra-t2"></div></div>
+                            <div class="dato-t2">0</div>
+                        </div>
+                    </li>
+                    <li>
+                        Mejor racha de juegos ganados
+                        <div class="flex" id="MRJG">
+                            <div class="dato-t1">0</div>
+                            <div class="barra-t1"><div class="relleno-barra-t1"></div></div>
+                            <div class="barra-t2"><div class="relleno-barra-t2"></div></div>
+                            <div class="dato-t2">0</div>
+                        </div>
+                    </li>
+                </ul>
+                <button class="ir-al-h2h">
+                    <a href="#">Ver H2H</a>
+                </button>
+            </div>
+            <!-- Ficha técnica -->
+            <div class="seleccion-contenido" data-info="2">
+                <div class="ficha-tecnica-tipo">Fecha
+                    <div class="ficha-tecnica-dato" id="fecha">?</div>
+                </div>
+                <div class="ficha-tecnica-tipo">Lugar
+                    <div class="ficha-tecnica-dato" id="lugar">?</div>
+                </div>
+                <div class="ficha-tecnica-tipo">Pista
+                    <div class="ficha-tecnica-dato" id="pista">?</div>
+                </div>
+                <div class="ficha-tecnica-tipo">Superficie
+                    <div class="ficha-tecnica-dato" id="superficie">?</div>
+                </div>
+                <div class="ficha-tecnica-tipo">Árbitro
+                    <div class="ficha-tecnica-dato" id="arbitro">?</div>
+                </div>
             </div>
         </div>
     </body>
