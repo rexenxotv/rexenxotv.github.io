@@ -56,6 +56,12 @@ export async function getTorneo(id) {
     return snapshot.val();
 }
 
+export async function getBracketTorneo(id) {
+    const snapshot = await get(child(ref(db), `brackets/${id}`));
+    if (!snapshot.exists()) throw new Error(`No se encontró el torneo: ${id}`);
+    return snapshot.val();
+}
+
 export async function getIDsTorneos() {
     const snapshot = await get(ref(db, 'torneos'));
     if(!snapshot.exists()) return []; // Si hubiera un error devuelve una lista vacía

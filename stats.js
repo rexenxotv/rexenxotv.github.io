@@ -845,7 +845,12 @@ export function getRawData(partido) {
     }
 
     if( nJuegos !== partido.data.length) {
-        throw new Error("El número de juegos del marcador y del json no coinciden!");
+        if(partido.retirada === false) {
+            throw new Error("El número de juegos del marcador y del json no coinciden!");
+        }
+        else {
+            nJuegos++; // Debió empezarse un set que no dio tiempo a acabar
+        }
     }
 
     // Variables auxiliares pa contar las veces que sale cada tipopunto o mensaje
@@ -914,7 +919,7 @@ export function getRawData(partido) {
         rawData_t1.nAces += n1A + n2A;
         rawData_t1.nPrimerSaque += n1 + n1A + n1P;
         rawData_t1.nSegundoSaque += n2 + n2A + n2P;
-        rawData_t1.nSaques += (n1 + n1A + n1P) + (n2 + n2A + n2P);
+        rawData_t1.nSaques += (n1 + n1A + n1P) + (n2 + n2A + n2P) + n3;
         rawData_t1.nDoblesFaltas += n3;
         rawData_t1.nPG_primerSaque += n1 + n1A;
         rawData_t1.nPG_segundoSaque += n2 + n2A;
@@ -936,42 +941,21 @@ export function getRawData(partido) {
         const nPuntosJuego = dataJuego.trim().split(" ").length;
 
         // *
-        // 100% tengo que quitar el W1 W2 y meter PP1 PP2 pa chekear juegos en blanco fácil
+        // 100% tengo que quitar el W1 W2 y meter PPR PPS pa chekear juegos en blanco fácil
         const puntosJuegoSinWarnings = dataJuego.trim().split(" ").filter(p => p !== "W1" && p !== "W2");
         const esJuegoEnBlanco = puntosJuegoSinWarnings.length === 4 ? true : false;
         // *
 
-        let ultimoPuntoJuego = dataJuego.trim().split(" ")[nPuntosJuego - 1];
-        // Revisar warnings, a partir del tercero es point penalty
-        if(ultimoPuntoJuego === "W1") {
-            if(rawData_t1.nWarnings > 2) rawData_t2.nJG_restando++;
-            else {
-                let tal = 2;
-                while(ultimoPuntoJuego === "W1" || ultimoPuntoJuego === "W2") {
-                    ultimoPuntoJuego = dataJuego.trim().split(" ")[nPuntosJuego - tal];
-                    tal++;
-                }
-            }
-        }
-        else if(ultimoPuntoJuego === "W2") {
-            if(rawData_t2.nWarnings > 2) rawData_t1.nJG_sacando++;
-            else {
-                let tal = 2;
-                while(ultimoPuntoJuego === "W1" || ultimoPuntoJuego === "W2") {
-                    ultimoPuntoJuego = dataJuego.trim().split(" ")[nPuntosJuego - tal];
-                    tal++;
-                }
-            }
-        }
+        let ultimoPuntoJuego = puntosJuegoSinWarnings[nPuntosJuego - 1];
 
-        if(["1", "2", "1A", "2A", "1U", "2U"].includes(ultimoPuntoJuego)) {
+        if(["1", "2", "1A", "2A", "1U", "2U", "PPR"].includes(ultimoPuntoJuego)) {
             rawData_t1.nJG_sacando++;
             if(esJuegoEnBlanco) {
                 rawData_t1.nJuegosEnBlanco++;
                 rawData_t2.nJuegosEnBlancoEnContra++;
             }
         }
-        else if(["1P", "2P", "3", "1PU", "2PU"].includes(ultimoPuntoJuego)) {
+        else if(["1P", "2P", "3", "1PU", "2PU", "PPS"].includes(ultimoPuntoJuego)) {
             rawData_t2.nJG_restando++;
             if(esJuegoEnBlanco) {
                 rawData_t2.nJuegosEnBlanco++;
@@ -979,6 +963,39 @@ export function getRawData(partido) {
             }
         }
 
+        let pts_t1 = 0;
+        let pts_t2 = 0;
+        // (2.D.) Breakpoints, Setpoints, Matchpoints
+        for(const punto of puntosJuegoSinWarnings) {
+            // Obtenemos los booleanos que necesitamos
+            const esPuntoGanadoPalQueSaca = ["1", "2", "1A", "2A", "1U", "2U", "PPR"].includes(punto);
+            const esPuntoGanadoPalQueResta = ["1P", "2P", "3", "1PU", "2PU", "PPS"].includes(punto);
+            const esBreakPoint = (pts_t1 < pts_t2 && pts_t2 >= 3);
+
+            if(esBreakPoint) {
+                rawData_t1.nBreakpointsEnContra++;
+                rawData_t2.nBreakpointsAFavor++;
+                console.log("rawData_t1.nBreakpointsEnContra: " + rawData_t1.nBreakpointsEnContra);
+                console.log("rawData_t2.nBreakpointsAFavor: " + rawData_t2.nBreakpointsAFavor);
+            }
+
+            if(esPuntoGanadoPalQueSaca) {
+                if(esBreakPoint) {
+                    rawData_t1.nBreakpointsSalvados++;
+                    console.log("rawData_t1.nBreakpointsSalvados: " + rawData_t1.nBreakpointsSalvados);
+                    // AÑADIR LÓGICA PARA SETPOINTS Y MATCHPOINTS
+                }
+                pts_t1++;
+            }
+            else if(esPuntoGanadoPalQueResta) {
+                if(esBreakPoint) {
+                    rawData_t2.nBreakpointsConvertidos++;
+                    console.log("rawData_t2.nBreakpointsConvertidos: " + rawData_t2.nBreakpointsConvertidos);
+                    // AÑADIR LÓGICA PARA SETPOINTS Y MATCHPOINTS
+                }
+                pts_t2++;
+            }
+        }
     }
 
     // (3) Procesar la info de los juegos en los que saca T2 (los tiebreaks van a parte)
@@ -1016,7 +1033,7 @@ export function getRawData(partido) {
         rawData_t2.nAces += n1A + n2A;
         rawData_t2.nPrimerSaque += n1 + n1A + n1P;
         rawData_t2.nSegundoSaque += n2 + n2A + n2P;
-        rawData_t2.nSaques += (n1 + n1A + n1P) + (n2 + n2A + n2P);
+        rawData_t2.nSaques += (n1 + n1A + n1P) + (n2 + n2A + n2P) + n3;
         rawData_t2.nDoblesFaltas += n3;
         rawData_t2.nPG_primerSaque += n1 + n1A;
         rawData_t2.nPG_segundoSaque += n2 + n2A;
@@ -1039,42 +1056,21 @@ export function getRawData(partido) {
         const nPuntosJuego = dataJuego.trim().split(" ").length;
 
         // *
-        // 100% tengo que quitar el W1 W2 y meter PP1 PP2 pa chekear juegos en blanco fácil
+        // 100% tengo que quitar el W1 W2 y meter PPR PPS pa chekear juegos en blanco fácil
         const puntosJuegoSinWarnings = dataJuego.trim().split(" ").filter(p => p !== "W1" && p !== "W2");
         const esJuegoEnBlanco = puntosJuegoSinWarnings.length === 4 ? true : false;
         // *
 
-        let ultimoPuntoJuego = dataJuego.trim().split(" ")[nPuntosJuego - 1];
-        // Revisar warnings, a partir del tercero es point penalty
-        if(ultimoPuntoJuego === "W1") {
-            if(rawData_t1.nWarnings > 2) rawData_t2.nJG_sacando++;
-            else {
-                let tal = 2;
-                while(ultimoPuntoJuego === "W1" || ultimoPuntoJuego === "W2") {
-                    ultimoPuntoJuego = dataJuego.trim().split(" ")[nPuntosJuego - tal];
-                    tal++;
-                }
-            }
-        }
-        else if(ultimoPuntoJuego === "W2") {
-            if(rawData_t2.nWarnings > 2) rawData_t1.nJG_restando++;
-            else {
-                let tal = 2;
-                while(ultimoPuntoJuego === "W1" || ultimoPuntoJuego === "W2") {
-                    ultimoPuntoJuego = dataJuego.trim().split(" ")[nPuntosJuego - tal];
-                    tal++;
-                }
-            }
-        }
+        let ultimoPuntoJuego = puntosJuegoSinWarnings[nPuntosJuego - 1];
 
-        if(["1", "2", "1A", "2A", "1U", "2U"].includes(ultimoPuntoJuego)) {
+        if(["1", "2", "1A", "2A", "1U", "2U", "PPR"].includes(ultimoPuntoJuego)) {
             rawData_t2.nJG_sacando++;
             if(esJuegoEnBlanco) {
                 rawData_t2.nJuegosEnBlanco++;
                 rawData_t1.nJuegosEnBlancoEnContra++;
             }
         }
-        else if(["1P", "2P", "3", "1PU", "2PU"].includes(ultimoPuntoJuego)) {
+        else if(["1P", "2P", "3", "1PU", "2PU", "PPS"].includes(ultimoPuntoJuego)) {
             rawData_t1.nJG_restando++;
             if(esJuegoEnBlanco) {
                 rawData_t1.nJuegosEnBlanco++;
@@ -1082,6 +1078,36 @@ export function getRawData(partido) {
             }
         }
 
+        let pts_t1 = 0;
+        let pts_t2 = 0;
+        // (3.D.) Breakpoints, Setpoints, Matchpoints
+        for(const punto of puntosJuegoSinWarnings) {
+            // Obtenemos los booleanos que necesitamos
+            const esPuntoGanadoPalQueSaca = ["1", "2", "1A", "2A", "1U", "2U", "PPR"].includes(punto);
+            const esPuntoGanadoPalQueResta = ["1P", "2P", "3", "1PU", "2PU", "PPS"].includes(punto);
+            const esBreakPoint = (pts_t2 < pts_t1 && pts_t1 >= 3);
+
+            // Comprobar si es breakpoint
+            if(esBreakPoint) {
+                rawData_t2.nBreakpointsEnContra++;
+                rawData_t1.nBreakpointsAFavor++;
+            }
+
+            if(esPuntoGanadoPalQueSaca) {
+                if(esBreakPoint) {
+                    rawData_t2.nBreakpointsSalvados++;
+                    // AÑADIR LÓGICA PARA SETPOINTS Y MATCHPOINTS
+                }
+                pts_t2++;
+            }
+            else if(esPuntoGanadoPalQueResta) {
+                if(esBreakPoint) {
+                    rawData_t1.nBreakpointsConvertidos++;
+                    // AÑADIR LÓGICA PARA SETPOINTS Y MATCHPOINTS
+                }
+                pts_t1++;
+            }
+        }
     }
 
     // (4) Procesar la info de los tiebreaks (se viene terroristada)
@@ -1142,7 +1168,7 @@ export function getRawData(partido) {
         rawData_t1.nAces += n1A + n2A;
         rawData_t1.nPrimerSaque += n1 + n1A + n1P;
         rawData_t1.nSegundoSaque += n2 + n2A + n2P;
-        rawData_t1.nSaques += (n1 + n1A + n1P) + (n2 + n2A + n2P);
+        rawData_t1.nSaques += (n1 + n1A + n1P) + (n2 + n2A + n2P) + n3;
         rawData_t1.nDoblesFaltas += n3;
         rawData_t1.nPG_primerSaque += n1 + n1A;
         rawData_t1.nPG_segundoSaque += n2 + n2A;
@@ -1185,7 +1211,7 @@ export function getRawData(partido) {
         rawData_t2.nAces += n1A + n2A;
         rawData_t2.nPrimerSaque += n1 + n1A + n1P;
         rawData_t2.nSegundoSaque += n2 + n2A + n2P;
-        rawData_t2.nSaques += (n1 + n1A + n1P) + (n2 + n2A + n2P);
+        rawData_t2.nSaques += (n1 + n1A + n1P) + (n2 + n2A + n2P) + n3;
         rawData_t2.nDoblesFaltas += n3;
         rawData_t2.nPG_primerSaque += n1 + n1A;
         rawData_t2.nPG_segundoSaque += n2 + n2A;

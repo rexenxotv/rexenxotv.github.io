@@ -1,4 +1,4 @@
-import { getPartido, getTorneo, getPista } from "./firebase-init.js";
+import { getPartido, getTorneo, getBracketTorneo, getPista } from "./firebase-init.js";
 import { actualizarTodasLasBarras } from "./partido_porcentajes_barras.js";
 import { RawDataStatsTenistaPartido, StatsTenistaPartido, getRawData } from "./stats.js";
 
@@ -78,9 +78,10 @@ document.addEventListener('DOMContentLoaded', async() => {
             ganador = ID_tenista2;
             perdedor = ID_tenista1;
         }
-        // Seeding
 
+        // Seeding
         // (si es WC, LL, PR, etc. se le baja la fuente) -> font-size: calc(var(--vw) * 2.6);
+        // THE CODE GOES HERE !
 
         // Nombres
         marcador_ganador.querySelector('.m-nombre a').textContent = ganador.toUpperCase();
@@ -189,6 +190,24 @@ document.addEventListener('DOMContentLoaded', async() => {
 
         // Pal futuro (en un marcador en directo que muestra el juego actual):
         // Si es AD se baja el tamaño de fuente -> font-size: calc(var(--vw) * 3.6);
+        const datosBracket = await getBracketTorneo(p.torneo);
+        console.log(datosBracket);
+        if(datosBracket) {
+            if(datosBracket.seeding[ganador]) {
+                const seeding_ganador = datosBracket.seeding[ganador];
+                marcador_ganador.querySelector('.m-seeding').textContent = seeding_ganador;
+                if( ["WC", "LL", "PR", "Q"].includes(seeding_ganador) ) {
+                    marcador_ganador.querySelector('.m-seeding').style.fontSize = "calc(var(--vw) * 2.6)";
+                }
+            }
+            if(datosBracket.seeding[perdedor]) {
+                const seeding_perdedor = datosBracket.seeding[perdedor];
+                marcador_perdedor.querySelector('.m-seeding').textContent = seeding_perdedor;
+                if( ["WC", "LL", "PR", "Q"].includes(seeding_perdedor) ) {
+                    marcador_perdedor.querySelector('.m-seeding').style.fontSize = "calc(var(--vw) * 2.6)";
+                }
+            }
+        }
         
 
         // Ajustamos el ancho del nombre en función del número de sets
