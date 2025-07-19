@@ -937,18 +937,15 @@ export function getRawData(partido) {
         // (2.C) Quién ganó el juego y si fue juego en blanco
         // TODO TO-DO PAFACER: gestionar RET1 RET2
 
-        // Ver de qué tipo es el último punto para saber quién ganó el juego
-        const nPuntosJuego = dataJuego.trim().split(" ").length;
-
         // *
         // 100% tengo que quitar el W1 W2 y meter PPR PPS pa chekear juegos en blanco fácil
         const puntosJuegoSinWarnings = dataJuego.trim().split(" ").filter(p => p !== "W1" && p !== "W2");
         const esJuegoEnBlanco = puntosJuegoSinWarnings.length === 4 ? true : false;
         // *
 
-        let ultimoPuntoJuego = puntosJuegoSinWarnings[nPuntosJuego - 1];
+        let ultimoPuntoJuego = puntosJuegoSinWarnings[puntosJuegoSinWarnings.length - 1];
 
-        if(["1", "2", "1A", "2A", "1U", "2U", "PPR"].includes(ultimoPuntoJuego)) {
+        if(["1", "2", "1A", "2A", "1U", "2U", "1AU", "2AU", "PPR"].includes(ultimoPuntoJuego)) {
             rawData_t1.nJG_sacando++;
             if(esJuegoEnBlanco) {
                 rawData_t1.nJuegosEnBlanco++;
@@ -968,7 +965,7 @@ export function getRawData(partido) {
         // (2.D.) Breakpoints, Setpoints, Matchpoints
         for(const punto of puntosJuegoSinWarnings) {
             // Obtenemos los booleanos que necesitamos
-            const esPuntoGanadoPalQueSaca = ["1", "2", "1A", "2A", "1U", "2U", "PPR"].includes(punto);
+            const esPuntoGanadoPalQueSaca = ["1", "2", "1A", "2A", "1U", "2U", "1AU", "2AU", "PPR"].includes(punto);
             const esPuntoGanadoPalQueResta = ["1P", "2P", "3", "1PU", "2PU", "PPS"].includes(punto);
             const esBreakPoint = (pts_t1 < pts_t2 && pts_t2 >= 3);
 
@@ -1052,18 +1049,15 @@ export function getRawData(partido) {
 
         // TODO TO-DO PAFACER: gestionar RET1 RET2
 
-        // Ver de qué tipo es el último punto para saber quién ganó el juego
-        const nPuntosJuego = dataJuego.trim().split(" ").length;
-
         // *
         // 100% tengo que quitar el W1 W2 y meter PPR PPS pa chekear juegos en blanco fácil
         const puntosJuegoSinWarnings = dataJuego.trim().split(" ").filter(p => p !== "W1" && p !== "W2");
         const esJuegoEnBlanco = puntosJuegoSinWarnings.length === 4 ? true : false;
         // *
 
-        let ultimoPuntoJuego = puntosJuegoSinWarnings[nPuntosJuego - 1];
+        let ultimoPuntoJuego = puntosJuegoSinWarnings[puntosJuegoSinWarnings.length - 1];
 
-        if(["1", "2", "1A", "2A", "1U", "2U", "PPR"].includes(ultimoPuntoJuego)) {
+        if(["1", "2", "1A", "2A", "1U", "2U", "1AU", "2AU", "PPR"].includes(ultimoPuntoJuego)) {
             rawData_t2.nJG_sacando++;
             if(esJuegoEnBlanco) {
                 rawData_t2.nJuegosEnBlanco++;
@@ -1080,10 +1074,11 @@ export function getRawData(partido) {
 
         let pts_t1 = 0;
         let pts_t2 = 0;
+        
         // (3.D.) Breakpoints, Setpoints, Matchpoints
         for(const punto of puntosJuegoSinWarnings) {
             // Obtenemos los booleanos que necesitamos
-            const esPuntoGanadoPalQueSaca = ["1", "2", "1A", "2A", "1U", "2U", "PPR"].includes(punto);
+            const esPuntoGanadoPalQueSaca = ["1", "2", "1A", "2A", "1U", "2U", "1AU", "2AU", "PPR"].includes(punto);
             const esPuntoGanadoPalQueResta = ["1P", "2P", "3", "1PU", "2PU", "PPS"].includes(punto);
             const esBreakPoint = (pts_t2 < pts_t1 && pts_t1 >= 3);
 
