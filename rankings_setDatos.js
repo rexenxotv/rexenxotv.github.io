@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', async() => {
                 <div class="lr-diff"></div>
             </div>
             <div class="lr-foto"><a href="tenista.html?id=${posicion.tenista}">
-                <img src="media/pfp/${posicion.tenista}.png">
+                <img src="media/pfp/${posicion.tenista}.png" loading="lazy">
             </a></div>
             <div>
                 <div class="lr-nombre">
@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', async() => {
             </div>
             <div class="ultimo-torneo">
                 ${posicion.ultimo_torneo}
-                <img src="media/logo/${posicion.archivo_logo}.png">
+                <img src="media/logo/${posicion.archivo_logo}.png" loading="lazy">
             </div>
         `;
 

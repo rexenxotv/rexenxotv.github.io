@@ -134,6 +134,8 @@ img {
 
 .clasificaciones {
     margin-top: calc(var(--vw) * 5);
+    /*Tamaño texto por defecto*/
+    font-size: calc(var(--vw) * 3.2);
     /*Flexbox*/
     display: flex;
     flex-direction: column;

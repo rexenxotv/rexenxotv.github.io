@@ -261,7 +261,7 @@ document.addEventListener('DOMContentLoaded', async() => {
             li.innerHTML = `
                 <div class="datos-torneo">
                     <div class="categoria-torneo">
-                        ${archivo_logo ? `<img src="media/logo/${archivo_logo}.png">` : ''}
+                        ${archivo_logo ? `<img src="media/logo/${archivo_logo}.png" loading="lazy">` : ''}
                     </div>
                     <div class="info-torneo">
                         <div class="info-torneo-nombre">${objetoTorneo.serie} ${objetoTorneo.anho}</div>

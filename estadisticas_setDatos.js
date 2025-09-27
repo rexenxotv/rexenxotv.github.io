@@ -22,7 +22,11 @@ document.addEventListener('DOMContentLoaded', async() => {
         {texto: "%juegos ganados restando", valor: "p_JG_restando"},
         {texto: "%puntos ganados restando 1er saque", valor: "p_PG_restandoPrimerSaque"},
         {texto: "%puntos ganados restando 2do saque", valor: "p_PG_restandoSegundoSaque"},
-        {texto: "Tiebreaks ganados", valor: "tiebreaksGanados"}
+        {texto: "Tiebreaks ganados", valor: "tiebreaksGanados"},
+        {texto: "Donuts", valor: "donuts"},
+        {texto: "Donuts (en contra)", valor: "donutsEnContra"},
+        {texto: "Juegos en blanco", valor: "juegosEnBlanco"},
+        {texto: "Juegos en blanco (en contra)", valor: "juegosEnBlancoEnContra"}
     ];
 
     // Crear el html de la lista
@@ -202,7 +206,7 @@ document.addEventListener('DOMContentLoaded', async() => {
         </div>
         <div class="tenista-imagen">
             <a href="/tenista.html?id=${stats_tenistas[0].tenista}">
-                <img src="media/pfp/${stats_tenistas[0].tenista}.png">
+                <img src="media/pfp/${stats_tenistas[0].tenista}.png" loading="lazy">
             </a>
         </div>
     `;
@@ -242,7 +246,7 @@ document.addEventListener('DOMContentLoaded', async() => {
         </div>
         <div class="tenista-imagen">
             <a href="/tenista.html?id=${stats_tenistas[0].tenista}">
-                <img src="media/pfp/${stats_tenistas[0].tenista}.png">
+                <img src="media/pfp/${stats_tenistas[0].tenista}.png" loading="lazy">
             </a>
         </div>
     `;
@@ -299,7 +303,7 @@ document.addEventListener('DOMContentLoaded', async() => {
             <td data-stat="donuts">${tenista.stats.donuts.toFixed(0)}</td>
             <td data-stat="donutsEnContra">${tenista.stats.donutsEnContra.toFixed(0)}</td>
             <td data-stat="juegosEnBlanco">${tenista.stats.juegosEnBlanco.toFixed(0)}</td>
-            <td data-stat="juegosEnBlanco">${tenista.stats.juegosEnBlancoEnContra.toFixed(0)}</td>
+            <td data-stat="juegosEnBlancoEnContra">${tenista.stats.juegosEnBlancoEnContra.toFixed(0)}</td>
         `;
 
         // Añadir a la tabla
