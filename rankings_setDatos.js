@@ -1,5 +1,4 @@
-import { getTenista, getPartido, getLiveRankings, getRankingCompletoTenista, getIDsTenistas, getTorneo, getPartidosTenista } from "./firebase-init.js";
-import { RawDataStatsTenistaPartido, StatsTenistaPartido, getRawData } from "./stats.js";
+import { getTenista, getPartido, getLiveRankings, getRankingCompletoTenista, getIDsTenistas, getTorneo } from "./firebase-init.js";
 
 document.addEventListener('DOMContentLoaded', async() => {
     // Obtenemos todos los rankings oficiales que hubo (rollito caché)
@@ -52,42 +51,6 @@ document.addEventListener('DOMContentLoaded', async() => {
             }
         }
 
-        // Cargamos las stats también (lo siento por la pantalla de carga)
-        // NA TARDA DEMASIADO TIENE QUE SER SU PROPIA PÁGINA LAS STATS
-        /**
-        const partidos = await getPartidosTenista(ID_tenista);
-        if(!partidos) {
-            console.error("Este tenista aún no jugó ningún partido:", ID_tenista);
-            return;
-        }
-        let statsTotales = new RawDataStatsTenistaPartido();
-        let nPartidosConStats = 0;
-
-        for(const p of partidos) {
-            // Si no es estado fulldata ignorar
-            if( p.estado != "fulldata") continue;
-
-            nPartidosConStats++;
-
-            try {
-                const [stats_t1, stats_t2] = getRawData(p);
-                if(p.tenista1 === ID_tenista) statsTotales.juntarCon(stats_t1);
-                else statsTotales.juntarCon(stats_t2);
-
-                // DEBUG
-                console.log(p.id + ": " + p.tenista1 + " vs " + p.tenista2);
-                console.log("stats " + p.tenista1);
-                console.log(stats_t1);
-                console.log("stats " + p.tenista2);
-                console.log(stats_t2);
-                console.log("stats acumuladas " + ID_tenista);
-                console.log(statsTotales);
-            } catch (e) {
-                console.warn(`No se pudieron obtener stats del partido ${p.id}`, e);
-            }
-        }
-        const stats = new StatsTenistaPartido(statsTotales); */
-
         console.log(ID_tenista);
         console.log(data);
 
@@ -115,7 +78,6 @@ document.addEventListener('DOMContentLoaded', async() => {
 
     // Creamos los ul
     const ulLiveRanking = document.getElementById('live-ranking-actual');
-    const ulStats = document.getElementById('all-stats');
     // UTF: ⇧ ⇩ ↺ ⯆▼▾▽ ⯅▲▴△ ⭡⭣
 
     // Listado de tenistas

@@ -5,9 +5,9 @@
         <!--This viewport element ensures the page renders at the width of the browser viewport, preventing mobile browsers from rendering pages wider than the viewport and then shrinking them down.-->
         <meta name="viewport" content="width=device-width">
         <!--Linkeando el archivo CSS-->
-        <link rel="stylesheet" href="rankings.css">
+        <link rel="stylesheet" href="estadisticas.css">
         <!--Título de la página (cuando pones el ratón encima tal)-->
-        <title>Rankings | ATP Rexenxo</title>
+        <title>Estadísticas | ATP Rexenxo</title>
         <!-- JavaScript para garantizar ratio de móvil -->
         <script src="ratio_movil.js"></script>
         <!-- CONFIG MENÚ -->
@@ -20,7 +20,7 @@
         <!-- JavaScript para cambiar la data que se muestra (TAL) -->
         <script type="module" src="seleccionador.js" defer></script>
         <!-- JavaScript para cargar los datos del tenista que indica el id -->
-        <script type="module" src="rankings_setDatos.js" defer></script>
+        <script type="module" src="estadisticas_setDatos.js" defer></script>
     </head>
     <body>
         <div class="ratio-movil">
@@ -38,43 +38,65 @@
             <div class="rankings-encabezado">
                 <div class="logo-h2h">
                     <img src="media/logo/logo-atpr.png" alt="Logo H2H">
-                    RANKINGS
+                    ESTADÍSTICAS
                 </div>
             </div>
             <!-- SELECTOR -->
             <div class="rankings-seleccion">
                 <a href="#" class="seleccion-modo seleccion-modo--activa" data-boton="1">
-                    <strong>Live Ranking</strong>
+                    <strong>Individuales</strong>
                 </a>
-                <!-- Race to Contumil temporalmente desactivada style="display: none;" -->
-                <a href="#" class="seleccion-modo" data-boton="2" style="display: none;">
-                    <strong>Race to Contumil</strong>
+                <a href="#" class="seleccion-modo" data-boton="2">
+                    <strong>Clasificación</strong>
                 </a>
                 <a href="#" class="seleccion-modo" data-boton="3">
-                    <strong>Stats</strong>
+                    <strong>W/L</strong>
                 </a>
             </div>
-            <!-- LIVE RANKING -->
+            <!-- INDIVIDUALES -->
             <div class="seleccion-contenido seleccion-contenido--activa" data-info="1">
-                <div class="live-ranking">
-                    <ul id="live-ranking-actual">
-                        <div class="leyendas">
-                            <div class="leyenda" style="width: calc(var(--vw) * 10);">Rank</div>
-                            <div class="leyenda" style="width: calc(var(--vw) * 44);">Tenista</div>
-                            <div class="leyenda" style="width: calc(var(--vw) * 10);">Pts *</div>
-                            <div class="leyenda" style="width: calc(var(--vw) * 20);">Último torneo</div>
-                        </div>
+                <div class="tipo-stat" data-stat="aces">
+                    <button>Aces</button>
+                    <img src="media/web/desplegable.png"></img>
+                    <ul id="listaStats" style="display: none;">
+                        <!-- Se gestiona en el JS -->
                     </ul>
-                    <div class="leyenda" style="display: none;">
-                        SIN RANKING
+                </div>
+                <div class="stats-individuales">
+                    <!-- Tabla con todas las stats cargadas (sólo se muestra la seleccionada) -->
+                    <table id="tabla-stats">
+                        <thead>
+                            <tr>
+                                <th>Tenistas</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Se gestiona en el JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- CLASIFICACIÓN -->
+            <div class="seleccion-contenido" data-info="2">
+                <div class="selector-botones">
+                    <button class="selector-boton activo" id="clasificacionSaque">Saque</button>
+                    <button class="selector-boton" id="clasificacionResto">Resto</button>
+                </div>
+                <div class="clasificaciones">
+                    <div class="clasificacion activo" id="lideres-saque">
+                        <div class="clasificacion-tipo">Líderes al Saque</div>
+                        <div class="clasificacion-lider"></div>
+                        <ul class="clasificacion-resto"></ul>
+                    </div>
+                    <div class="clasificacion" id="lideres-resto">
+                        <div class="clasificacion-tipo">Líderes al Resto</div>
+                        <div class="clasificacion-lider"></div>
+                        <ul class="clasificacion-resto"></ul>
                     </div>
                 </div>
             </div>
-            <!-- RACE TO CONTUMIL // Temporalmente desactivada style="display: none;" -->
-            <div class="seleccion-contenido" data-info="2">
-                Próximamente
-            </div>
-            <!-- STATS -->
+            <!-- W/L -->
             <div class="seleccion-contenido" data-info="3"></div>
             <div class="stats">
                 <ul id="all-stats"></ul>

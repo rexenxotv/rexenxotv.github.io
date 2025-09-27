@@ -32,12 +32,6 @@ img {
     height: auto;   /*Mantener el ratio*/
 }
 
-.margen {
-    width: calc(var(--vw) * 100);
-    height: calc(var(--vw) * 5);
-    background-color: snow;
-}
-
 /*-----------------------------------------------------------------------------------------------*/
 
 /* Nueva parvada: cargando... */
@@ -102,6 +96,167 @@ img {
     font-size: calc(var(--vw) * 3.2);
 }
 
+/*-----------------------------------------------------------------------------------------------*/
+
+.selector-botones {
+    display: inline-flex;
+    border-radius: calc(var(--vw) * 5);
+    overflow: hidden;
+    border: calc(var(--vw) * 0.6);
+    border-style: solid;
+    border-color: rgb(16, 32, 64);
+}
+
+.selector-boton {
+    background-color: rgb(48, 64, 96);
+    border: none;
+    padding-top: calc(var(--vw) * 2.4);
+    padding-bottom: calc(var(--vw) * 2.4);
+    padding-left: calc(var(--vw) * 4.8);
+    padding-right: calc(var(--vw) * 4.8);
+    transition: background 0.3s;
+    /*Texto*/
+    font-weight: bold;
+    color: white;
+}
+
+.selector-boton:not(:last-child) {
+    border-right: calc(var(--vw) * 0.6);
+    border-right-style: solid;
+    border-right-color: rgb(16, 32, 64);
+}
+
+.selector-boton.activo {
+    background-color: rgb(16, 32, 64);
+}
+
+/*-----------------------------------------------------------------------------------------------*/
+
+.clasificaciones {
+    margin-top: calc(var(--vw) * 5);
+    /*Flexbox*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: calc(var(--vw) * 5);
+}
+
+.clasificacion {
+    width: calc(var(--vw) * 80);
+    min-height: calc(var(--vw) * 42);
+    background-color: rgb(16, 32, 64);
+    overflow: hidden;
+    /*Bordesiño*/
+    border: calc(var(--vw) * 1);
+    border-style: solid;
+    border-color: rgb(48, 64, 96);
+    border-radius: calc(var(--vw) * 6);
+    border-spacing: 0; /*Importante*/
+    /*Texto*/
+    color: white;
+    /*Si no está pulsada la opción para verlo, se oculta*/
+    display: none;
+}
+
+.clasificacion.activo {
+    /*Flexbox*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.clasificacion ul {
+    text-decoration: none;
+    background-color: rgb(48, 64, 96);
+    /*Arreglo pa que esté bien distribuido*/
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.clasificacion-tipo {
+    width: calc(var(--vw) * 80);
+    padding: calc(var(--vw) * 2);
+    background-color: rgb(48, 64, 96);
+    text-align: center;
+}
+
+.clasificacion-lider {
+    height: calc(var(--vw) * 40);
+    padding: calc(var(--vw) * 3);
+    /*Flexbox*/
+    display: flex;
+    align-items: center;
+    gap: calc(var(--vw) * 6);
+}
+
+.lider-nombre {
+    font-size: calc(var(--vw) * 5);
+}
+
+.lider-nombre a {
+    color: white;
+    /*Corrigiendo el estilo por defecto*/
+    text-decoration: none;
+}
+
+.tenista-imagen {
+    width: calc(var(--vw) * 32);
+    height: calc(var(--vw) * 32);
+    border: calc(var(--vw) * 0.6);
+    border-style: solid;
+    border-color: yellow;
+    /*Realmente este div es un círculo*/
+    border-radius: 50%; /*Esto le da la forma de círculo*/
+    box-sizing: border-box;
+    overflow: hidden;   /*Esto hace que todo lo que está por fuera del círculo no se vea*/
+}
+
+.tenista-imagen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /*No queremos ajustar la imagen a dentro del círculo*/
+}
+
+.clasificacion-resto {
+    width: calc(var(--vw) * 80);
+    /*Flexbox*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.clasificacion-resto li {
+    width: calc(var(--vw) * 80);
+    height: calc(var(--vw) * 8);
+    /*Flexbox*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cr-pos {
+    width: calc(var(--vw) * 20);
+    text-align: center;
+}
+
+.cr-nombre {
+    width: calc(var(--vw) * 40);
+}
+
+.cr-nombre a {
+    color: white;
+    /*Corrigiendo el estilo por defecto*/
+    text-decoration: none;
+}
+
+.cr-puntos {
+    width: calc(var(--vw) * 20);
+    text-align: center;
+    font-size: bolder;
+}
+
+/*DE AQUÍ PARRIBA LO NUEVO, PABAJO LO DE RANKINGS COPYPASTE*/
 /*-----------------------------------------------------------------------------------------------*/
 
 .logo-h2h {
@@ -190,14 +345,22 @@ img {
 }
 
 .seleccion-contenido--activa {
-    display: block;
+    padding-top: calc(var(--vw) * 4);
+    /*Flexbox*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /*Texto*/
     color: black;
 }
 
 /*-----------------------------------------------------------------------------------------------*/
 
-.live-ranking {
+.stats-individuales {
     background-color: snow;
+    width: calc(var(--vw) * 90);
+    margin-top: calc(var(--vw) * 5);
     /*Flexbox*/
     display: flex;
     flex-direction: column;
@@ -205,7 +368,8 @@ img {
     align-items: center;
 }
 
-#live-ranking-actual {
+/*PAL FUTURO: BORRAR*/
+#stats-individuales-actual {
     width: calc(var(--vw) * 100);
     /*Quitemos la bullshit*/
     list-style: none;
@@ -218,7 +382,8 @@ img {
     align-items: center;
 }
 
-#live-ranking-actual li {
+/*PAL FUTURO: BORRAR*/
+#stats-individuales-actual li {
     width: calc(var(--vw) * 100);
     height: calc(var(--vw) * 20);
     /*Flexbox*/
@@ -229,6 +394,32 @@ img {
     gap: calc(var(--vw) * 2);
     margin-bottom: calc(var(--vw) * 2);
 }
+
+#tabla-stats {
+    width: calc(var(--vw) * 90);
+    font-size: calc(var(--vw) * 3.6);
+    border-collapse: collapse;
+    /*Para respetar los anchos*/
+    table-layout: fixed;
+}
+
+#tabla-stats thead {
+    border-bottom: calc(var(--vw) * 1);
+    border-bottom-color: rgb(104, 104, 104);
+    border-bottom-style: solid;
+}
+
+/*Cada 2 fondo gris*/
+#tabla-stats tbody tr:nth-child(even) {
+    background-color: lightgray;
+}
+
+/*BORRAR EN EL FUTURO: sólo ver 2 columnas*/
+#tabla-stats td:nth-child(n+3) {
+    display: none;
+}
+
+/*-----------------------------------------------------------------------------------------------*/
 
 .lr-foto {
     width: calc(var(--vw) * 16);
@@ -357,8 +548,72 @@ img {
 
 .leyenda {
     /*Texto*/
-    text-align: center;
+    text-align: left;
     font-size: calc(var(--vw) * 3.6);
     font-weight: 550;
     color: black;
+}
+
+.tipo-stat {
+    width: calc(var(--vw) * 50);
+    min-height: calc(var(--vw) * 8);
+    /*Bordes*/
+    border: calc(var(--vw) * 0.5);
+    border-style: solid;
+    border-color: black;
+    /*Texto*/
+    font-size: calc(var(--vw) * 3.2);
+    font-weight: bold;
+    color: black;
+    /*Flexbox*/
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /*Colocación*/
+    align-self: flex-start;
+    margin-left: calc(var(--vw) * 5);
+    /*listaStats*/
+    position: relative;
+    z-index: 10;
+}
+
+.tipo-stat button {
+    all: unset;
+    margin-left: calc(var(--vw) * 1);
+    margin-right: calc(var(--vw) * 1);
+    white-space: normal; /*Justificar texto*/
+}
+
+.tipo-stat img {
+    width: calc(var(--vw) * 4);
+    height: calc(var(--vw) * 4.5);
+    object-fit: contain;
+    margin-right: calc(var(--vw) * 2);
+}
+
+#listaStats {
+    background: white;
+    max-height: calc(var(--vw) * 100);
+    /*Bordes*/
+    border: calc(var(--vw) * 0.5);
+    border-style: solid;
+    border-color: gray;
+    /*Texto*/
+    color: gray;
+    /*Quitar el estilo de lista por defecto*/
+    list-style: none;
+    margin: 0;
+    margin-top: calc(var(--vw) * 0.4);
+    padding: 0;
+    /**/
+    position: absolute;
+    overflow: visible;
+    top: 100%;
+    left: 0;
+    z-index: 8;
+}
+
+#listaStats li {
+    padding: calc(var(--vw) * 0.6);
+    white-space: normal; /*Justificar texto*/
 }

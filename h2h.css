@@ -35,7 +35,6 @@ img {
 .margen {
     width: calc(var(--vw) * 100);
     height: calc(var(--vw) * 5);
-    background-color: transparent;
 }
 
 .h2h {
@@ -51,10 +50,6 @@ img {
     /*El tamaño en referencia al ancho del dispositivo: mismo ancho y la mitad de ese ancho de alto*/
     width: calc(var(--vw) * 100);
     height: calc(var(--vw) * 50);
-    /*Color de fondo de la estructura entera*/
-    background-color: transparent;
-    /*Borde del rectángulo: de momento no quiero*/
-    border: none;
     /*Flexbox*/
     display: flex;
     flex-direction: column;
@@ -86,8 +81,6 @@ img {
 .h2h-vs {
     width: calc(var(--vw) * 90);
     height: calc(var(--vw) * 40);
-    background-color: transparent;
-    border: none;
     /*Flexbox*/
     display: flex;
     justify-content: center;
@@ -97,8 +90,6 @@ img {
 .tenista1 {
     width: calc(var(--vw) * 25);
     height: calc(var(--vw) * 40);
-    background-color: transparent;
-    border: none;
     /*Flexbox*/
     display: flex;
     flex-direction: column;
@@ -109,8 +100,6 @@ img {
 .tenista-imagen-hueco {
     width: calc(var(--vw) * 25);
     height: calc(var(--vw) * 25);
-    background-color: transparent;
-    border: none;
     /*Flexbox*/
     display: flex;
     justify-content: center;
@@ -120,7 +109,6 @@ img {
 .tenista1-imagen {
     width: calc(var(--vw) * 20);
     height: calc(var(--vw) * 20);
-    background-color: transparent;
     border: calc(var(--vw) * 0.6);
     border-style: solid;
     border-color: blue;
@@ -139,8 +127,6 @@ img {
 .tenista1-nombre {
     width: calc(var(--vw) * 25);
     height: calc(var(--vw) * 15);
-    background-color: transparent;
-    border: none;
     /*Flexbox*/
     display: flex;
     justify-content: center;
@@ -159,8 +145,6 @@ img {
 .tenista2 {
     width: calc(var(--vw) * 25);
     height: calc(var(--vw) * 40);
-    background-color: transparent;
-    border: none;
     /*Flexbox*/
     display: flex;
     flex-direction: column;
@@ -171,7 +155,6 @@ img {
 .tenista2-imagen {
     width: calc(var(--vw) * 20);
     height: calc(var(--vw) * 20);
-    background-color: transparent;
     border: calc(var(--vw) * 0.6);
     border-style: solid;
     border-color: yellow;
@@ -190,8 +173,6 @@ img {
 .tenista2-nombre {
     width: calc(var(--vw) * 25);
     height: calc(var(--vw) * 15);
-    background-color: transparent;
-    border: none;
     /*Flexbox*/
     display: flex;
     justify-content: center;
@@ -214,8 +195,6 @@ img {
 .vs-victorias {
     width: calc(var(--vw) * 40);
     height: calc(var(--vw) * 40);
-    background-color: transparent;
-    border: none;
     /*Flexbox*/
     display: flex;
     flex-direction: column;
@@ -226,8 +205,6 @@ img {
 .vs-victorias-contenido {
     width: calc(var(--vw) * 40);
     height: calc(var(--vw) * 26);
-    background-color: transparent;
-    border: none;
     /*Flexbox*/
     display: flex;
     justify-content: center;
@@ -237,8 +214,6 @@ img {
 .victorias-tenista1 {
     width: calc(var(--vw) * 8);
     height: calc(var(--vw) * 26);
-    background-color: transparent;
-    border: none;
     /*Flexbox*/
     display: flex;
     justify-content: center;
@@ -252,8 +227,6 @@ img {
 .victorias-tenista2 {
     width: calc(var(--vw) * 8);
     height: calc(var(--vw) * 26);
-    background-color: transparent;
-    border: none;
     /*Flexbox*/
     display: flex;
     justify-content: center;
@@ -267,7 +240,6 @@ img {
 .circunferencia-porcentajes {
     width: calc(var(--vw) * 24);
     height: calc(var(--vw) * 24);
-    background-color: transparent;
     border-radius: 50%; /*Para que sea un círculo*/
     box-sizing: border-box;
     /*Flexbox*/
@@ -313,8 +285,6 @@ img {
 .vs-victorias-hueco {
     width: calc(var(--vw) * 40);
     height: calc(var(--vw) * 14);
-    background-color: transparent;
-    border: none;
 }
 
 /*-----------------------------------------------------------------------------------------------*/
@@ -322,8 +292,6 @@ img {
 .h2h-data {
     width: calc(var(--vw) * 100);
     /*NO ESPECIFICAMOS LA ALTURA YA QUE ES VARIABLE*/
-    background-color: transparent;
-    border: none;
     /*Flexbox*/
     display: flex;
     flex-direction: column;
@@ -334,8 +302,6 @@ img {
 .h2h-seleccion {
     width: calc(var(--vw) * 40);
     height: calc(var(--vw) * 2);
-    background-color: transparent;
-    border: none;
     /*Flexbox*/
     display: flex;
     justify-content: space-between;
@@ -346,7 +312,6 @@ img {
 
 .seleccion-modo {
     width: calc(var(--vw) * 14);
-    background-color: transparent;
     /*Texto cuando no está pulsado*/
     font-size: calc(var(--vw) * 3);
     text-align: center;
@@ -393,7 +358,6 @@ img {
 
 .h2h-info-individual {
     width: calc(var(--vw) * 80);
-    border: none;
     /*Flexbox*/
     display: flex;
     flex-direction: column;
@@ -401,7 +365,6 @@ img {
 
 .h2h-info-individual-extra {
     width: calc(var(--vw) * 80);
-    border: none;
     font-size: calc(var(--vw) * 4);
     /*Flexbox*/
     display: none;
@@ -479,7 +442,6 @@ img {
 .h2h-info-partidos {
     width: calc(var(--vw) * 92);
     margin: 0 auto;
-    border: none;
     /*Flexbox*/
     display: flex;
     flex-direction: column;

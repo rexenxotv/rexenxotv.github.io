@@ -972,14 +972,14 @@ export function getRawData(partido) {
             if(esBreakPoint) {
                 rawData_t1.nBreakpointsEnContra++;
                 rawData_t2.nBreakpointsAFavor++;
-                console.log("rawData_t1.nBreakpointsEnContra: " + rawData_t1.nBreakpointsEnContra);
-                console.log("rawData_t2.nBreakpointsAFavor: " + rawData_t2.nBreakpointsAFavor);
+                //console.log("rawData_t1.nBreakpointsEnContra: " + rawData_t1.nBreakpointsEnContra);
+                //console.log("rawData_t2.nBreakpointsAFavor: " + rawData_t2.nBreakpointsAFavor);
             }
 
             if(esPuntoGanadoPalQueSaca) {
                 if(esBreakPoint) {
                     rawData_t1.nBreakpointsSalvados++;
-                    console.log("rawData_t1.nBreakpointsSalvados: " + rawData_t1.nBreakpointsSalvados);
+                    //console.log("rawData_t1.nBreakpointsSalvados: " + rawData_t1.nBreakpointsSalvados);
                     // AÑADIR LÓGICA PARA SETPOINTS Y MATCHPOINTS
                 }
                 pts_t1++;
@@ -987,7 +987,7 @@ export function getRawData(partido) {
             else if(esPuntoGanadoPalQueResta) {
                 if(esBreakPoint) {
                     rawData_t2.nBreakpointsConvertidos++;
-                    console.log("rawData_t2.nBreakpointsConvertidos: " + rawData_t2.nBreakpointsConvertidos);
+                    //console.log("rawData_t2.nBreakpointsConvertidos: " + rawData_t2.nBreakpointsConvertidos);
                     // AÑADIR LÓGICA PARA SETPOINTS Y MATCHPOINTS
                 }
                 pts_t2++;

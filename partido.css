@@ -144,32 +144,6 @@ img {
     object-fit: cover; /*No queremos ajustar la imagen a dentro del círculo*/
 }
 
-.tenista2-imagen img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /*No queremos ajustar la imagen a dentro del círculo*/
-}
-
-.tenista1-nombre {
-    width: calc(var(--vw) * 25);
-    height: calc(var(--vw) * 15);
-    background-color: transparent;
-    border: none;
-    /*Flexbox*/
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.tenista1-nombre a {
-    /*Corrigiendo el estilo por defecto*/
-    text-decoration: none;
-    /*Ajustar el tamaño de letra al tamaño de pantalla*/
-    font-size: calc(var(--vw) * 4);
-    text-align: center;
-    color: white;
-}
-
 .duracion {
     width: calc(var(--vw) * 79);
     /*Texto*/
