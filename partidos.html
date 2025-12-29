@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <!--This viewport element ensures the page renders at the width of the browser viewport, preventing mobile browsers from rendering pages wider than the viewport and then shrinking them down.-->
+        <meta name="viewport" content="width=device-width">
+        <!--Linkeando el archivo CSS-->
+        <link rel="stylesheet" href="partidos.css">
+        <!--Título de la página (cuando pones el ratón encima tal)-->
+        <title>Marcadores | ATP Rexenxo</title>
+        <!-- JavaScript para garantizar ratio de móvil -->
+        <script src="ratio_movil.js"></script>
+        <!-- CONFIG MENÚ -->
+        <link rel="stylesheet" href="menu.css">
+        <script src="menu.js"></script>
+        <!-- Backend con Firebase -->
+        <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+        <script type="module" src="firebase-init.js"></script>
+        <!-- JavaScript para cambiar la data que se muestra (Stats/Ficha técnica) -->
+        <script type="module" src="seleccionador.js" defer></script>
+        <!-- JavaScript para cargar los datos del partido que indica el id -->
+        <script type="module" src="partidos_setDatos.js" defer></script>
+    </head>
+    <body>
+        <div class="ratio-movil">
+            <!--MENÚ SUPERIOR-->
+            <div id="menu"></div>
+            <!-- DESCRIPCIÓN -->
+            
+            <!-- LISTADO DE MARCADORES -->
+            <div class="caja-partidos">
+                <ul id="lista-partidos"></ul>
+            </div>
+        </div>
+    </body>
+</html>
