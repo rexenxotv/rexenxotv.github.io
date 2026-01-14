@@ -80,7 +80,7 @@ export class StatsTenistaPartido {
         this.p_PG_primerSaque = rawData.nPrimerSaque ? rawData.nPG_primerSaque / rawData.nPrimerSaque : 0;
         this.p_PG_segundoSaque = rawData.nSegundoSaque ? rawData.nPG_segundoSaque / rawData.nSegundoSaque : 0;
         this.doblesFaltas = rawData.nDoblesFaltas;
-        this.p_breakpointsSalvados = rawData.nBreakpointsEnContra ? rawData.nBreakpointsSalvados / rawData.nBreakpointsEnContra : 0;
+        this.p_breakpointsSalvados = rawData.nBreakpointsEnContra ? rawData.nBreakpointsSalvados / rawData.nBreakpointsEnContra : 1; // Si no tuvo ningún breakpoint que salvar se considera 100%
         this.p_JG_sacando = rawData.nJuegosSacando ? rawData.nJG_sacando / rawData.nJuegosSacando : 0;
         // Resto
         this.p_PG_restandoPrimerSaque = rawData.nRestosPrimerSaque ? rawData.nPG_restandoPrimerSaque / rawData.nRestosPrimerSaque : 0;

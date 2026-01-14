@@ -392,6 +392,20 @@ document.addEventListener('DOMContentLoaded', async() => {
         document.getElementById("superficie").textContent = pista.tipo || "?";
         document.getElementById("arbitro").textContent = p.arbitro || "?";
 
+        const puntuacionSaque_t1 = (stats_t1.p_primerSaque + stats_t1.p_PG_primerSaque + stats_t1.p_PG_segundoSaque 
+        + stats_t1.p_JG_sacando) * 100 + stats_t1.aces - stats_t1.doblesFaltas;
+        const puntuacionResto_t1 = (stats_t1.p_PG_restandoPrimerSaque + stats_t1.p_PG_restandoSegundoSaque 
+        + stats_t1.p_breakpointsConvertidos + stats_t1.p_JG_restando) * 100;
+        const puntuacionSaque_t2 = (stats_t2.p_primerSaque + stats_t2.p_PG_primerSaque + stats_t2.p_PG_segundoSaque 
+        + stats_t2.p_JG_sacando) * 100 + stats_t2.aces - stats_t2.doblesFaltas;
+        const puntuacionResto_t2 = (stats_t2.p_PG_restandoPrimerSaque + stats_t2.p_PG_restandoSegundoSaque 
+        + stats_t2.p_breakpointsConvertidos + stats_t2.p_JG_restando) * 100;
+        // log pa mirar una cosa
+        console.log(p.tenista1 + " SAQUE:" + puntuacionSaque_t1);
+        console.log(p.tenista1 + " RESTO:" + puntuacionResto_t1);
+        console.log(p.tenista2 + " SAQUE:" + puntuacionSaque_t2);
+        console.log(p.tenista2 + " RESTO:" + puntuacionResto_t2);
+
         // ------------------ Actualizar las barras y porcentajes visuales !! ------------------ //
         actualizarTodasLasBarras();
     }
