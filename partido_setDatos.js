@@ -250,6 +250,14 @@ document.addEventListener('DOMContentLoaded', async() => {
         // Las transformamos a las stats que se muestran
         const stats_t1 = new StatsTenistaPartido(rawData_t1);
         const stats_t2 = new StatsTenistaPartido(rawData_t2);
+        
+        // DEBUG
+        console.log(p.id + ": " + p.tenista1 + " vs " + p.tenista2);
+        console.log("stats_t1 " + p.tenista1);
+        console.log(stats_t1);
+        console.log("stats_t2 " + p.tenista2);
+        console.log(stats_t2);
+
         // Variable de control: número de decimales de los floats
         const nDecimales = 0;
 
